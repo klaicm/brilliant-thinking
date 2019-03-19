@@ -7,18 +7,21 @@ import { TableComponent } from './table/table.component';
 
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { TrophiesComponent } from './trophies/trophies.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'table', component: TableComponent },
-  { path: 'player', component: PlayerComponent }
+  { path: 'player', component: PlayerComponent },
+  { path: 'trophies', component: TrophiesComponent }
 ]
 @NgModule({
   declarations: [
     AppComponent,
     PlayerComponent,
     TableComponent,
-    HomeComponent
+    HomeComponent,
+    TrophiesComponent
   ],
   imports: [
     BrowserModule,

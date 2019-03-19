@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
@@ -9,108 +10,100 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <style>
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 550px}
-    
+    .row.content {
+      height: 550px
+    }
+
     /* Set gray background color and 100% height */
     .sidenav {
       background-color: #f1f1f1;
       height: 100%;
     }
-        
+
     /* On small screens, set height to 'auto' for the grid */
     @media screen and (max-width: 767px) {
-      .row.content {height: auto;} 
+      .row.content {
+        height: auto;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<div class="container-fluid">
-  <div class="row content">
+  <div class="container-fluid">
+    <div class="row content">
       <h2>Detalji o igraču</h2>
       <br>
       <ul class="nav nav-tabs">
-        <li class="active"><a href="#section1">Trenutna sezona</a></li>
+        <li class="active"><a routerLink="/player">Trenutna sezona</a></li>
         <li><a href="#section2">Odigrani mečevi</a></li>
-        <li><a href="#section3">Trofeji</a></li>
+        <li><a routerLink="/trophies">Trofeji</a></li>
         <li><a href="#section3">Prethodne sezone</a></li>
       </ul><br>
-    <br>
-    
-    <div class="col-sm-12">
-      <div class="well">
-        <h4>Dashboard</h4>
-        <p>Some text..</p>
-      </div>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="well green">
-            <h4>Pobjede</h4>
-            <p>12</p> 
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="well red">
-            <h4>Porazi</h4>
-            <p>10</p> 
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="well blue">
-            <h4>Odigrano</h4>
-            <p>22</p> 
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="well">
-            <h4>Graf</h4>
-            <p>30%</p> 
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Graf linija pozicija kroz sezonu</p> 
-            <p>Text</p> 
-            <p>Text</p> 
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Graf linija postotak kroz sezonu</p> 
-            <p>Text</p> 
-            <p>Text</p> 
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Graf nesta</p> 
-            <p>Text</p> 
-            <p>Text</p> 
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Text</p> 
-          </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="well">
-              <p>Text</p> 
+      <br>
+
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="well" style="text-align: center">
+              <img [src]="pieChartPath" style="width: 140px; height: 150px" />
             </div>
           </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Text</p> 
+          <div class="col-sm-3">
+            <div class="well green">
+              <h4>Pobjede</h4>
+              <p>12</p>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="well red">
+              <h4>Porazi</h4>
+              <p>10</p>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="well blue">
+              <h4>Odigrano</h4>
+              <p>22</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="well">
+              <p>Graf linija pozicija kroz sezonu</p>
+              <img [src]="lineChartPath" style="width: 500px; height: 250px" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="well">
+              <p>Graf linija postotak kroz sezonu</p>
+              <img [src]="lineChartTwoPath" style="width: 500px; height: 250px" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="well">
+              <p>Text</p>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="well">
+              <p>Text</p>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="well">
+              <p>Text</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 </body>
+
 </html>
