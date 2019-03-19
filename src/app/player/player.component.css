@@ -1,0 +1,15 @@
+.well {
+    background-color: #fff
+}
+
+.red {
+    border-left: 10px solid orangered
+}
+
+.green {
+    border-left: 10px solid limegreen
+}
+
+.blue {
+    border-left: 10px solid blue
+}

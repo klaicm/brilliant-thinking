@@ -1,0 +1,23 @@
+.active {
+    font-weight: 700
+}
+
+.sidebar a {
+    color: #fff
+}
+
+.sidebar a:hover {
+    font-weight: 700;
+    background: transparent;
+    background-color: transparent
+}
+
+.sidebar a:active {    
+    font-weight: 700;
+    background-color: transparent;
+}
+
+.sidebar a:visited {
+    font-weight: 700;
+    background-color: #4e73df;    
+}
