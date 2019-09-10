@@ -17,6 +17,7 @@ export class TableComponent implements OnInit {
 
       this.tableService.getTable().subscribe((response: Array<Player>) => {
         this.players = response;
+        console.log(this.players.length);
       });
   }
 

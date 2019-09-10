@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PlayerService } from 'src/app/player/player.service';
 
 @Component({
   selector: 'app-player',
@@ -11,9 +13,13 @@ export class PlayerComponent implements OnInit {
   lineChartTwoPath: String = '../../assets/images/line_chart2.PNG';
   pieChartPath: String = '../../assets/images/pie_chart.PNG';
 
-  constructor() { }
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private playerService: PlayerService) { }
 
   ngOnInit() {
+  }
+
+  navigateToPlayer(playerId: number) {
+    this.router.navigate(['../player'])
   }
 
 }
