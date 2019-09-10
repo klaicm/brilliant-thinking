@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PlayerService } from './player.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PlayerService } from 'src/app/player/player.service';
 
 @Component({
   selector: 'app-player',
@@ -8,18 +9,21 @@ import { PlayerService } from './player.service';
 })
 export class PlayerComponent implements OnInit {
 
-  lineChartPath: string = '../../assets/images/line_chart.PNG';
-  lineChartTwoPath: string = '../../assets/images/line_chart2.PNG';
-  pieChartPath: string = '../../assets/images/pie_chart.PNG';
-  playerData: any;
+  lineChartPath: String = '../../assets/images/line_chart.PNG';
+  lineChartTwoPath: String = '../../assets/images/line_chart2.PNG';
+  pieChartPath: String = '../../assets/images/pie_chart.PNG';
 
-  constructor(private playerService: PlayerService) { }
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private playerService: PlayerService) { }
 
   ngOnInit() {
     this.playerService.getPlayerData().subscribe(response => {
       console.log(response);
       this.playerData = response;
     })
+  }
+
+  navigateToPlayer(playerId: number) {
+    this.router.navigate(['../player'])
   }
 
 }

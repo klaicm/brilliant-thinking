@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs/internal/Observable';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class PlayerService {
 
-  constructor(private http: HttpClient) { }
+    private static PLAYER_URL = 'http://localhost:8080/player';
 
-  testUrl: string = 'http://localhost:8080/greeting';
+    constructor(private http: HttpClient) { }
 
-  getPlayerData(): Observable<any> {
-    return this.http.get(this.testUrl);
-  }
+    getPlayer(playerId: number): Observable<any> {
+        return this.http.get(`${PlayerService.PLAYER_URL}/${playerId}`);
+    }
+
+    getPlayerMatches(playerId: number): Observable<any> {
+        return this.http.get(`${PlayerService.PLAYER_URL}/matches/${playerId}`);
+    }
 }

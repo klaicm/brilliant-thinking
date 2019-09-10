@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TableService } from 'src/app/table/table.service';
+import { Player } from 'src/app/player/player.model';
 
 @Component({
   selector: 'app-table',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TableComponent implements OnInit {
 
-  constructor() { }
+  players: Array<Player>;
+
+  constructor(private tableService: TableService) { }
 
   ngOnInit() {
+
+      this.tableService.getTable().subscribe((response: Array<Player>) => {
+        this.players = response;
+        console.log(this.players.length);
+      });
   }
 
 }
