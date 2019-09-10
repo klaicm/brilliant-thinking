@@ -6,39 +6,18 @@
         <th scope="col">#</th>
         <th scope="col">Ime i prezime</th>
         <th scope="col">Broj bodova</th>
-        <th scope="col">Postotak</th>
         <th scope="col">Pobjede</th>
         <th scope="col">Porazi</th>
-        <th scope="col">Odigrao</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td><a routerLink="/player">Mark Otto</a></td>
-        <td>30</td>
-        <td>50%</td>
-        <td>11</td>
-        <td>10</td>
-        <td>21</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob Thornton</td>
-        <td>25</td>
-        <td>60%</td>
-        <td>9</td>
-        <td>11</td>
-        <td>20</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Larry theBird</td>
-        <td>25</td>
-        <td>60%</td>
-        <td>9</td>
-        <td>11</td>
-        <td>20</td>
+
+      <tr *ngFor="let player of players; let i = index">
+        <th>{{i+1}}</th>
+        <th>{{player.firstName + ' ' + player.lastName}}</th>
+        <th>{{player.points}}</th>
+        <th>{{player.wins}}</th>
+        <th>{{player.loses}}</th>
       </tr>
     </tbody>
   </table>
