@@ -35,9 +35,10 @@
     <div class="row content">
       <h2>Detalji o igraču</h2>
       <br>
+      <h4>{{player.firstName}} {{player.lastName}}</h4>
       <ul class="nav nav-tabs">
         <li class="active"><a routerLink="/player">Trenutna sezona</a></li>
-        <li><a href="#section2">Odigrani mečevi</a></li>
+        <li><a (click)="navigateToPlayerMatches(player.id)">Odigrani mečevi</a></li>
         <li><a routerLink="/trophies">Trofeji</a></li>
         <li><a href="#section3">Prethodne sezone</a></li>
       </ul><br>
@@ -53,20 +54,19 @@
           <div class="col-sm-3">
             <div class="well green">
               <h4>Pobjede</h4>
-              <p>12</p>
-              <p>{{playerData.content}}</p>
+              <p>{{player.wins}}</p>
             </div>
           </div>
           <div class="col-sm-3">
             <div class="well red">
               <h4>Porazi</h4>
-              <p>10</p>
+              <p>{{player.loses}}</p>
             </div>
           </div>
           <div class="col-sm-3">
             <div class="well blue">
               <h4>Odigrano</h4>
-              <p>22</p>
+              <p>{{player.wins+player.loses}}</p>
             </div>
           </div>
         </div>
