@@ -13,13 +13,16 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   playerId: number;
   player: Player;
+  matches: Array<any>;
+  playerDetailsView = false;
+  playerMatchesView = false;
   lineChartPath: String = '../../assets/images/line_chart.PNG';
   lineChartTwoPath: String = '../../assets/images/line_chart2.PNG';
   pieChartPath: String = '../../assets/images/pie_chart.PNG';
+  private sub: Subscription;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private playerService: PlayerService) { }
 
-  private sub: Subscription;
   ngOnInit() {
     this.getPlayerId();
   }
@@ -28,7 +31,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.sub = this.activatedRoute.params.subscribe(params => {
       this.playerId = +params['id'];
       this.getPlayer(this.playerId);
-    })
+      this.getPlayerMatches(this.playerId);
+    });
   }
 
   getPlayer(playerId: number): void {
@@ -37,8 +41,20 @@ export class PlayerComponent implements OnInit, OnDestroy {
     });
   }
 
-  navigateToPlayerMatches(playerId: number): void {
-    this.router.navigate(['/matches', playerId]);
+  getPlayerMatches(playerId: number): void {
+    this.playerService.getPlayerMatches(playerId).subscribe((response: Array<any>) => {
+        this.matches = response;
+      });
+  }
+
+  navigateToPlayerDetails(): void {
+    this.playerDetailsView = true;
+    this.playerMatchesView = false;
+  }
+
+  navigateToPlayerMatches(): void {
+    this.playerMatchesView = true;
+    this.playerDetailsView = false;
   }
 
   ngOnDestroy(): void {

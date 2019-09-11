@@ -13,13 +13,15 @@ import { TableService } from 'src/app/table/table.service';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { MatchesComponent } from './player/matches/matches.component';
+import { DetailsComponent } from 'src/app/player/details/details.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'table', component: TableComponent },
   { path: 'player/:id', component: PlayerComponent },
   { path: 'trophies', component: TrophiesComponent },
-  { path: 'matches/:id', component: MatchesComponent }
+  { path: 'matches', component: MatchesComponent },
+  { path: 'details', component: DetailsComponent }
 ];
 
 @NgModule({
@@ -29,7 +31,8 @@ const appRoutes: Routes = [
     TableComponent,
     HomeComponent,
     TrophiesComponent,
-    MatchesComponent
+    MatchesComponent,
+    DetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,39 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { PlayerService } from '../player.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Player } from '../player.model';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { PlayerComponent } from 'src/app/player/player.component';
+import { Input } from '@angular/core';
 
 @Component({
   selector: 'app-matches',
   templateUrl: './matches.component.html'
 })
-export class MatchesComponent implements OnInit {
+export class MatchesComponent extends PlayerComponent implements OnInit, OnDestroy {
 
-    playerId: number;
-    matches: Array<any>;
-    sub: Subscription;
+  @Input() matches: Array<any>;
 
-  constructor(private playerService: PlayerService, private activatedRoute: ActivatedRoute) { }
-
-  ngOnInit() {
-    this.getPlayerId();
-  }
-
-  getPlayerId(): void {
-    this.sub = this.activatedRoute.params.subscribe(params => {
-      this.playerId = +params['id'];
-      this.getPlayerMatches(this.playerId);
-    })
-  }
-
-  getPlayerMatches(playerId: number): void {
-    this.playerService.getPlayerMatches(playerId).subscribe((response: Array<any>) => {
-        this.matches = response;
-      });
-  }
-
-  ngOnDestroy(): void {
-      this.sub.unsubscribe();
-  }
 }

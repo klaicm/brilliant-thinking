@@ -1,23 +1,23 @@
 <h4>Mečevi</h4>
 <br>
 <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Pobjednik</th>
-        <th scope="col">Luzer</th>
-        <th scope="col">Rezultat</th>
-        <th scope="col">Datum</th>
-      </tr>
-    </thead>
-    <tbody>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Pobjednik</th>
+      <th scope="col">Luzer</th>
+      <th scope="col">Rezultat</th>
+      <th scope="col">Datum</th>
+    </tr>
+  </thead>
+  <tbody>
 
-      <tr *ngFor="let match of matches; let i = index">
-        <th>{{i+1}}</th>
-        <th>{{match.playerW.firstName}} {{match.playerW.lastName}}</th> 
-        <th>{{match.playerL.firstName}} {{match.playerL.lastName}}</th>
-        <th>{{match.result}}</th>
-        <th>{{match.date}}</th>
-      </tr>
-    </tbody>
-  </table>
+    <tr *ngFor="let match of matches; let i = index">
+      <th>{{i+1}}</th>
+      <th>{{match.playerW.firstName}} {{match.playerW.lastName}}</th> 
+      <th>{{match.playerL.firstName}} {{match.playerL.lastName}}</th>
+      <th>{{match.result}}</th>
+      <th>{{match.date}}</th>
+    </tr>
+  </tbody>
+</table>
