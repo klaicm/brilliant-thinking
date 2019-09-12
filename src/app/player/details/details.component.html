@@ -2,57 +2,70 @@
 <br>
 <div class="row">
     <div class="col-sm-3">
-        <div class="well" style="text-align: center">
-        <img [src]="pieChartPath" style="width: 140px; height: 150px" />
-        </div>
+        <table class="table">
+            <tbody>
+                <th>
+                    <tr>Pobjede</tr>
+                    <tr>Porazi</tr>
+                    <tr>Odigrano</tr>
+                    <tr>Postotak</tr>
+                </th>
+                <th>
+                    <tr>{{player.wins}} </tr>
+                    <tr>{{player.loses}}</tr>
+                    <tr>{{player.wins+player.loses}}</tr>
+                    <tr>{{(player.wins/(player.loses+player.wins))*100}} %</tr>
+                </th>
+            </tbody>
+        </table>        
     </div>
     <div class="col-sm-3">
         <div class="well green">
-        <h4>Pobjede</h4>
-        <p>{{player.wins}}</p>
+            <h4>Pobjede</h4>
+            <p>{{player.wins}}</p>
         </div>
     </div>
     <div class="col-sm-3">
         <div class="well red">
-        <h4>Porazi</h4>
-        <p>{{player.loses}}</p>
+            <h4>Porazi</h4>
+            <p>{{player.loses}}</p>
         </div>
     </div>
     <div class="col-sm-3">
         <div class="well blue">
-        <h4>Odigrano</h4>
-        <p>{{player.wins+player.loses}}</p>
+            <h4>Odigrano</h4>
+            <p>{{player.wins+player.loses}}</p>
         </div>
     </div>
 </div>
 <div class="row">
-<div class="col-sm-6">
-    <div class="well">
-    <p>Graf linija pozicija kroz sezonu</p>
-    <img [src]="lineChartPath" style="width: 500px; height: 250px" />
+    <div class="col-sm-6">
+        <div class="well">
+            <p>Graf linija pozicija kroz sezonu</p>
+            <img [src]="lineChartPath" style="width: 500px; height: 250px" />
+        </div>
     </div>
-</div>
-<div class="col-sm-6">
-    <div class="well">
-    <p>Graf linija postotak kroz sezonu</p>
-    <img [src]="lineChartTwoPath" style="width: 500px; height: 250px" />
+    <div class="col-sm-6">
+        <div class="well">
+            <p>Graf linija postotak kroz sezonu</p>
+            <img [src]="lineChartTwoPath" style="width: 500px; height: 250px" />
+        </div>
     </div>
-</div>
 </div>
 <div class="row">
-<div class="col-sm-4">
-    <div class="well">
-    <p>Text</p>
+    <div class="col-sm-4">
+        <div class="well">
+            <p>Text</p>
+        </div>
     </div>
-</div>
-<div class="col-sm-4">
-    <div class="well">
-    <p>Text</p>
+    <div class="col-sm-4">
+        <div class="well">
+            <p>Text</p>
+        </div>
     </div>
-</div>
-<div class="col-sm-4">
-    <div class="well">
-    <p>Text</p>
+    <div class="col-sm-4">
+        <div class="well">
+            <p>Text</p>
+        </div>
     </div>
-</div>
 </div>
