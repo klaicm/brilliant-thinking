@@ -46,7 +46,7 @@
       <br>
 
       <div class="col-sm-12">
-        <app-details *ngIf="playerDetailsView" [player]='player'></app-details>
+        <app-details *ngIf="playerDetailsView" [player]='player' [matches]='matches'></app-details>
         <app-matches *ngIf="playerMatchesView" [matches]='matches'></app-matches>
       </div>
     </div>

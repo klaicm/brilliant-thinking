@@ -1,24 +1,77 @@
 <div class="row">
-    <div class="col-sm-3">
-        <table class="table">
-            <tbody>
-                <th>
-                    <tr>Pobjede</tr>
-                    <tr>Porazi</tr>
-                    <tr>Odigrano</tr>
-                    <tr>Postotak</tr>
-                </th>
-                <th>
-                    <tr>{{player.wins}} </tr>
-                    <tr>{{player.loses}}</tr>
-                    <tr>{{player.wins+player.loses}}</tr>
-                    <tr>{{(player.wins/(player.loses+player.wins))*100}} %</tr>
-                </th>
-            </tbody>
-        </table>
+    <div class="col-sm-6">
+        <div class="row">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Pobjede</th>
+                        <td>{{player.wins}}</td>
+                    </tr>
+                    <tr>
+                        <th>Porazi</th>
+                        <td>{{player.loses}}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Odigrano</th>
+                        <td>{{player.wins+player.loses}}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Postotak</th>
+                        <td>{{(player.wins/(player.loses+player.wins))*100}} %</td>
+                    </tr>
+
+                    <tr>
+                        <th>ELO rating</th>
+                        <td>1526</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <table class="table">
+                <tbody>
+                    <tr *ngFor="let match of matches; let i = index">
+                        <th style="color: green">W</th>
+                        <th>{{match.playerW.firstName}} {{match.playerW.lastName}}</th>
+                        <th>{{match.playerL.firstName}} {{match.playerL.lastName}}</th>
+                        <th>{{match.result}}</th>
+                        <th>{{match.date}}</th>
+                    </tr>
+                    <!--
+                    <th>Posljednjih 5 mečeva</th>
+                    <tr>
+                        <td>Igrac1</td>
+                        <td style="color: green">W</td>
+                    </tr>
+                    <tr>
+                        <td>Igrac2</td>
+                        <td style="color: green">W</td>
+                    </tr>
+
+                    <tr>
+                        <td>Igrac3</td>
+                        <td style="color: red">L</td>
+                    </tr>
+
+                    <tr>
+                        <td>Igrac4</td>
+                        <td style="color: green">W</td>
+                    </tr>
+
+                    <tr>
+                        <td>Igrac5</td>
+                        <td style="color: red">L</td>
+                    </tr>
+                -->
+                </tbody>
+            </table>
+        </div>
+
     </div>
-    <div class="col-sm-9">
-        <div class="well blue">
+    <div class="col-sm-6">
+        <div class="well">
             <chart [options]="resultsPie"> </chart>
         </div>
     </div>
@@ -38,19 +91,14 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-6">
         <div class="well">
             <chart [options]="eloRating"> </chart>
         </div>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-6">
         <div class="well">
-            <p>Text</p>
-        </div>
-    </div>
-    <div class="col-sm-4">
-        <div class="well">
-            <p>Text</p>
+            <chart [options]="gamesPerWeek"> </chart>
         </div>
     </div>
 </div>

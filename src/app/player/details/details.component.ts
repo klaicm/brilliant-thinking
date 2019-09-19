@@ -5,16 +5,18 @@ import { Player } from 'src/app/player/player.model';
 @Component({
     selector: 'app-details',
     templateUrl: './details.component.html',
-    styleUrls: ['./details.component.css']
+    styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent {
 
     @Input() player: Player;
+    @Input() matches: Array<any>;
 
     position: Object;
     winPercentage: Object;
     eloRating: Object;
     resultsPie: Object;
+    gamesPerWeek: Object;
 
     constructor() {
 
@@ -96,6 +98,30 @@ export class DetailsComponent {
                 type: 'areaspline',
                 color: '#00b0ff',
                 data: [1299.9, 1471.5, 1506.4, 1229.2, 1647.8],
+            }]
+        };
+
+        this.gamesPerWeek = {
+            chart: {
+                type: 'column',
+                styledMode: true
+            },
+            title: {
+                text: 'Trenutna forma'
+            },
+            yAxis: {
+                className: 'highcharts-color-0',
+                title: {
+                    text: 'Primary axis'
+                }
+            },
+            plotOptions: {
+                column: {
+                    borderRadius: 5
+                }
+            },
+            series: [{
+                data: [4, 3, 1, 1, 4, 3],
             }]
         };
 

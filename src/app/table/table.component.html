@@ -1,24 +1,26 @@
 <h4>Tablica sezone 2019 zima</h4>
 <br>
 <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Ime i prezime</th>
-        <th scope="col">Broj bodova</th>
-        <th scope="col">Pobjede</th>
-        <th scope="col">Porazi</th>
-        <th scope="col">ELO rating</th>
-      </tr>
-    </thead>
-    <tbody>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Ime i prezime</th>
+      <th scope="col">Broj bodova</th>
+      <th scope="col">Pobjede</th>
+      <th scope="col">Porazi</th>
+      <th scope="col">ELO rating</th>
+    </tr>
+  </thead>
+  <tbody>
 
-      <tr *ngFor="let player of players; let i = index">
-        <th>{{i+1}}</th>
-        <th><a (click)="navigateToPlayer(player.id)">{{player.firstName + ' ' + player.lastName}}</a></th>
-        <th>{{player.points}}</th>
-        <th>{{player.wins}}</th>
-        <th>{{player.loses}}</th>
-      </tr>
-    </tbody>
-  </table>
+    <tr *ngFor="let player of players; let i = index">
+      <th>{{i+1}}</th>
+      <th>
+        <a (click)="navigateToPlayer(player.id)">{{player.firstName + ' ' + player.lastName}}</a>
+      </th>
+      <th>{{player.points}}</th>
+      <th>{{player.wins}}</th>
+      <th>{{player.loses}}</th>
+    </tr>
+  </tbody>
+</table>
