@@ -14,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { MatchesComponent } from './player/matches/matches.component';
 import { DetailsComponent } from 'src/app/player/details/details.component';
+import { ChartModule } from 'angular2-highcharts';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -37,7 +38,8 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    ChartModule.forRoot(require('highcharts'))
   ],
   providers: [
     PlayerService,

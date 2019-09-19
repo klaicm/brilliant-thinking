@@ -1,5 +1,3 @@
-<h4>Detalji</h4>
-<br>
 <div class="row">
     <div class="col-sm-3">
         <table class="table">
@@ -17,45 +15,32 @@
                     <tr>{{(player.wins/(player.loses+player.wins))*100}} %</tr>
                 </th>
             </tbody>
-        </table>        
+        </table>
     </div>
-    <div class="col-sm-3">
-        <div class="well green">
-            <h4>Pobjede</h4>
-            <p>{{player.wins}}</p>
-        </div>
-    </div>
-    <div class="col-sm-3">
-        <div class="well red">
-            <h4>Porazi</h4>
-            <p>{{player.loses}}</p>
-        </div>
-    </div>
-    <div class="col-sm-3">
+    <div class="col-sm-9">
         <div class="well blue">
-            <h4>Odigrano</h4>
-            <p>{{player.wins+player.loses}}</p>
+            <chart [options]="resultsPie"> </chart>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col-sm-6">
         <div class="well">
-            <p>Graf linija pozicija kroz sezonu</p>
-            <img [src]="lineChartPath" style="width: 500px; height: 250px" />
+            <div style="display: block">
+                <chart [options]="position"> </chart>
+            </div>
         </div>
     </div>
     <div class="col-sm-6">
         <div class="well">
-            <p>Graf linija postotak kroz sezonu</p>
-            <img [src]="lineChartTwoPath" style="width: 500px; height: 250px" />
+            <chart [options]="winPercentage"> </chart>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col-sm-4">
         <div class="well">
-            <p>Text</p>
+            <chart [options]="eloRating"> </chart>
         </div>
     </div>
     <div class="col-sm-4">

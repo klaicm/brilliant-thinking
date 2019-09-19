@@ -1,23 +1,47 @@
-.active {
-    font-weight: 700
+.sidebar1 {
+    background: rgb(255, 255, 254);
+    /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#f4ff81, #eeff41, #c6ff00);
+    /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#f4ff81, #eeff41, #c6ff00);
+    /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#f4ff81, #eeff41, #c6ff00);
+    /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#f4ff81, #eeff41, #c6ff00);
+    /* Standard syntax */
+    padding: 0px;
+    min-height: 100%;
 }
-
-.sidebar a {
-    color: #fff
+.logo {
+    max-height: 130px;
 }
-
-.sidebar a:hover {
-    font-weight: 700;
-    background: transparent;
-    background-color: transparent
+.logo>img {
+    margin-top: 30px;
+    padding: 3px;
+    border: 3px solid white;
+    border-radius: 100%;
 }
-
-.sidebar a:active {    
-    font-weight: 700;
-    background-color: transparent;
+.list {
+    color: #fff;
+    list-style: none;
+    padding-left: 0px;
 }
-
-.sidebar a:visited {
-    font-weight: 700;
-    background-color: #4e73df;    
+.list::first-line {
+    color: rgba(255, 255, 255, 0.5);
+}
+.list> li, h5, h3 {
+    padding: 5px 0px 5px 40px;
+}
+.list>li:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-left: 5px solid white;
+    color: white;
+    font-weight: bolder;
+    padding-left: 35px;
+}
+.main-content{
+    text-align:center;
+}
+a {
+    color: black;
 }
