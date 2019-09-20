@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { PlayerComponent } from 'src/app/player/player.component';
 import { Player } from 'src/app/player/player.model';
+import { Match } from 'src/app/player/matches/match.model';
 
 @Component({
     selector: 'app-details',
@@ -10,7 +11,7 @@ import { Player } from 'src/app/player/player.model';
 export class DetailsComponent {
 
     @Input() player: Player;
-    @Input() matches: Array<any>;
+    @Input() matches: Array<Match>;
 
     position: Object;
     winPercentage: Object;
