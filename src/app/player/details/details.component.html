@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-sm-6">
-        <div class="row">
-            <table class="table">
+        <div class="row" class="well">
+            <table class="table" style="margin-bottom: 0px">
                 <tbody>
                     <tr>
                         <th>Pobjede</th>
@@ -29,8 +29,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="row">
-            <table class="table">
+        <div class="row" class="well">
+            <table class="table" style="margin-bottom: 0px">
                 <tbody>
                     <tr *ngFor="let match of matches; let i = index">
                         <th style="color: green">W</th>
@@ -39,32 +39,6 @@
                         <th>{{match.result}}</th>
                         <th>{{match.date}}</th>
                     </tr>
-                    <!--
-                    <th>Posljednjih 5 mečeva</th>
-                    <tr>
-                        <td>Igrac1</td>
-                        <td style="color: green">W</td>
-                    </tr>
-                    <tr>
-                        <td>Igrac2</td>
-                        <td style="color: green">W</td>
-                    </tr>
-
-                    <tr>
-                        <td>Igrac3</td>
-                        <td style="color: red">L</td>
-                    </tr>
-
-                    <tr>
-                        <td>Igrac4</td>
-                        <td style="color: green">W</td>
-                    </tr>
-
-                    <tr>
-                        <td>Igrac5</td>
-                        <td style="color: red">L</td>
-                    </tr>
-                -->
                 </tbody>
             </table>
         </div>

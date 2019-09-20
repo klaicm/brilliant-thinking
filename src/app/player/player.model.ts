@@ -8,8 +8,8 @@ export class Player {
     points: number;
     wins: number;
     loses: number;
-    archData: Array<ArchData>;
-    matches: Array<Match>;
-    seasons: Array<Match>;
+    archData: Set<ArchData>;
+    matches: Set<Match>;
+    seasons: Set<Match>;
 
 }

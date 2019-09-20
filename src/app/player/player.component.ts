@@ -16,9 +16,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
   matches: Array<any>;
   playerDetailsView = false;
   playerMatchesView = false;
-  lineChartPath: String = '../../assets/images/line_chart.PNG';
-  lineChartTwoPath: String = '../../assets/images/line_chart2.PNG';
-  pieChartPath: String = '../../assets/images/pie_chart.PNG';
   private sub: Subscription;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private playerService: PlayerService) { }

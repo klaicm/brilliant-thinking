@@ -9,8 +9,12 @@ import { Input } from '@angular/core';
   selector: 'app-matches',
   templateUrl: './matches.component.html'
 })
-export class MatchesComponent extends PlayerComponent implements OnInit, OnDestroy {
+export class MatchesComponent {
 
   @Input() matches: Array<any>;
+
+  constructor() {
+    console.log(this.matches);
+  }
 
 }

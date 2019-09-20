@@ -2,13 +2,14 @@ import { Component, Input } from '@angular/core';
 import { PlayerComponent } from 'src/app/player/player.component';
 import { Player } from 'src/app/player/player.model';
 import { Match } from 'src/app/player/matches/match.model';
+import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
     selector: 'app-details',
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss']
 })
-export class DetailsComponent {
+export class DetailsComponent implements OnInit {
 
     @Input() player: Player;
     @Input() matches: Array<Match>;
@@ -18,9 +19,29 @@ export class DetailsComponent {
     eloRating: Object;
     resultsPie: Object;
     gamesPerWeek: Object;
+    positionList: Array<number> = new Array<number>();
+    eloRatingList: Array<number> = new Array<number>();
+    winPercentageList: Array<number> = new Array<number>();
 
     constructor() {
+    }
 
+    ngOnInit(): void {
+
+        this.player.archData.forEach(i => {
+            this.positionList.push(i.position);
+            this.eloRatingList.push(i.eloRating);
+            this.winPercentageList.push(i.winPercentage);
+        });
+
+        this.resultsPieChart(this.player);
+        this.positionChart(this.positionList);
+        this.winPercentageChart(this.winPercentageList);
+        this.eloRatingChart(this.eloRatingList);
+        this.gamesPerWeekChart();
+    }
+
+    resultsPieChart(player: Player): void {
         this.resultsPie = {
             chart: {
                 plotBackgroundColor: null,
@@ -68,7 +89,9 @@ export class DetailsComponent {
                 }]
             }]
         };
+    }
 
+    positionChart(positionList: Array<number>): void {
         this.position = {
             title: { text: 'Plasman kroz sezonu' },
             yAxis: {
@@ -79,29 +102,35 @@ export class DetailsComponent {
             series: [{
                 type: 'spline',
                 color: '#4527a0',
-                data: [60, 45, 15, 26, 10, 5],
+                data: positionList,
             }]
         };
+    }
 
+    winPercentageChart(winPercentageList: Array<number>): void {
         this.winPercentage = {
             title: { text: 'Postotak pobjeda' },
             series: [{
                 type: 'spline',
                 color: '#ef6c00',
-                data: [29.9, 50, 71.5, 65.2, 73.8],
+                data: winPercentageList,
             }]
         };
+    }
 
+    eloRatingChart(eloRatingList: Array<number>): void {
         this.eloRating = {
             title: { text: 'Elo rating' },
             shadow: true,
             series: [{
                 type: 'areaspline',
                 color: '#00b0ff',
-                data: [1299.9, 1471.5, 1506.4, 1229.2, 1647.8],
+                data: eloRatingList,
             }]
         };
+    }
 
+    gamesPerWeekChart(): void {
         this.gamesPerWeek = {
             chart: {
                 type: 'column',
@@ -125,7 +154,6 @@ export class DetailsComponent {
                 data: [4, 3, 1, 1, 4, 3],
             }]
         };
-
     }
 
 }
