@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  logoi: String = '../assets/images/logoi.png';
   title = 'app';
 }

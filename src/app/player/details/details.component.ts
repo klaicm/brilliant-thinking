@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { PlayerComponent } from 'src/app/player/player.component';
 import { Player } from 'src/app/player/player.model';
 import { Match } from 'src/app/player/matches/match.model';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
