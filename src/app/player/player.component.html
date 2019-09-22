@@ -9,15 +9,22 @@
       <br>
       <h4>{{player.firstName}} {{player.lastName}}</h4>
       <br>
+      <!--
       <ul class="nav nav-tabs">
-        <!--<li class="active"><a routerLink="/player">Trenutna sezona</a></li>-->
+        <li class="active"><a routerLink="/player">Trenutna sezona</a></li>
         <li class="active"><a (click)="navigateToPlayerDetails()">Trenutna sezona</a></li>
         <li><a (click)="navigateToPlayerMatches()">Odigrani mečevi</a></li>
         <li><a routerLink="/trophies">Trofej</a></li>
         <li><a href="#section3">Prethodne sezone</a></li>
       </ul>
+    -->
       <br>
       <br>
+      <mat-tab-group>
+        <mat-tab label="First"> <app-details *ngIf="playerDetailsView" [player]='player' [matches]='matches'></app-details> </mat-tab>
+        <mat-tab label="Second"> <app-matches *ngIf="playerMatchesView" [matches]='matches'></app-matches> 2 </mat-tab>
+        <mat-tab label="Third"> Content 3 </mat-tab>
+      </mat-tab-group>
       <div class="col-sm-12">
         <app-details *ngIf="playerDetailsView" [player]='player' [matches]='matches'></app-details>
         <app-matches *ngIf="playerMatchesView" [matches]='matches'></app-matches>

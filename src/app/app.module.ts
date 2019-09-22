@@ -13,7 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatchesComponent } from './player/matches/matches.component';
 import { DetailsComponent } from 'src/app/player/details/details.component';
 import { ChartModule } from 'angular2-highcharts';
-import {MatTabsModule} from '@angular/material';
+import {MatTabsModule, MatButtonModule} from '@angular/material';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -38,6 +38,8 @@ const appRoutes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatTabsModule,
+    MatButtonModule,
     RouterModule.forRoot(appRoutes),
     ChartModule.forRoot(require('highcharts'))
   ],
