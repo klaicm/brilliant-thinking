@@ -13,3 +13,8 @@
 .blue {
     border-left: 10px solid #4e73df
 }
+
+.content {
+    padding-left: 22px;
+    padding-right: 22px;
+}

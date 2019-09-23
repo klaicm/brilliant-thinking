@@ -1,15 +1,28 @@
-<!-- Side navigation -->
-<div class="sidenav">
-  <div class="row" style="text-align: center">
-    <span><img [src]="logoi" style="width: 100px; height: 100px" /></span>
-  </div>
-    <a routerLink=""><i class="fa fa-home" style="font-size: 18px; padding-right: 8px"></i>Home</a>
-    <a routerLink="/table"><i class="fa fa-table" style="font-size: 18px; padding-right: 8px"></i>Table</a>
-    <a routerLink=""><i class="fa fa-area-chart" style="font-size: 18px; padding-right: 8px"></i>Season</a>
-</div>
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary" class="example-toolbar">
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <h1 class="example-app-name">Tennis scores App</h1>
+  </mat-toolbar>
 
-<!-- Page content -->
-<div class="main">
-  <router-outlet></router-outlet>
-</div>
+  <mat-sidenav-container class="example-sidenav-container"
+                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" style="width: 130px;">
+      <mat-nav-list>
+          <mat-list-item>
+              <button mat-icon-button routerLink=""><mat-icon>home</mat-icon><span class="list-text">Home</span></button>
+          </mat-list-item>
+          <mat-list-item>
+              <button mat-icon-button routerLink="/table"><mat-icon>view_list</mat-icon><span class="list-text">Table</span></button>
+          </mat-list-item>
+          <mat-list-item>
+              <button mat-icon-button routerLink=""><mat-icon>bubble_chart</mat-icon><span class="list-text">History</span></button>
+          </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
 
+    <mat-sidenav-content style="margin-left: 130px">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

@@ -8,6 +8,7 @@ export class Player {
     points: number;
     wins: number;
     loses: number;
+    elo: number;
     archData: Set<ArchData>;
     matches: Set<Match>;
     seasons: Set<Match>;

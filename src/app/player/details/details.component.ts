@@ -2,13 +2,15 @@ import { Component, Input } from '@angular/core';
 import { Player } from 'src/app/player/player.model';
 import { Match } from 'src/app/player/matches/match.model';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { AfterViewInit } from '@angular/core';
+import {ChangeDetectorRef } from '@angular/core';
 
 @Component({
     selector: 'app-details',
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss']
 })
-export class DetailsComponent implements OnInit {
+export class DetailsComponent implements AfterViewInit {
 
     @Input() player: Player;
     @Input() matches: Array<Match>;
@@ -22,10 +24,10 @@ export class DetailsComponent implements OnInit {
     eloRatingList: Array<number> = new Array<number>();
     winPercentageList: Array<number> = new Array<number>();
 
-    constructor() {
+    constructor(private cdref: ChangeDetectorRef) {
     }
 
-    ngOnInit(): void {
+    ngAfterViewInit(): void {
 
         this.player.archData.forEach(i => {
             this.positionList.push(i.position);
@@ -38,6 +40,8 @@ export class DetailsComponent implements OnInit {
         this.winPercentageChart(this.winPercentageList);
         this.eloRatingChart(this.eloRatingList);
         this.gamesPerWeekChart();
+
+        this.cdref.detectChanges();
     }
 
     resultsPieChart(player: Player): void {
