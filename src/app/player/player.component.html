@@ -1,22 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<body>
-
-  <div class="container-fluid">
-    <div class="row content">
-      <h2><i class="fa fa-area-chart"></i>Detalji o igraču</h2>
-      <br>
-      <h4>{{player.firstName}} {{player.lastName}}</h4>
-      <mat-tab-group>
-        <mat-tab label="Trenutna sezona"><app-details [player]='player' [matches]='matches'></app-details></mat-tab>
-        <mat-tab label="Odigrani mečevi"><app-matches [matches]='matches'></app-matches></mat-tab>
-        <mat-tab label="Trofeji"> Content 3 </mat-tab>
-        <mat-tab label="Prethodne sezone"> Content 3 </mat-tab>
-      </mat-tab-group>
-    </div>
-  </div>
-
-</body>
-
-</html>
+<div style="padding-left: 18px; padding-right: 18px">
+  <h2>Detalji o igraču</h2>
+  <br>
+  <h4>{{player.firstName}} {{player.lastName}}</h4>
+  <mat-tab-group>
+    <mat-tab label="Trenutna sezona">
+      <app-details [player]="player" [matches]="matches"></app-details>
+    </mat-tab>
+    <mat-tab label="Odigrani mečevi">
+      <app-matches [matches]="matches"></app-matches>
+    </mat-tab>
+    <mat-tab label="Trofeji"> Content 3 </mat-tab>
+    <mat-tab label="Prethodne sezone"> Content 3 </mat-tab>
+  </mat-tab-group>
+</div>

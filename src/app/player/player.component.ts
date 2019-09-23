@@ -3,25 +3,28 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PlayerService } from 'src/app/player/player.service';
 import { Subscription } from 'rxjs';
 import { Player } from './player.model';
+import { Match } from './matches/match.model';
 
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.css']
 })
-export class PlayerComponent implements OnInit, OnDestroy {
+export class PlayerComponent implements OnInit {
 
   playerId: number;
   player: Player;
-  matches: Array<any>;
+  matches: Array<Match>;
   playerDetailsView = false;
   playerMatchesView = false;
   private sub: Subscription;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private playerService: PlayerService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getPlayerId();
+    console.log('U ngOnInit() ' + this.matches);
+    console.log('U ngOnInit() ' + this.player);
   }
 
   getPlayerId(): void {
@@ -35,23 +38,15 @@ export class PlayerComponent implements OnInit, OnDestroy {
   getPlayer(playerId: number): void {
     this.playerService.getPlayer(playerId).subscribe((response: Player) => {
       this.player = response;
+      console.log(this.player);
     });
   }
 
   getPlayerMatches(playerId: number): void {
-    this.playerService.getPlayerMatches(playerId).subscribe((response: Array<any>) => {
+    this.playerService.getPlayerMatches(playerId).subscribe((response: Array<Match>) => {
         this.matches = response;
+        console.log(this.matches);
       });
-  }
-
-  navigateToPlayerDetails(): void {
-    this.playerDetailsView = true;
-    this.playerMatchesView = false;
-  }
-
-  navigateToPlayerMatches(): void {
-    this.playerMatchesView = true;
-    this.playerDetailsView = false;
   }
 
   ngOnDestroy(): void {

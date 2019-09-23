@@ -1,21 +1,35 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Pobjednik</th>
-      <th scope="col">Luzer</th>
-      <th scope="col">Rezultat</th>
-      <th scope="col">Datum</th>
-    </tr>
-  </thead>
-  <tbody>
+<div>
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%">
 
-    <tr *ngFor="let match of matches; let i = index">
-      <th>{{i+1}}</th>
-      <th>{{match.playerW.firstName}} {{match.playerW.lastName}}</th> 
-      <th>{{match.playerL.firstName}} {{match.playerL.lastName}}</th>
-      <th>{{match.result}}</th>
-      <th>{{match.date}}</th>
-    </tr>
-  </tbody>
-</table>
+    <!-- Position Column -->
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Won </th>
+      <td mat-cell *matCellDef="let element">
+        <a (click)="navigateToPlayer(element.playerW.id)">{{element.playerW.firstName}} {{element.playerW.lastName}}</a>
+      </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Lost </th>
+      <td mat-cell *matCellDef="let element">
+        <a (click)="navigateToPlayer(element.playerL.id)">{{element.playerL.firstName}} {{element.playerL.lastName}}</a>
+      </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="result">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Rezultat </th>
+      <td mat-cell *matCellDef="let element"> {{element.result}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Datum </th>
+      <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

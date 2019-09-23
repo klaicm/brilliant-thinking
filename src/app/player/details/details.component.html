@@ -1,9 +1,8 @@
 <div class="row">
-    <div class="col-sm-6">
-        <!--
-        <div class="row" class="well">
-            <table class="table" style="margin-bottom: 0px">
-                <tbody>
+    <div class="col-sm-6" style="padding: 8px">
+        <div>
+            <mat-card>
+                <table class="table">
                     <tr>
                         <th>Pobjede</th>
                         <td>{{player.wins}}</td>
@@ -27,41 +26,12 @@
                         <th>ELO rating</th>
                         <td>{{player.elo}}</td>
                     </tr>
-                </tbody>
-            </table>
+                </table>
+            </mat-card>
         </div>
-    -->
-        <mat-card>
-            <table class="table">
-                <tr>
-                    <th>Pobjede</th>
-                    <td>{{player.wins}}</td>
-                </tr>
-                <tr>
-                    <th>Porazi</th>
-                    <td>{{player.loses}}</td>
-                </tr>
-
-                <tr>
-                    <th>Odigrano</th>
-                    <td>{{player.wins+player.loses}}</td>
-                </tr>
-
-                <tr>
-                    <th>Postotak</th>
-                    <td>{{(player.wins/(player.loses+player.wins))*100}} %</td>
-                </tr>
-
-                <tr>
-                    <th>ELO rating</th>
-                    <td>{{player.elo}}</td>
-                </tr>
-            </table>
-        </mat-card>
-        <!--
-        <div class="row" class="well">
-            <table class="table" style="margin-bottom: 0px">
-                <tbody>
+        <div style="padding-top: 8px">
+            <mat-card>
+                <table class="table">
                     <tr *ngFor="let match of matches; let i = index">
                         <th style="color: green">W</th>
                         <th>{{match.playerW.firstName}} {{match.playerW.lastName}}</th>
@@ -69,77 +39,37 @@
                         <th>{{match.result}}</th>
                         <th>{{match.date}}</th>
                     </tr>
-                </tbody>
-            </table>
+                </table>
+            </mat-card>
         </div>
-    -->
-        <mat-card>
-            <table class="table">
-                <tr *ngFor="let match of matches; let i = index">
-                    <th style="color: green">W</th>
-                    <th>{{match.playerW.firstName}} {{match.playerW.lastName}}</th>
-                    <th>{{match.playerL.firstName}} {{match.playerL.lastName}}</th>
-                    <th>{{match.result}}</th>
-                    <th>{{match.date}}</th>
-                </tr>
-            </table>
-        </mat-card>
-
     </div>
-    <div class="col-sm-6">
-        <!--
-        <div class="well">
-            <chart [options]="resultsPie"> </chart>
-        </div>
-    -->
+    <div class="col-sm-6 card">
         <mat-card>
             <chart [options]="resultsPie"> </chart>
         </mat-card>
     </div>
 </div>
 <div class="row">
-    <div class="col-sm-6">
-        <!--
-        <div class="well">
-            <div style="display: block">
-                <chart [options]="position"> </chart>
-            </div>
-        </div>
-    -->
+    <div class="col-sm-6 card">
         <mat-card>
             <div style="display: block">
                 <chart [options]="position"> </chart>
             </div>
         </mat-card>
     </div>
-    <div class="col-sm-6">
-        <!--
-        <div class="well">
-            <chart [options]="winPercentage"> </chart>
-        </div>
-    -->
+    <div class="col-sm-6 card">
         <mat-card>
             <chart [options]="winPercentage"> </chart>
         </mat-card>
     </div>
 </div>
 <div class="row">
-    <div class="col-sm-6">
-        <!--
-        <div class="well">
-            <chart [options]="eloRating"> </chart>
-        </div>
-    -->
+    <div class="col-sm-6 card">
         <mat-card>
             <chart [options]="eloRating"> </chart>
         </mat-card>
     </div>
-    <div class="col-sm-6">
-        <!--
-        <div class="well">
-            <chart [options]="gamesPerWeek"> </chart>
-        </div>
-    -->
+    <div class="col-sm-6 card">
         <mat-card>
             <chart [options]="gamesPerWeek"> </chart>
         </mat-card>

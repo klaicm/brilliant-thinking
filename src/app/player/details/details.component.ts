@@ -1,9 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Player } from 'src/app/player/player.model';
 import { Match } from 'src/app/player/matches/match.model';
-import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { AfterViewInit } from '@angular/core';
-import {ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
     selector: 'app-details',
