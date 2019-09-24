@@ -10,7 +10,7 @@ import { Match } from './matches/match.model';
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.css']
 })
-export class PlayerComponent implements OnInit {
+export class PlayerComponent implements OnInit, OnDestroy {
 
   playerId: number;
   player: Player;
@@ -23,22 +23,19 @@ export class PlayerComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPlayerId();
-    console.log('U ngOnInit() ' + this.matches);
-    console.log('U ngOnInit() ' + this.player);
   }
 
   getPlayerId(): void {
     this.sub = this.activatedRoute.params.subscribe(params => {
       this.playerId = +params['id'];
       this.getPlayer(this.playerId);
-      this.getPlayerMatches(this.playerId);
     });
   }
 
   getPlayer(playerId: number): void {
     this.playerService.getPlayer(playerId).subscribe((response: Player) => {
       this.player = response;
-      console.log(this.player);
+      this.getPlayerMatches(this.playerId);
     });
   }
 

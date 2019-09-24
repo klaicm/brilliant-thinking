@@ -3,16 +3,23 @@ import { Router } from '@angular/router';
 import { Input } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { Match } from './match.model';
+import { Player } from 'src/app/player/player.model';
 
 @Component({
   selector: 'app-matches',
-  templateUrl: './matches.component.html'
+  templateUrl: './matches.component.html',
+  styleUrls: ['./matches.component.scss']
 })
 export class MatchesComponent implements OnChanges {
 
   @Input() matches: Array<Match>;
+  @Input() player: Player;
 
-  displayedColumns: string[] = ['firstName', 'lastName', 'result', 'date'];
+  red: String = '#FFCDD2';
+  green: String = '#E8F5E9';
+  cPlayer: Player = new Player();
+
+  displayedColumns: string[] = ['playerWon', 'playerLost', 'result', 'date'];
 
   dataSource = new MatTableDataSource([]);
 
@@ -24,7 +31,10 @@ export class MatchesComponent implements OnChanges {
     if (this.matches) {
       this.dataSource = new MatTableDataSource(this.matches);
       this.dataSource.sort = this.sort;
-      console.log(this.matches)
+    }
+
+    if (this.player) {
+      this.cPlayer = this.player;
     }
   }
 
