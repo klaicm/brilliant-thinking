@@ -1,15 +1,17 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Player } from 'src/app/player/player.model';
 import { Match } from 'src/app/player/matches/match.model';
 import { AfterViewInit } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-details',
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss']
 })
-export class DetailsComponent implements AfterViewInit {
+export class DetailsComponent implements AfterViewInit, OnChanges {
 
     @Input() player: Player;
     @Input() matches: Array<Match>;
@@ -22,8 +24,10 @@ export class DetailsComponent implements AfterViewInit {
     positionList: Array<number> = new Array<number>();
     eloRatingList: Array<number> = new Array<number>();
     winPercentageList: Array<number> = new Array<number>();
+    dataSource = new MatTableDataSource([]);
+    displayedColumns: string[] = ['mark', 'playerWon', 'playerLost', 'result', 'date'];
 
-    constructor(private cdref: ChangeDetectorRef) {
+    constructor(private cdref: ChangeDetectorRef, private router: Router) {
     }
 
     ngAfterViewInit(): void {
@@ -41,6 +45,12 @@ export class DetailsComponent implements AfterViewInit {
         this.gamesPerWeekChart();
 
         this.cdref.detectChanges();
+    }
+
+    ngOnChanges() {
+        if (this.matches) {
+            this.dataSource = new MatTableDataSource(this.matches);
+        }
     }
 
     resultsPieChart(player: Player): void {
@@ -126,7 +136,7 @@ export class DetailsComponent implements AfterViewInit {
             shadow: true,
             series: [{
                 type: 'areaspline',
-                color: '#00b0ff',
+                color: '#CCFF90',
                 data: eloRatingList,
             }]
         };
@@ -156,6 +166,10 @@ export class DetailsComponent implements AfterViewInit {
                 data: [4, 3, 1, 1, 4, 3],
             }]
         };
+    }
+
+    navigateToPlayer(playerId: number): void {
+        this.router.navigate(['/player', playerId]);
     }
 
 }
