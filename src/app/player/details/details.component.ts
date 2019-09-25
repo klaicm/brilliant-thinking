@@ -73,7 +73,8 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
                     cursor: 'pointer',
                     dataLabels: {
                         enabled: true,
-                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        distance: -50
                     }
                 }
             },
@@ -107,9 +108,14 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
         this.position = {
             title: { text: 'Plasman kroz sezonu' },
             yAxis: {
+                allowDecimals: false,
                 reversed: true,
-                showFirstLabel: false,
-                showLastLabel: true
+                showFirstLabel: true,
+                showLastLabel: true,
+                min: 1
+            },
+            xAxis: {
+                allowDecimals: false,
             },
             series: [{
                 type: 'spline',
@@ -122,6 +128,14 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
     winPercentageChart(winPercentageList: Array<number>): void {
         this.winPercentage = {
             title: { text: 'Postotak pobjeda' },
+            yAxis: {
+                allowDecimals: false,
+                min: 0,
+                max: 100
+            },
+            xAxis: {
+                allowDecimals: false,
+            },
             series: [{
                 type: 'spline',
                 color: '#ef6c00',
@@ -133,6 +147,14 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
     eloRatingChart(eloRatingList: Array<number>): void {
         this.eloRating = {
             title: { text: 'Elo rating' },
+            yAxis: {
+                allowDecimals: false,
+                min: 500,
+                max: 2500
+            },
+            xAxis: {
+                allowDecimals: false
+            },
             shadow: true,
             series: [{
                 type: 'areaspline',
@@ -145,25 +167,26 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
     gamesPerWeekChart(): void {
         this.gamesPerWeek = {
             chart: {
-                type: 'column',
-                styledMode: true
+                type: 'column'
             },
             title: {
-                text: 'Trenutna forma'
+                text: 'Prijedlog za graf'
             },
-            yAxis: {
-                className: 'highcharts-color-0',
-                title: {
-                    text: 'Primary axis'
-                }
+            xAxis: {
+                categories: ['1', '2', '3', '4', '5']
             },
-            plotOptions: {
-                column: {
-                    borderRadius: 5
-                }
+            credits: {
+                enabled: false
             },
             series: [{
-                data: [4, 3, 1, 1, 4, 3],
+                name: 'Luka',
+                data: [5, 3, 4, 7, 2]
+            }, {
+                name: 'Ivan',
+                data: [2, -2, -3, 2, 1]
+            }, {
+                name: 'Marko',
+                data: [3, 4, 4, -2, 5]
             }]
         };
     }

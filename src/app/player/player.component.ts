@@ -18,6 +18,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   playerDetailsView = false;
   playerMatchesView = false;
   private sub: Subscription;
+  profilePic: String = '../../../assets/images/profile1.png';
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private playerService: PlayerService) { }
 
