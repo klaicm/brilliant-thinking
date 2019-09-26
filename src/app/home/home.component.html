@@ -1,3 +1,81 @@
-<p>
-  home works!
-</p>
+<div>
+  <div class="row tab-row">
+    <div class="col-sm-2" style="padding: 8px">
+      <mat-card class="trophy-card">
+        <h4>Ukupno odigranih mečeva</h4>
+        <h4>123</h4>
+      </mat-card>
+    </div>
+    <div class="col-sm-2" style="padding: 8px">
+      <mat-card class="trophy-card">
+        <h4>Ukupan broj igrača</h4>
+        <h4>111</h4>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row tab-row">
+    <div class="col-sm-8 card">
+      <mat-card>
+        <h4>Posljednjih 20 mečeva</h4>
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="playerWon">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Pobjednik </th>
+              <td mat-cell *matCellDef="let element">
+                <a (click)="navigateToPlayer(element.playerW.id)">{{element.playerW.firstName}} {{element.playerW.lastName}}</a>
+              </td>
+            </ng-container>
+        
+            <!-- Name Column -->
+            <ng-container matColumnDef="playerLost">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Poraženi </th>
+              <td mat-cell *matCellDef="let element">
+                <a (click)="navigateToPlayer(element.playerL.id)">{{element.playerL.firstName}} {{element.playerL.lastName}}</a>
+              </td>
+            </ng-container>
+        
+            <!-- Weight Column -->
+            <ng-container matColumnDef="result">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Rezultat </th>
+              <td mat-cell *matCellDef="let element"> {{element.result}} </td>
+            </ng-container>
+        
+            <!-- Weight Column -->
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Datum </th>
+              <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+      </mat-card>
+    </div>
+
+  </div>
+  <div class="row tab-row">
+    <div class="col-sm-4 card">
+      <mat-card>
+        <chart [options]="gamesPerDay"> </chart>
+      </mat-card>
+    </div>
+    <div class="col-sm-4 card">
+      <mat-card>
+        <chart [options]="playerMatches"> </chart>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row tab-row">
+    <div class="col-sm-4 card">
+      <mat-card>
+        <chart [options]="winsInRow"> </chart>
+      </mat-card>
+    </div>
+    <div class="col-sm-4 card">
+      <mat-card>
+        <chart [options]="eloRating"> </chart>
+      </mat-card>
+    </div>
+  </div>
+</div>

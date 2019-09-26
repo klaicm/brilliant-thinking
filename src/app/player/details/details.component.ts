@@ -111,8 +111,7 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
                 allowDecimals: false,
                 reversed: true,
                 showFirstLabel: true,
-                showLastLabel: true,
-                min: 1
+                showLastLabel: true
             },
             xAxis: {
                 allowDecimals: false,
@@ -149,8 +148,8 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
             title: { text: 'Elo rating' },
             yAxis: {
                 allowDecimals: false,
-                min: 500,
-                max: 2500
+                min: 750,
+                tickInterval: 250
             },
             xAxis: {
                 allowDecimals: false
@@ -190,6 +189,8 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
             }]
         };
     }
+
+    gaugeChart(): void {}
 
     navigateToPlayer(playerId: number): void {
         this.router.navigate(['/player', playerId]);

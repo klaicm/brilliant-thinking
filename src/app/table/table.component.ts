@@ -25,7 +25,6 @@ export class TableComponent implements OnInit {
 
       this.tableService.getTable().subscribe((response: Array<Player>) => {
         this.players = response;
-        console.log(this.players.length);
         this.dataSource = new MatTableDataSource(this.players);
         this.dataSource.sort = this.sort;
       });
