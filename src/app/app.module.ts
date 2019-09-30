@@ -14,7 +14,7 @@ import { MatchesComponent } from './player/matches/matches.component';
 import { DetailsComponent } from 'src/app/player/details/details.component';
 import { ChartModule } from 'angular2-highcharts';
 import { MatTabsModule, MatButtonModule, MatSidenavModule, MatToolbarModule,
-  MatListModule, MatTableModule, MatSortModule, MatIconModule, MatCardModule } from '@angular/material';
+  MatListModule, MatTableModule, MatSortModule, MatIconModule, MatCardModule, MatExpansionModule } from '@angular/material';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -48,6 +48,7 @@ const appRoutes: Routes = [
     MatSortModule,
     MatIconModule,
     MatCardModule,
+    MatExpansionModule,
     RouterModule.forRoot(appRoutes),
     ChartModule.forRoot(require('highcharts'))
   ],
@@ -60,7 +61,8 @@ const appRoutes: Routes = [
     MatTableModule,
     MatSortModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatExpansionModule
   ],
   providers: [
     PlayerService,

@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   matches: Array<Match>;
   dataSource = new MatTableDataSource([]);
   displayedColumns: string[] = ['playerWon', 'playerLost', 'result', 'date'];
+  panelOpenState = false;
 
   @ViewChild(MatSort) sort: MatSort;
 
