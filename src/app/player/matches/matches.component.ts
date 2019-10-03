@@ -15,8 +15,6 @@ export class MatchesComponent implements OnChanges {
   @Input() matches: Array<Match>;
   @Input() player: Player;
 
-  red: String = '#FFCDD2';
-  green: String = '#E8F5E9';
   cPlayer: Player = new Player();
 
   displayedColumns: string[] = ['playerWon', 'playerLost', 'result', 'date'];
