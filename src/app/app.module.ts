@@ -15,6 +15,7 @@ import { DetailsComponent } from 'src/app/player/details/details.component';
 import { ChartModule } from 'angular2-highcharts';
 import { MatTabsModule, MatButtonModule, MatSidenavModule, MatToolbarModule,
   MatListModule, MatTableModule, MatSortModule, MatIconModule, MatCardModule, MatExpansionModule } from '@angular/material';
+import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,6 +25,11 @@ const appRoutes: Routes = [
   { path: 'matches', component: MatchesComponent },
   { path: 'details', component: DetailsComponent }
 ];
+
+export function highchartsFactory() {
+  const hc = require('highcharts');
+  return hc;
+}
 
 @NgModule({
   declarations: [
@@ -50,7 +56,7 @@ const appRoutes: Routes = [
     MatCardModule,
     MatExpansionModule,
     RouterModule.forRoot(appRoutes),
-    ChartModule.forRoot(require('highcharts'))
+    ChartModule
   ],
   exports: [
     MatTabsModule,
@@ -66,7 +72,11 @@ const appRoutes: Routes = [
   ],
   providers: [
     PlayerService,
-    TableService
+    TableService,
+    {
+      provide: HighchartsStatic,
+      useFactory: highchartsFactory
+    }
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
