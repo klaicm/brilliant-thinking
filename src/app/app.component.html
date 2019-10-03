@@ -1,31 +1,52 @@
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
-  <mat-toolbar color="primary" class="example-toolbar">
-    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="example-app-name">Tennis scores App</h1>
-  </mat-toolbar>
+    <mat-toolbar color="primary" class="example-toolbar">
 
-  <mat-sidenav-container class="example-sidenav-container"
-                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
-                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" style="width: 130px;">
-      <mat-nav-list>
-          <mat-list-item>
-              <button mat-icon-button routerLink=""><mat-icon>home</mat-icon><span class="list-text">Home</span></button>
-          </mat-list-item>
-          <mat-list-item>
-              <button mat-icon-button routerLink="/table"><mat-icon>view_list</mat-icon><span class="list-text">Table</span></button>
-          </mat-list-item>
-          <mat-list-item>
-              <button mat-icon-button routerLink=""><mat-icon>bubble_chart</mat-icon><span class="list-text">History</span></button>
-          </mat-list-item>
-      </mat-nav-list>
-      <div>
-          <img style="opacity: 0.5;" [src]="profilePic"/>
-      </div>
-    </mat-sidenav>
+        <mat-toolbar-row>
+            <span>
+                <button mat-icon-button (click)="snav.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            </span>
+            <span>
+                <h2>Tennis scores App</h2>
+            </span>
+            <span class="example-spacer"></span>
+            <mat-icon class="example-icon" aria-hidden="false" aria-label="Example heart icon" style="margin-right: 16px">search</mat-icon>
+            <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon" style="margin-right: 16px">account_circle</mat-icon>
+        </mat-toolbar-row>
 
-    <mat-sidenav-content style="margin-left: 130px">
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56"
+            style="width: 130px;">
+            <mat-nav-list>
+                <mat-list-item>
+                    <button mat-icon-button routerLink="">
+                        <mat-icon>home</mat-icon>
+                        <span class="list-text">Home</span>
+                    </button>
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-icon-button routerLink="/table">
+                        <mat-icon>view_list</mat-icon>
+                        <span class="list-text">Table</span>
+                    </button>
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-icon-button routerLink="">
+                        <mat-icon>bubble_chart</mat-icon>
+                        <span class="list-text">History</span>
+                    </button>
+                </mat-list-item>
+            </mat-nav-list>
+            <div>
+                <img style="opacity: 0.5;" [src]="profilePic" />
+            </div>
+        </mat-sidenav>
+
+        <mat-sidenav-content style="margin-left: 130px">
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
 </div>
