@@ -4,6 +4,7 @@ import { Input } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { Match } from './match.model';
 import { Player } from 'src/app/player/player.model';
+import { PlayerService } from 'src/app/player/player.service';
 
 @Component({
   selector: 'app-matches',
@@ -17,13 +18,35 @@ export class MatchesComponent implements OnChanges {
 
   cPlayer: Player = new Player();
 
+  match: Match = new Match;
+
   displayedColumns: string[] = ['playerWon', 'playerLost', 'result', 'date'];
 
   dataSource = new MatTableDataSource([]);
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private router: Router, private cdref: ChangeDetectorRef) { }
+  constructor(private router: Router, private cdref: ChangeDetectorRef, private playerService: PlayerService) { }
+
+  testSaveMatch(): void {
+    let playerWon = new Player;
+    let playerLost = new Player;
+
+    playerWon.firstName = 'Petar';
+    playerWon.lastName = 'Perić';
+    playerWon.elo = 1550;
+
+    playerWon.firstName = 'Stjepan';
+    playerWon.lastName = 'Stjepić';
+    playerWon.elo = 1350;
+    this.match.result = '6:4 6:2';
+
+    this.match.playerW = playerWon;
+
+    this.playerService.saveMatch(this.match).subscribe(response => {
+      const listen = response;
+    });
+  }
 
   ngOnChanges() {
     if (this.matches) {

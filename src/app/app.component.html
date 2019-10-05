@@ -8,35 +8,47 @@
                 </button>
             </span>
             <span>
-                <h2>Tennis scores App</h2>
+                <h2>Menu</h2>
             </span>
             <span class="example-spacer"></span>
-            <mat-icon class="example-icon" aria-hidden="false" aria-label="Example heart icon" style="margin-right: 16px">search</mat-icon>
+            <form>
+                <mat-form-field>
+                    <input type="text" placeholder="Traži igrača" aria-label="Number" matInput [formControl]="playerFormControl" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                        <mat-option *ngFor="let player of filteredOptions | async" [value]="player">
+                            {{player.firstName}} {{ player.lastName}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </form>
+            <button mat-icon-button (click)="toPlayer()">
+                <mat-icon class="example-icon" aria-hidden="false" aria-label="Example heart icon" style="margin-right: 16px">search</mat-icon>
+            </button>
+
             <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon" style="margin-right: 16px">account_circle</mat-icon>
         </mat-toolbar-row>
 
     </mat-toolbar>
 
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56"
-            style="width: 130px;">
+        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
             <mat-nav-list>
                 <mat-list-item>
-                    <button mat-icon-button routerLink="">
+                    <button mat-icon-button routerLink="" style="">
                         <mat-icon>home</mat-icon>
-                        <span class="list-text">Home</span>
+                        <span class="list-text">Početna</span>
                     </button>
                 </mat-list-item>
                 <mat-list-item>
                     <button mat-icon-button routerLink="/table">
                         <mat-icon>view_list</mat-icon>
-                        <span class="list-text">Table</span>
+                        <span class="list-text">Tablica</span>
                     </button>
                 </mat-list-item>
                 <mat-list-item>
                     <button mat-icon-button routerLink="">
                         <mat-icon>bubble_chart</mat-icon>
-                        <span class="list-text">History</span>
+                        <span class="list-text">Povijest</span>
                     </button>
                 </mat-list-item>
             </mat-nav-list>
