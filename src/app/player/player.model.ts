@@ -3,6 +3,7 @@ import { Match } from 'src/app/player/matches/match.model';
 
 export class Player {
 
+    id: number;
     firstName: String;
     lastName: String;
     points: number;
