@@ -60,7 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
     return val ? val.firstName + ' ' + val.lastName : val;
   }
 
-  private toPlayer() {
+  toPlayer() {
     this.selectedPlayer = this.playerFormControl.value;
     this.router.navigate(['/player', this.selectedPlayer.id]);
     this.playerFormControl.reset();
