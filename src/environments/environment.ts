@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: 'http://tennis-scores-back.eu-west-2.elasticbeanstalk.com'
+  url: 'https://tennis-scores-service.herokuapp.com'
 };
 
 /*
