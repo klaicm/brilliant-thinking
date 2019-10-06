@@ -32,19 +32,23 @@ export class MatchesComponent implements OnChanges {
     let playerWon = new Player;
     let playerLost = new Player;
 
-    playerWon.firstName = 'Petar';
-    playerWon.lastName = 'Perić';
+    playerWon.id = 1;
+    playerWon.firstName = 'Ivan';
+    playerWon.lastName = 'Ivić';
     playerWon.elo = 1550;
 
-    playerWon.firstName = 'Stjepan';
-    playerWon.lastName = 'Stjepić';
-    playerWon.elo = 1350;
+    playerLost.id = 2;
+    playerLost.firstName = 'Marko';
+    playerLost.lastName = 'Marić';
+    playerLost.elo = 1350;
     this.match.result = '6:4 6:2';
 
     this.match.playerW = playerWon;
+    this.match.playerL = playerLost;
 
     this.playerService.saveMatch(this.match).subscribe(response => {
       const listen = response;
+      console.log(this.match)
     });
   }
 

@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { Match } from 'src/app/player/matches/match.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class PlayerService {
 
-    private static PLAYER_URL = 'http://localhost:8080/player';
+    private static PLAYER_URL = environment.url + '/player';
+    private static ALL_PLAYERS_URL = environment.url + '/allPlayers';
+    private static SAVE_MATCH_URL = environment.url + '/saveMatch';
 
     constructor(private http: HttpClient) { }
 
@@ -19,10 +22,10 @@ export class PlayerService {
     }
 
     getAllPlayers(): Observable<any> {
-        return this.http.get('http://localhost:8080/allPlayers');
+        return this.http.get(PlayerService.ALL_PLAYERS_URL);
     }
 
     saveMatch(match: Match): Observable<any> {
-        return this.http.post('http://localhost:8080/saveMatch', match);
+        return this.http.post(PlayerService.SAVE_MATCH_URL, match);
     }
 }
