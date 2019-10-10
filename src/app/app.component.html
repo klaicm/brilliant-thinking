@@ -7,12 +7,9 @@
                     <mat-icon>menu</mat-icon>
                 </button>
             </span>
-            <span>
-                <h2>Menu</h2>
-            </span>
             <span class="example-spacer"></span>
             <form>
-                <mat-form-field>
+                <mat-form-field class="input-headline">
                     <input type="text" placeholder="Traži igrača" aria-label="Number" matInput [formControl]="playerFormControl" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                         <mat-option *ngFor="let player of filteredOptions | async" [value]="player">
@@ -25,7 +22,7 @@
                 <mat-icon class="example-icon" aria-hidden="false" aria-label="Example heart icon" style="margin-right: 16px">search</mat-icon>
             </button>
 
-            <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon" style="margin-right: 16px">account_circle</mat-icon>
+            <!--<mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon" style="margin-right: 16px">account_circle</mat-icon>-->
         </mat-toolbar-row>
 
     </mat-toolbar>

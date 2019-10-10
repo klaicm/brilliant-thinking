@@ -58,3 +58,8 @@
   .example-spacer {
     flex: 1 1 auto;
   }
+
+  .input-headline {
+    font-size: 14px;
+    font-weight: 200;
+}
