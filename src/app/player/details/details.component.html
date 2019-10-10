@@ -42,18 +42,11 @@
                         </ng-container>
 
                         <!-- Position Column -->
-                        <ng-container matColumnDef="playerWon">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Pobjednik </th>
+                        <ng-container matColumnDef="opponent">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Protivnik </th>
                             <td mat-cell *matCellDef="let element">
-                                <a (click)="navigateToPlayer(element.playerW.id)">{{element.playerW.firstName}} {{element.playerW.lastName}}</a>
-                            </td>
-                        </ng-container>
-
-                        <!-- Name Column -->
-                        <ng-container matColumnDef="playerLost">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Poraženi </th>
-                            <td mat-cell *matCellDef="let element">
-                                <a (click)="navigateToPlayer(element.playerL.id)">{{element.playerL.firstName}} {{element.playerL.lastName}}</a>
+                                <a *ngIf="player.id === element.playerW.id" (click)="navigateToPlayer(element.playerL.id)">{{element.playerL.firstName}} {{element.playerL.lastName}}</a>
+                                <a *ngIf="player.id === element.playerL.id" (click)="navigateToPlayer(element.playerW.id)">{{element.playerW.firstName}} {{element.playerW.lastName}}</a>
                             </td>
                         </ng-container>
 

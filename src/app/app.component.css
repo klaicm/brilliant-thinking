@@ -30,10 +30,6 @@
     flex: 1 0 auto;
   }
 
-  .mat-drawer-container {
-    background-color: aliceblue;
-  }
-
   .list-text {
       padding-left: 8px;
   }

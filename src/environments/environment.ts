@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: 'https://tennis-scores-service.herokuapp.com'
+  url: 'http://localhost:5000/'
 };
 
 /*

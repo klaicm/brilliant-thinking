@@ -25,7 +25,7 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
     eloRatingList: Array<number> = new Array<number>();
     winPercentageList: Array<number> = new Array<number>();
     dataSource = new MatTableDataSource([]);
-    displayedColumns: string[] = ['mark', 'playerWon', 'playerLost', 'result', 'date'];
+    displayedColumns: string[] = ['mark', 'opponent', 'result', 'date'];
 
     constructor(private cdref: ChangeDetectorRef, private router: Router) {
     }
@@ -82,23 +82,19 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
                 name: 'Ishod',
                 colorByPoint: true,
                 data: [{
-                    name: 'Pobjeda 2:0',
+                    name: '2:0',
                     y: 55,
-                    color: '#b2ff59',
                     sliced: true,
                     selected: true
                 }, {
-                    name: 'Pobjeda tie-break',
+                    name: '2:1',
                     y: 25,
-                    color: '#eeff41',
                 }, {
-                    name: 'Poraz 0:2',
+                    name: '0:2',
                     y: 10,
-                    color: '#fbc02d',
                 }, {
-                    name: 'Poraz tie-break',
+                    name: '1:2',
                     y: 10,
-                    color: '#ef6c00',
                 }]
             }]
         };

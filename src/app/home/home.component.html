@@ -20,7 +20,7 @@
               <ng-container matColumnDef="playerWon">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Pobjednik </th>
                 <td mat-cell *matCellDef="let element">
-                  <a (click)="navigateToPlayer(element.playerW.id)">{{element.playerW.firstName}}
+                  <a (click)="navigateToPlayer(element.playerW.id)">{{element.playerW.firstName | slice : 0 : 1}}.
                     {{element.playerW.lastName}}</a>
                 </td>
               </ng-container>
@@ -29,7 +29,7 @@
               <ng-container matColumnDef="playerLost">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Poraženi </th>
                 <td mat-cell *matCellDef="let element">
-                  <a (click)="navigateToPlayer(element.playerL.id)">{{element.playerL.firstName}}
+                  <a (click)="navigateToPlayer(element.playerL.id)">{{element.playerL.firstName | slice : 0 : 1}}.
                     {{element.playerL.lastName}}</a>
                 </td>
               </ng-container>
