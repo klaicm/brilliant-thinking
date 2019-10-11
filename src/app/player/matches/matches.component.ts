@@ -33,14 +33,8 @@ export class MatchesComponent implements OnChanges {
     let playerLost = new Player;
 
     playerWon.id = 1;
-    playerWon.firstName = 'Ivan';
-    playerWon.lastName = 'Ivić';
-    playerWon.elo = 1550;
 
     playerLost.id = 2;
-    playerLost.firstName = 'Marko';
-    playerLost.lastName = 'Marić';
-    playerLost.elo = 1350;
     this.match.result = '6:4 6:2';
 
     this.match.playerW = playerWon;

@@ -7,8 +7,10 @@ export class Player {
     firstName: String;
     lastName: String;
     points: number;
-    wins: number;
-    loses: number;
+    winsInTwo: number;
+    winsInTb: number;
+    losesInTwo: number;
+    losesInTb: number;
     elo: number;
     archData: Set<ArchData>;
     matches: Set<Match>;
