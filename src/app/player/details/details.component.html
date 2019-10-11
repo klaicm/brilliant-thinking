@@ -6,21 +6,21 @@
                     <table class="table">
                         <tr>
                             <th>Pobjede</th>
-                            <td>{{player.wins}}</td>
+                            <td>{{player.winsInTwo+player.winsInTb}}</td>
                         </tr>
                         <tr>
                             <th>Porazi</th>
-                            <td>{{player.loses}}</td>
+                            <td>{{player.losesInTwo+player.losesInTb}}</td>
                         </tr>
 
                         <tr>
                             <th>Odigrano</th>
-                            <td>{{player.wins+player.loses}}</td>
+                            <td>{{player.winsInTwo+player.winsInTb+player.losesInTwo+player.losesInTb}}</td>
                         </tr>
 
                         <tr>
                             <th>Postotak</th>
-                            <td>{{(player.wins/(player.loses+player.wins))*100}} %</td>
+                            <td>{{((player.winsInTwo+player.winsInTb)/(player.winsInTwo+player.winsInTb+player.losesInTwo+player.losesInTb))*100 | number:'1.0-0'}} %</td>
                         </tr>
 
                         <tr>

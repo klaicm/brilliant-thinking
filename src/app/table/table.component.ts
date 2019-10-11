@@ -4,7 +4,6 @@ import { Player } from 'src/app/player/player.model';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { ViewChild } from '@angular/core';
-import { AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-table',
@@ -13,7 +12,8 @@ import { AfterViewInit } from '@angular/core';
 })
 export class TableComponent implements OnInit {
 
-  displayedColumns: string[] = ['firstName', 'lastName', 'points', 'elo', 'played', 'wins', 'loses'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'points', 'elo', 
+    'percentage', 'played', 'winsInTwo', 'winsInTb', 'losesInTb', 'losesInTwo'];
   players: Array<Player>;
   dataSource = new MatTableDataSource([]);
 
