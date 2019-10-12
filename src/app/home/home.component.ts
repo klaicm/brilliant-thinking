@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { TableService } from 'src/app/table/table.service';
 import { Match } from 'src/app/player/matches/match.model';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { PlayerService } from '../player/player.service';
+import { Player } from '../player/player.model';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
 
   gamesPerDay: Object;
   playerMatches: Object;
@@ -20,10 +22,15 @@ export class HomeComponent implements OnInit {
   dataSource = new MatTableDataSource([]);
   displayedColumns: string[] = ['playerWon', 'playerLost', 'result', 'date'];
   panelOpenState = false;
+  allPlayers: Array<Player>;
+  firstEightByPoints: Array<Player>;
+  firstEightByElo: Array<Player>;
+  firstEightByMatches: Array<Player>;
+  firstEightByWinPercentage: Array<Player>;
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private tableService: TableService, private router: Router) { }
+  constructor(private tableService: TableService, private playerService: PlayerService, private router: Router) { }
 
   ngOnInit() {
 
@@ -33,10 +40,28 @@ export class HomeComponent implements OnInit {
       this.dataSource.sort = this.sort;
     });
 
+    this.playerService.getAllPlayers().subscribe((response: Array<Player>) => {
+      this.allPlayers = response;
+      this.firstEightByPoints = this.allPlayers.sort((a, b) => (a.points > b.points) ? 1 : -1).slice(0, 8);
+      this.firstEightByElo = this.allPlayers.sort((a, b) => (a.elo > b.elo) ? -1 : 1).slice(0, 8);
+      this.firstEightByMatches = this.allPlayers.sort((a, b) =>
+        ((a.winsInTb + a.winsInTwo + a.losesInTb + a.losesInTwo) > (b.winsInTb + b.winsInTwo + b.losesInTwo + b.losesInTb)) ?
+          -1 : 1).slice(0, 8);
+      this.firstEightByWinPercentage = this.allPlayers.sort((a, b) =>
+        ((a.winsInTb + a.winsInTwo)/(a.winsInTb + a.winsInTwo + a.losesInTb + a.losesInTwo) > 
+        ((b.winsInTb + b.winsInTwo)/(b.winsInTb + b.winsInTwo + b.losesInTwo + b.losesInTb))) ?
+          -1 : 1).slice(0, 8);
+      console.log(this.firstEightByMatches.map(match => match.firstName));
+      console.log(this.firstEightByMatches.map(match => match.matches));
+    });
+  }
+
+  ngAfterViewInit(): void {
     this.gamesPerDayChart();
     this.playerMatchesChart();
     this.winsInRowChart();
     this.eloRatingChart();
+    // this.winPercentageChart();
   }
 
   gamesPerDayChart(): void {
@@ -45,17 +70,18 @@ export class HomeComponent implements OnInit {
         type: 'column'
       },
       title: {
-        text: 'Mečeva po danima'
+        text: 'Postotak pobjeda'
       },
       xAxis: {
-        categories: ['Ponedjeljak', 'Utorak', 'Srijeda', 'Četvrtak', 'Petak', 'Subota', 'Nedjelja']
+        categories: this.firstEightByWinPercentage.map(player => player.firstName + ' ' + player.lastName)
       },
       credits: {
         enabled: false
       },
       series: [{
         name: 'Ponedjeljak',
-        data: [25, 38, 14, 27, 21, 30, 28]
+        data: this.firstEightByWinPercentage.map(player => 
+          ((player.winsInTb + player.winsInTwo)/(player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo))*100)
       }]
     };
   }
@@ -69,14 +95,15 @@ export class HomeComponent implements OnInit {
         text: 'Broj odigranih mečeva'
       },
       xAxis: {
-        categories: ['Marko Marić', 'Ivan Ivić', 'Luka Lukić', 'Pero Perić', 'Tomo Tomić']
+        categories: this.firstEightByMatches.map(match => (match.firstName + ' ' + match.lastName))
       },
       credits: {
         enabled: false
       },
       series: [{
         name: 'Broj mečeva',
-        data: [25, 22, 16, 10, 10],
+        // data: [25, 22, 16, 10, 10],
+        data: this.firstEightByMatches.map(match => (match.winsInTb + match.winsInTwo + match.losesInTb + match.losesInTwo)),
         color: '#CCFF90'
       }]
     };
@@ -113,14 +140,14 @@ export class HomeComponent implements OnInit {
         text: 'Elo rating'
       },
       xAxis: {
-        categories: ['Luka Lukić, ', 'Pero Perić', 'Tomo Tomić', 'Marko Marić', 'Ivan Ivić']
+        categories: this.firstEightByElo.map(match => (match.firstName + ' ' + match.lastName))
       },
       credits: {
         enabled: false
       },
       series: [{
         name: 'Elo rating',
-        data: [2125, 1938, 1914, 1727, 1621],
+        data: this.firstEightByElo.map(match => match.elo),
         color: '#4527a0'
       }]
     };
@@ -128,5 +155,5 @@ export class HomeComponent implements OnInit {
 
   navigateToPlayer(playerId: number): void {
     this.router.navigate(['/player', playerId]);
-}
+  }
 }
