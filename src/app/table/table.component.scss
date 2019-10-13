@@ -2,3 +2,16 @@ a {
     color: black;
     cursor: pointer;
 }
+
+/* make the table a 100% wide by default */
+table {
+    width: 100%;
+}
+    
+/* if the browser window is at least 800px-s wide: */
+@media screen and (max-width: 1000px) {
+    table {
+        width: 1100px;
+    }
+}
+

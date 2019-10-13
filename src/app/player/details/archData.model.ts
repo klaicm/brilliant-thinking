@@ -4,5 +4,7 @@ export class ArchData {
     winPercentage: number;
     position: number;
     date: Date;
+    totalWins: number;
+    totalLoses: number;
 
 }

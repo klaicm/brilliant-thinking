@@ -20,10 +20,11 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
     winPercentage: Object;
     eloRating: Object;
     resultsPie: Object;
-    gamesPerWeek: Object;
+    resultsPerMonth: Object;
     positionList: Array<number> = new Array<number>();
     eloRatingList: Array<number> = new Array<number>();
     winPercentageList: Array<number> = new Array<number>();
+    winsPerMonth: Array<number> = new Array<number>();
     dataSource = new MatTableDataSource([]);
     displayedColumns: string[] = ['mark', 'opponent', 'result', 'date'];
 
@@ -36,13 +37,20 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
             this.positionList.push(i.position);
             this.eloRatingList.push(i.eloRating);
             this.winPercentageList.push(i.winPercentage);
+            
+            // ovdje sada malo više rada :)
+            // početak i kraj mjeseca uzeti broj pobjeda i poraza iz arch tablice
+            // nakon toga oduzeti početak od kraja i dobiti koliko je pobjeda, a koliko poraza u tom mjesecu
+            // problem ostaje - kako izvući mjesece "univerzalizirati", a da ne bude hardkodiranje?
+            // enumi, pa razdijeliti na zimsku i ljetnu ligu? 
+
         });
 
         this.resultsPieChart(this.player);
         this.positionChart(this.positionList);
         this.winPercentageChart(this.winPercentageList);
         this.eloRatingChart(this.eloRatingList);
-        this.gamesPerWeekChart();
+        this.resultsPerMonthChart();
 
         this.cdref.detectChanges();
     }
@@ -64,6 +72,9 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
             title: {
                 text: 'Ishodi mečeva'
             },
+            credits: {
+                enabled: false
+            },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
             },
@@ -83,18 +94,21 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
                 colorByPoint: true,
                 data: [{
                     name: '2:0',
-                    y: 55,
-                    sliced: true,
-                    selected: true
+                    y: (player.winsInTwo/(player.winsInTwo + player.winsInTb + player.losesInTb + player.losesInTwo))*100,                   sliced: true,
+                    selected: true,
+                    color: '#90ed7d'
                 }, {
                     name: '2:1',
-                    y: 25,
-                }, {
-                    name: '0:2',
-                    y: 10,
+                    y: (player.winsInTb/(player.winsInTwo + player.winsInTb + player.losesInTb + player.losesInTwo))*100,
+                    color: '#F4FF81'
                 }, {
                     name: '1:2',
-                    y: 10,
+                    y: (player.losesInTb/(player.winsInTwo + player.winsInTb + player.losesInTb + player.losesInTwo))*100,
+                    color: '#FFB74D'
+                }, {
+                    name: '0:2',
+                    y: (player.losesInTwo/(player.winsInTwo + player.winsInTb + player.losesInTb + player.losesInTwo))*100,
+                    color: '#FF5252'
                 }]
             }]
         };
@@ -103,7 +117,11 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
     positionChart(positionList: Array<number>): void {
         this.position = {
             title: { text: 'Plasman kroz sezonu' },
+            credits: {
+                enabled: false
+            },
             yAxis: {
+                title: false,
                 allowDecimals: false,
                 reversed: true,
                 showFirstLabel: true,
@@ -113,6 +131,7 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
                 allowDecimals: false,
             },
             series: [{
+                name: 'Plasman',
                 type: 'spline',
                 color: '#4527a0',
                 data: positionList,
@@ -123,7 +142,11 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
     winPercentageChart(winPercentageList: Array<number>): void {
         this.winPercentage = {
             title: { text: 'Postotak pobjeda' },
+            credits: {
+                enabled: false
+            },
             yAxis: {
+                title: false,
                 allowDecimals: false,
                 min: 0,
                 max: 100
@@ -132,6 +155,7 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
                 allowDecimals: false,
             },
             series: [{
+                name: 'Postotak pobjeda',
                 type: 'spline',
                 color: '#ef6c00',
                 data: winPercentageList,
@@ -142,7 +166,11 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
     eloRatingChart(eloRatingList: Array<number>): void {
         this.eloRating = {
             title: { text: 'Elo rating' },
+            credits: {
+                enabled: false
+            },
             yAxis: {
+                title: false,
                 allowDecimals: false,
                 min: 750,
                 tickInterval: 250
@@ -152,6 +180,7 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
             },
             shadow: true,
             series: [{
+                name: 'ELO rating',
                 type: 'areaspline',
                 color: '#CCFF90',
                 data: eloRatingList,
@@ -159,13 +188,16 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
         };
     }
 
-    gamesPerWeekChart(): void {
-        this.gamesPerWeek = {
+    resultsPerMonthChart(): void {
+        this.resultsPerMonth = {
             chart: {
                 type: 'column'
             },
             title: {
-                text: 'Prijedlog za graf'
+                text: 'Rezultati po mjesecima'
+            },
+            yAxis: {
+                title: false
             },
             xAxis: {
                 categories: ['1', '2', '3', '4', '5']
@@ -174,14 +206,13 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
                 enabled: false
             },
             series: [{
-                name: 'Luka',
-                data: [5, 3, 4, 7, 2]
+                name: 'Pobjede',
+                data: [5, 3, 4, 7, 2],
+                color: '#90ed7d'
             }, {
-                name: 'Ivan',
-                data: [2, -2, -3, 2, 1]
-            }, {
-                name: 'Marko',
-                data: [3, 4, 4, -2, 5]
+                name: 'Porazi',
+                data: [2, 2, 1, 2, 1],
+                color: '#FF5252'
             }]
         };
     }

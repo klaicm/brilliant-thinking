@@ -14,10 +14,11 @@ import { Player } from '../player/player.model';
 })
 export class HomeComponent implements OnInit, AfterViewInit {
 
-  gamesPerDay: Object;
+  winPercentage: Object;
   playerMatches: Object;
   winsInRow: Object;
   eloRating: Object;
+  pointsPerMatch: Object;
   matches: Array<Match>;
   dataSource = new MatTableDataSource([]);
   displayedColumns: string[] = ['playerWon', 'playerLost', 'result', 'date'];
@@ -27,6 +28,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   firstEightByElo: Array<Player>;
   firstEightByMatches: Array<Player>;
   firstEightByWinPercentage: Array<Player>;
+  firstEightByPpg: Array<Player>;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -42,46 +44,55 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     this.playerService.getAllPlayers().subscribe((response: Array<Player>) => {
       this.allPlayers = response;
-      this.firstEightByPoints = this.allPlayers.sort((a, b) => (a.points > b.points) ? 1 : -1).slice(0, 8);
-      this.firstEightByElo = this.allPlayers.sort((a, b) => (a.elo > b.elo) ? -1 : 1).slice(0, 8);
+      let playersWithMinTenMatches: Array<Player> = new Array<Player>();
+
+      playersWithMinTenMatches = this.allPlayers.filter(player => (player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo) >= 10);
+      // this.firstEightByPoints = this.allPlayers.sort((a, b) => (a.points > b.points) ? 1 : -1).slice(0, 8);
+      this.firstEightByElo = playersWithMinTenMatches.sort((a, b) => (a.elo > b.elo) ? -1 : 1).slice(0, 8);
       this.firstEightByMatches = this.allPlayers.sort((a, b) =>
         ((a.winsInTb + a.winsInTwo + a.losesInTb + a.losesInTwo) > (b.winsInTb + b.winsInTwo + b.losesInTwo + b.losesInTb)) ?
           -1 : 1).slice(0, 8);
-      this.firstEightByWinPercentage = this.allPlayers.sort((a, b) =>
+      this.firstEightByWinPercentage = playersWithMinTenMatches.sort((a, b) =>
         ((a.winsInTb + a.winsInTwo)/(a.winsInTb + a.winsInTwo + a.losesInTb + a.losesInTwo) > 
         ((b.winsInTb + b.winsInTwo)/(b.winsInTb + b.winsInTwo + b.losesInTwo + b.losesInTb))) ?
           -1 : 1).slice(0, 8);
-      console.log(this.firstEightByMatches.map(match => match.firstName));
-      console.log(this.firstEightByMatches.map(match => match.matches));
+      this.firstEightByPpg = playersWithMinTenMatches.sort((a, b) => 
+        (a.points/(a.winsInTb + a.winsInTwo + a.losesInTb + a.losesInTwo) > 
+        b.points/(b.winsInTb + b.winsInTwo + b.losesInTwo + b.losesInTb)) ? -1 : 1).slice(0, 8);
     });
   }
 
   ngAfterViewInit(): void {
-    this.gamesPerDayChart();
+    // this.gamesPerDayChart();
     this.playerMatchesChart();
-    this.winsInRowChart();
+    // this.winsInRowChart();
     this.eloRatingChart();
-    // this.winPercentageChart();
+    this.winPercentageChart();
+    this.pointsPerMatchChart()
+
   }
 
-  gamesPerDayChart(): void {
-    this.gamesPerDay = {
+  winPercentageChart(): void {
+    this.winPercentage = {
       chart: {
         type: 'column'
       },
       title: {
         text: 'Postotak pobjeda'
       },
+      yAxis: {
+        title: false
+      },
       xAxis: {
-        categories: this.firstEightByWinPercentage.map(player => player.firstName + ' ' + player.lastName)
+        categories: this.firstEightByWinPercentage.map(player => (player.firstName.substring(0, 1) + '. ' + player.lastName))
       },
       credits: {
         enabled: false
       },
       series: [{
-        name: 'Ponedjeljak',
+        name: 'Postotak pobjeda (min. 10 odigranih)',
         data: this.firstEightByWinPercentage.map(player => 
-          ((player.winsInTb + player.winsInTwo)/(player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo))*100)
+          Math.round(((player.winsInTb + player.winsInTwo)/(player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo))*100))
       }]
     };
   }
@@ -94,8 +105,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
       title: {
         text: 'Broj odigranih mečeva'
       },
+      yAxis: {
+        title: false
+      },
       xAxis: {
-        categories: this.firstEightByMatches.map(match => (match.firstName + ' ' + match.lastName))
+        categories: this.firstEightByMatches.map(player => (player.firstName.substring(0, 1) + '. ' + player.lastName))
       },
       credits: {
         enabled: false
@@ -103,7 +117,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       series: [{
         name: 'Broj mečeva',
         // data: [25, 22, 16, 10, 10],
-        data: this.firstEightByMatches.map(match => (match.winsInTb + match.winsInTwo + match.losesInTb + match.losesInTwo)),
+        data: this.firstEightByMatches.map(player => (player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo)),
         color: '#CCFF90'
       }]
     };
@@ -116,6 +130,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
       },
       title: {
         text: 'Niz pobjeda'
+      },
+      yAxis: {
+        title: false
       },
       xAxis: {
         categories: ['Ivan Ivić', 'Marko Marić', 'Tomo Tomić', 'Pero Perić', 'Luka Lukić']
@@ -139,16 +156,45 @@ export class HomeComponent implements OnInit, AfterViewInit {
       title: {
         text: 'Elo rating'
       },
+      yAxis: {
+        title: false
+      },
       xAxis: {
-        categories: this.firstEightByElo.map(match => (match.firstName + ' ' + match.lastName))
+        categories: this.firstEightByElo.map(player => (player.firstName.substring(0, 1) + '. ' + player.lastName))
       },
       credits: {
         enabled: false
       },
       series: [{
-        name: 'Elo rating',
-        data: this.firstEightByElo.map(match => match.elo),
+        name: 'Elo rating (min. 10 odigranih)',
+        data: this.firstEightByElo.map(player => player.elo),
         color: '#4527a0'
+      }]
+    };
+  }
+
+  pointsPerMatchChart(): void {
+    this.pointsPerMatch = {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: 'Prosjek bodova po meču'
+      },
+      yAxis: {
+        title: false
+      },
+      xAxis: {
+        categories: this.firstEightByPpg.map(player => (player.firstName.substring(0, 1) + '. ' + player.lastName))
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        name: 'Bodovi po meču (min. 10 odigranih)',
+        // data: [25, 22, 16, 10, 10],
+        data: this.firstEightByPpg.map(player => (player.points/(player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo))),
+        color: '#ef6c00'
       }]
     };
   }

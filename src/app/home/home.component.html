@@ -72,12 +72,12 @@
     <div class="row tab-row">
       <div class="col-sm-4 card">
         <mat-card>
-          <chart [options]="winsInRow"> </chart>
+          <chart [options]="pointsPerMatch"> </chart>
         </mat-card>
       </div>
       <div class="col-sm-4 card">
         <mat-card>
-          <chart [options]="gamesPerDay"> </chart>
+          <chart [options]="winPercentage"> </chart>
         </mat-card>
       </div>
     </div>
@@ -94,6 +94,7 @@
           <h5>{{allPlayers.length}}</h5>
         </mat-card>
       </div>
+      <!--
       <div class="col-sm-2" style="padding: 8px">
         <mat-card class="info-card">
           <h5>Neki podatak</h5>
@@ -106,5 +107,6 @@
           <h5>15</h5>
         </mat-card>
       </div>
+      -->
     </div>
   </div>
