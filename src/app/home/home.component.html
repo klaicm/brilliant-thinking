@@ -82,6 +82,20 @@
       </div>
     </div>
     <div class="row tab-row">
+      <div class="col-sm-4 card">
+        <mat-card>
+          <chart [options]="matchesPerDay"> </chart>
+        </mat-card>
+      </div>
+      <!--
+      <div class="col-sm-4 card">
+        <mat-card>
+          <chart [options]="winPercentage"> </chart>
+        </mat-card>
+      </div>
+      -->
+    </div>
+    <div class="row tab-row">
       <div class="col-sm-2" style="padding: 8px">
         <mat-card class="info-card">
           <h5>Ukupno odigranih mečeva</h5>

@@ -19,6 +19,7 @@ import { MatTabsModule, MatButtonModule, MatSidenavModule, MatToolbarModule,
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
+import { EloStatsComponent } from './elo-stats/elo-stats/elo-stats.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,7 +27,8 @@ const appRoutes: Routes = [
   { path: 'player/:id', component: PlayerComponent },
   { path: 'trophies', component: TrophiesComponent },
   { path: 'matches', component: MatchesComponent },
-  { path: 'details', component: DetailsComponent }
+  { path: 'details', component: DetailsComponent },
+  { path: 'elo-stats', component: EloStatsComponent }
 ];
 
 export function highchartsFactory() {
@@ -42,7 +44,9 @@ export function highchartsFactory() {
     HomeComponent,
     TrophiesComponent,
     MatchesComponent,
-    DetailsComponent
+    DetailsComponent,
+    EloStatsComponent,
+    EloStatsComponent
   ],
   imports: [
     BrowserModule,

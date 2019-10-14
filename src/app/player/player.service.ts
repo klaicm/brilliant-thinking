@@ -10,6 +10,7 @@ export class PlayerService {
     private static PLAYER_URL = environment.url + '/player';
     private static ALL_PLAYERS_URL = environment.url + '/allPlayers';
     private static SAVE_MATCH_URL = environment.url + '/saveMatch';
+    private static ELO_STATS_URL = environment.url + '/elo-stats';
 
     constructor(private http: HttpClient) { }
 
@@ -27,5 +28,9 @@ export class PlayerService {
 
     saveMatch(match: Match): Observable<any> {
         return this.http.post(PlayerService.SAVE_MATCH_URL, match);
+    }
+
+    getEloStats(player1Elo: number, player2Elo: number): Observable<any> {
+        return this.http.get(`${PlayerService.ELO_STATS_URL}/${player1Elo}/${player2Elo}`)
     }
 }
