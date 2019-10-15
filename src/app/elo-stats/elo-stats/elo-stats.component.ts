@@ -28,6 +28,7 @@ export class EloStatsComponent implements OnInit {
   positions: Object;
   eloRatings: Object;
   winPercentages: Object;
+  probabilites: Object;
   player: Player;
 
   constructor(private playerService: PlayerService) { }
@@ -59,20 +60,23 @@ export class EloStatsComponent implements OnInit {
       this.playerService.getEloStats(playerA.elo, playerB.elo).subscribe(response => {
         this.probabilityA = Math.round(response.ea * 100);
         this.probabilityB = Math.round(response.eb * 100);
+        this.winProbabilityChart(this.probabilityA, this.probabilityB,
+          playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName)
       })
-  
+
       this.getPlayerMatches(playerA.id);
-  
+
       this.positionChart(this.positionAList, this.positionBList,
         playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
       this.winPercentageChart(this.winPercentageAList, this.winPercentageBList,
         playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
       this.eloRatingChart(this.eloRatingAList, this.eloRatingBList,
         playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
+
     } else {
 
     }
-    
+
   }
 
   getPlayer(playerId: number, player: String): void {
@@ -125,7 +129,7 @@ export class EloStatsComponent implements OnInit {
       {
         name: playerBName,
         type: 'spline',
-        color: '#90CAF9',
+        color: '#EF6C00',
         data: positionBList,
       }]
     };
@@ -149,13 +153,13 @@ export class EloStatsComponent implements OnInit {
       series: [{
         name: playerAName,
         type: 'spline',
-        color: '#EF9A9A',
+        color: '#00E676',
         data: winPercentageAList,
       },
       {
         name: playerBName,
         type: 'spline',
-        color: '#CE93D8',
+        color: '#616161',
         data: winPercentageBList,
       }]
     };
@@ -190,6 +194,46 @@ export class EloStatsComponent implements OnInit {
         data: eloRatingBList,
       }]
     };
+  }
+
+  winProbabilityChart(probabilityA: number, probabilityB: number, playerAName: String, playerBName: String) {
+    this.probabilites = {
+      title: { text: 'Vjerojatnost pobjede' },
+      credits: {
+        enabled: false
+      },
+      tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions: {
+        pie: {
+          dataLabels: {
+            enabled: true,
+            distance: -50,
+            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+            style: {
+              fontWeight: 'bold',
+              color: 'white'
+            }
+          }
+        }
+      },
+      series: [{
+        type: 'pie',
+        innerSize: '50%',
+        data: [{
+          name: playerAName, 
+          y: probabilityA,
+          color: '#81D4FA'
+        },
+        {
+          name: playerBName, 
+          y: probabilityB,
+          color: '#FFCC80'
+        }
+        ]
+      }]
+    }
   }
 
 

@@ -42,8 +42,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   getPlayerMatches(playerId: number): void {
     this.playerService.getPlayerMatches(playerId).subscribe((response: Array<Match>) => {
-        this.matches = response;
-      });
+      this.matches = response;
+    });
   }
 
   ngOnDestroy(): void {

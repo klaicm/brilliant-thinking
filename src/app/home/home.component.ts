@@ -57,7 +57,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
       let playersWithMinTenMatches: Array<Player> = new Array<Player>();
 
       playersWithMinTenMatches = this.allPlayers.filter(player => (player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo) >= 10);
-      // this.firstEightByPoints = this.allPlayers.sort((a, b) => (a.points > b.points) ? 1 : -1).slice(0, 8);
       this.firstEightByElo = playersWithMinTenMatches.sort((a, b) => (a.elo > b.elo) ? -1 : 1).slice(0, 8);
       this.firstEightByMatches = this.allPlayers.sort((a, b) =>
         ((a.winsInTb + a.winsInTwo + a.losesInTb + a.losesInTwo) > (b.winsInTb + b.winsInTwo + b.losesInTwo + b.losesInTb)) ?

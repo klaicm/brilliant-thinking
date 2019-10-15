@@ -5,6 +5,10 @@
                 <mat-card>
                     <table class="table">
                         <tr>
+                            <th>Trenutna pozicija</th>
+                            <td>{{currentPlayerPositionPts}}.</td>
+                        </tr>
+                        <tr>
                             <th>Pobjede</th>
                             <td>{{player.winsInTwo+player.winsInTb}}</td>
                         </tr>
@@ -25,7 +29,7 @@
 
                         <tr>
                             <th>ELO rating</th>
-                            <td>{{player.elo}}</td>
+                            <td>{{player.elo}} (Trenutno: {{currentPlayerPositionElo}}.)</td>
                         </tr>
                     </table>
                 </mat-card>

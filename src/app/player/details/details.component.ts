@@ -5,6 +5,8 @@ import { AfterViewInit } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
+import { PlayerService } from '../player.service';
+import { element } from '@angular/core/src/render3';
 
 @Component({
     selector: 'app-details',
@@ -27,17 +29,22 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
     winsPerMonth: Array<number> = new Array<number>();
     dataSource = new MatTableDataSource([]);
     displayedColumns: string[] = ['mark', 'opponent', 'result', 'date'];
+    currentPlayerPositionPts: number;
+    currentPlayerPositionElo: number;
+    allPlayers: Array<Player>;
 
-    constructor(private cdref: ChangeDetectorRef, private router: Router) {
+    constructor(private cdref: ChangeDetectorRef, private router: Router, private playerService: PlayerService) {
+
     }
 
     ngAfterViewInit(): void {
 
+        this.getAllPlayers(this.player);
         this.player.archData.forEach(i => {
             this.positionList.push(i.position);
             this.eloRatingList.push(i.eloRating);
             this.winPercentageList.push(i.winPercentage);
-            
+
             // ovdje sada malo više rada :)
             // početak i kraj mjeseca uzeti broj pobjeda i poraza iz arch tablice
             // nakon toga oduzeti početak od kraja i dobiti koliko je pobjeda, a koliko poraza u tom mjesecu
@@ -45,6 +52,8 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
             // enumi, pa razdijeliti na zimsku i ljetnu ligu? 
 
         });
+
+        this.positionList.push(this.currentPlayerPositionPts); // trenutna (live) pozicija
 
         this.resultsPieChart(this.player);
         this.positionChart(this.positionList);
@@ -94,21 +103,21 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
                 colorByPoint: true,
                 data: [{
                     name: '2:0',
-                    y: (player.winsInTwo/(player.winsInTwo + player.winsInTb + player.losesInTb + player.losesInTwo))*100,                   sliced: true,
+                    y: (player.winsInTwo / (player.winsInTwo + player.winsInTb + player.losesInTb + player.losesInTwo)) * 100, sliced: true,
                     selected: true,
-                    color: '#90ed7d'
+                    color: '#B2FF59'
                 }, {
                     name: '2:1',
-                    y: (player.winsInTb/(player.winsInTwo + player.winsInTb + player.losesInTb + player.losesInTwo))*100,
-                    color: '#F4FF81'
+                    y: (player.winsInTb / (player.winsInTwo + player.winsInTb + player.losesInTb + player.losesInTwo)) * 100,
+                    color: '#FFFF8D'
                 }, {
                     name: '1:2',
-                    y: (player.losesInTb/(player.winsInTwo + player.winsInTb + player.losesInTb + player.losesInTwo))*100,
-                    color: '#FFB74D'
+                    y: (player.losesInTb / (player.winsInTwo + player.winsInTb + player.losesInTb + player.losesInTwo)) * 100,
+                    color: '#FFD180'
                 }, {
                     name: '0:2',
-                    y: (player.losesInTwo/(player.winsInTwo + player.winsInTb + player.losesInTb + player.losesInTwo))*100,
-                    color: '#FF5252'
+                    y: (player.losesInTwo / (player.winsInTwo + player.winsInTb + player.losesInTb + player.losesInTwo)) * 100,
+                    color: '#FFAB91'
                 }]
             }]
         };
@@ -133,7 +142,7 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
             series: [{
                 name: 'Plasman',
                 type: 'spline',
-                color: '#4527a0',
+                color: '#B39DDB',
                 data: positionList,
             }]
         };
@@ -157,7 +166,7 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
             series: [{
                 name: 'Postotak pobjeda',
                 type: 'spline',
-                color: '#ef6c00',
+                color: '#F48FB1',
                 data: winPercentageList,
             }]
         };
@@ -217,7 +226,22 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
         };
     }
 
-    gaugeChart(): void {}
+    getAllPlayers(player: Player): void {
+        this.playerService.getAllPlayers().subscribe((response: Array<Player>) => {
+            this.allPlayers = response;
+
+            let pointsSortedList = this.allPlayers.sort((a, b) =>
+                (a.points > b.points) ? -1 : 1);
+
+            this.currentPlayerPositionPts = pointsSortedList.findIndex(element => element.id === player.id) + 1;
+            let eloSortedList = this.allPlayers.sort((a, b) =>
+                (a.elo > b.elo) ? -1 : 1);
+
+            this.currentPlayerPositionElo = eloSortedList.findIndex(element => element.id === player.id) + 1;
+        })
+    }
+
+    gaugeChart(): void { }
 
     navigateToPlayer(playerId: number): void {
         this.router.navigate(['/player', playerId]);

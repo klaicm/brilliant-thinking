@@ -4,9 +4,10 @@
   </div>
   <br>
   <div>
-    <div class="row tab-row" style="text-align: center;">
-      <form [formGroup]="playerSelectFormGroup">
-        <div class="col-sm-4 card">
+    <div class="row tab-row">
+
+      <div class="col-sm-4 card" style="text-align: center;">
+        <form [formGroup]="playerSelectFormGroup">
           <mat-card>
             <mat-form-field style="padding-right: 16px">
               <mat-select placeholder="Odaberi igrača" formControlName="playerAFormControl">
@@ -28,55 +29,61 @@
               <!--<mat-icon>blur_on</mat-icon>-->
               Izračunaj
             </button>
-
-            <div class="progress" style="height: 15px; margin-top: 16px;">
-              <div class="progress-bar" role="progressbar" style="width: 55%; background-color: #4527A0;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
           </mat-card>
-        </div>
-
-        <p>{{probabilityA}}</p>
-        <p>{{probabilityB}}</p>
-      </form>
+        </form>
+      </div>
     </div>
+
     <div class="row tab-row">
+      <div class="col-sm-4 card">
+        <mat-card>
+          <chart [options]="probabilites"> </chart>
+        </mat-card>
+      </div>
+
       <div class="col-sm-4 card">
         <mat-card>
           <chart [options]="positions"> </chart>
         </mat-card>
       </div>
+    </div>
+
+    <div class="row tab-row">
       <div class="col-sm-4 card">
         <mat-card>
           <chart [options]="eloRatings"> </chart>
         </mat-card>
       </div>
-    </div>
-    <div class="row tab-row">
+
+
       <div class="col-sm-4 card">
         <mat-card>
           <chart [options]="winPercentages"> </chart>
         </mat-card>
       </div>
+    </div>
+
+    <div class="row tab-row">
       <div class="col-sm-4 card">
         <mat-card>
           <!--<chart [options]="winPercentage"> </chart>-->
         </mat-card>
       </div>
-    </div>
-    <div class="row tab-row">
+
+
       <div class="col-sm-4 card">
         <mat-card>
           <!--<chart [options]="matchesPerDay"> </chart>-->
         </mat-card>
       </div>
-      <!--
+    </div>
+    <!--
       <div class="col-sm-4 card">
         <mat-card>
           <chart [options]="winPercentage"> </chart>
         </mat-card>
       </div>
       -->
-    </div>
     <div class="row tab-row">
       <div class="col-sm-2" style="padding: 8px">
         <mat-card class="info-card">
