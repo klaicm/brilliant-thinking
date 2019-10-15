@@ -4,6 +4,7 @@ import { Player } from 'src/app/player/player.model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Match } from 'src/app/player/matches/match.model';
 import { ArchData } from 'src/app/player/details/archData.model';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-elo-stats',
@@ -15,8 +16,6 @@ export class EloStatsComponent implements OnInit {
   allPlayers: Array<Player> = new Array<Player>();
   probabilityA: number;
   probabilityB: number;
-  playerA: Player;
-  playerB: Player;
   playerSelectFormGroup: FormGroup;
   positionAList: Array<number> = new Array<number>();
   eloRatingAList: Array<number> = new Array<number>();
@@ -29,7 +28,10 @@ export class EloStatsComponent implements OnInit {
   eloRatings: Object;
   winPercentages: Object;
   probabilites: Object;
-  player: Player;
+  dataSource = new MatTableDataSource([]);
+  displayedColumns: string[] = ['playerWon', 'playerLost', 'result', 'date'];
+  playerAWins: number = 0;
+  playerBWins: number = 0;
 
   constructor(private playerService: PlayerService) { }
 
@@ -64,7 +66,7 @@ export class EloStatsComponent implements OnInit {
           playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName)
       })
 
-      this.getPlayerMatches(playerA.id);
+      this.getPlayerMatches(playerA.id, playerB.id);
 
       this.positionChart(this.positionAList, this.positionBList,
         playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
@@ -97,10 +99,23 @@ export class EloStatsComponent implements OnInit {
     });
   }
 
-  // dovoljno je naći samo od jednog i onda pronaći jel igrao sa ovim drugim
-  getPlayerMatches(playerId: number): void {
-    this.playerService.getPlayerMatches(playerId).subscribe((response: Array<Match>) => {
+  getPlayerMatches(playerAId: number, playerBId: number): void {
+    this.playerService.getPlayerMatches(playerAId).subscribe((response: Array<Match>) => {
       this.matches = response;
+
+      let mutualMatches = this.matches.filter(match => (match.playerL.id === playerBId || match.playerW.id == playerBId));
+
+      if (mutualMatches) {
+        mutualMatches.forEach(match => {
+          if (match.playerW.id === playerAId) {
+            this.playerAWins++;
+          } else if (match.playerW.id === playerBId) {
+            this.playerBWins++;
+          }
+        });
+      }
+
+      this.dataSource = new MatTableDataSource(mutualMatches);
     });
   }
 
@@ -212,8 +227,7 @@ export class EloStatsComponent implements OnInit {
             distance: -50,
             format: '<b>{point.name}</b>: {point.percentage:.1f} %',
             style: {
-              fontWeight: 'bold',
-              color: 'white'
+              color: 'black'
             }
           }
         }

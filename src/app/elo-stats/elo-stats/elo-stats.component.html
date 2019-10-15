@@ -16,7 +16,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            :
+            <strong>{{playerAWins}}</strong> : <strong>{{playerBWins}}</strong>
             <mat-form-field style="padding-left: 16px">
               <mat-select placeholder="Odaberi igrača" formControlName="playerBFormControl">
                 <mat-option *ngFor="let player of allPlayers" [value]="player">
@@ -31,6 +31,55 @@
             </button>
           </mat-card>
         </form>
+      </div>
+      <div class="col-sm-4 card">
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Međusobni mečevi
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <table mat-table [dataSource]="dataSource" matSort style="width: 100%">
+
+              <!-- Position Column -->
+              <ng-container matColumnDef="playerWon">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Pobjednik </th>
+                <td mat-cell *matCellDef="let element">
+                  <a (click)="navigateToPlayer(element.playerW.id)">{{element.playerW.firstName | slice : 0 : 1}}.
+                    {{element.playerW.lastName}}</a>
+                </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="playerLost">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Poraženi </th>
+                <td mat-cell *matCellDef="let element">
+                  <a (click)="navigateToPlayer(element.playerL.id)">{{element.playerL.firstName | slice : 0 : 1}}.
+                    {{element.playerL.lastName}}</a>
+                </td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="result">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Rezultat </th>
+                <td mat-cell *matCellDef="let element"> {{element.result}} </td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Datum </th>
+                <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+          </mat-expansion-panel>
+
+        </mat-accordion>
       </div>
     </div>
 
