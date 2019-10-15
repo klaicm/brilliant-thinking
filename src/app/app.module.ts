@@ -15,7 +15,7 @@ import { DetailsComponent } from 'src/app/player/details/details.component';
 import { ChartModule } from 'angular2-highcharts';
 import { MatTabsModule, MatButtonModule, MatSidenavModule, MatToolbarModule,
   MatListModule, MatTableModule, MatSortModule, MatIconModule, MatCardModule,
-  MatExpansionModule, MatAutocompleteModule, MatInputModule } from '@angular/material';
+  MatExpansionModule, MatAutocompleteModule, MatInputModule, MatSelectModule, MatFormFieldModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
@@ -64,6 +64,8 @@ export function highchartsFactory() {
     MatExpansionModule,
     MatAutocompleteModule,
     MatInputModule,
+    MatSelectModule,
+    MatFormFieldModule,
     ReactiveFormsModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
@@ -81,7 +83,11 @@ export function highchartsFactory() {
     MatCardModule,
     MatExpansionModule,
     MatAutocompleteModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     PlayerService,

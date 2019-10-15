@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { Match } from 'src/app/player/matches/match.model';
 import { environment } from 'src/environments/environment';
@@ -30,7 +30,10 @@ export class PlayerService {
         return this.http.post(PlayerService.SAVE_MATCH_URL, match);
     }
 
-    getEloStats(player1Elo: number, player2Elo: number): Observable<any> {
-        return this.http.get(`${PlayerService.ELO_STATS_URL}/${player1Elo}/${player2Elo}`)
+    getEloStats(playerAElo: number, playerBElo: number): Observable<any> {
+        const params = new HttpParams()
+            .set('playerAElo', playerAElo.toString())
+            .set('playerBElo', playerBElo.toString());
+        return this.http.get(`${PlayerService.ELO_STATS_URL}`, {params})
     }
 }
