@@ -32,6 +32,7 @@ export class EloStatsComponent implements OnInit {
   displayedColumns: string[] = ['playerWon', 'playerLost', 'result', 'date'];
   playerAWins: number = 0;
   playerBWins: number = 0;
+  panelOpenState = false;
 
   constructor(private playerService: PlayerService) { }
 
