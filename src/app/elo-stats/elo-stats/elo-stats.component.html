@@ -1,34 +1,36 @@
 <div style="padding-left: 18px; padding-right: 18px">
-  <div class="player-header" style="padding-left: 18px; padding-right: 18px">
-    <h2> Usporedba igrača </h2>
+  <div class="row tab-row">
+    <div class="page-header col-sm-4">
+      <h3>Usporedba igrača</h3>
+    </div>
   </div>
-  <br>
   <div>
     <div class="row tab-row">
-
       <div class="col-sm-4 card" style="text-align: center;">
         <form [formGroup]="playerSelectFormGroup">
           <mat-card>
-            <mat-form-field style="padding-right: 16px">
-              <mat-select placeholder="Odaberi igrača" formControlName="playerAFormControl">
-                <mat-option *ngFor="let player of allPlayers" [value]="player">
-                  {{player.firstName}} {{player.lastName}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <strong>{{playerAWins}}</strong> : <strong>{{playerBWins}}</strong>
-            <mat-form-field style="padding-left: 16px">
-              <mat-select placeholder="Odaberi igrača" formControlName="playerBFormControl">
-                <mat-option *ngFor="let player of allPlayers" [value]="player">
-                  {{player.firstName}} {{player.lastName}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <button mat-raised-button color="primary" aria-label="Calculate" (click)="getEloStats()">
-              <!--<mat-icon>blur_on</mat-icon>-->
-              Izračunaj
-            </button>
+            <div class="row">
+              <mat-form-field style="padding-right: 16px; width: 170px;">
+                <mat-select placeholder="Odaberi igrača" formControlName="playerAFormControl">
+                  <mat-option *ngFor="let player of allPlayers" [value]="player">
+                    {{player.firstName}} {{player.lastName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <strong>{{playerAWins}}</strong> : <strong>{{playerBWins}}</strong>
+              <mat-form-field style="padding-left: 16px; width: 170px;">
+                <mat-select placeholder="Odaberi igrača" formControlName="playerBFormControl">
+                  <mat-option *ngFor="let player of allPlayers" [value]="player">
+                    {{player.firstName}} {{player.lastName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <button mat-raised-button color="primary" aria-label="Calculate" (click)="getEloStats()">
+                Prikaži
+              </button>
+            </div>
           </mat-card>
         </form>
       </div>
@@ -43,7 +45,7 @@
 
             <table mat-table [dataSource]="dataSource" matSort style="width: 100%">
 
-              <!-- Position Column -->
+              <!-- Name Column -->
               <ng-container matColumnDef="playerWon">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Pobjednik </th>
                 <td mat-cell *matCellDef="let element">
@@ -61,13 +63,13 @@
                 </td>
               </ng-container>
 
-              <!-- Weight Column -->
+              <!-- Result Column -->
               <ng-container matColumnDef="result">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Rezultat </th>
                 <td mat-cell *matCellDef="let element"> {{element.result}} </td>
               </ng-container>
 
-              <!-- Weight Column -->
+              <!-- Date Column -->
               <ng-container matColumnDef="date">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Datum </th>
                 <td mat-cell *matCellDef="let element"> {{element.date}} </td>
@@ -86,7 +88,7 @@
     <div class="row tab-row">
       <div class="col-sm-4 card">
         <mat-card>
-          <chart [options]="probabilites"> </chart>
+          <chart [options]="probabilites"> ...</chart>
         </mat-card>
       </div>
 

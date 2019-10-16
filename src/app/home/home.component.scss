@@ -1,5 +1,6 @@
 .card {
     padding: 8px;
+    opacity: 0.9;
 }
 
 chart {
@@ -11,6 +12,16 @@ chart {
 a {
     color: black;
     cursor: pointer;
+}
+
+.page-header {
+    padding-left: 16px;    
+    margin-top: 16px;
+    margin-left: 9px;
+    margin-right: 16px;
+    color: white;
+    border-radius: 3px;
+    opacity: 0.6;
 }
 
 .tab-row {

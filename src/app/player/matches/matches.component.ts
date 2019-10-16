@@ -20,7 +20,7 @@ export class MatchesComponent implements OnChanges {
 
   match: Match = new Match;
 
-  displayedColumns: string[] = ['playerWon', 'playerLost', 'result', 'date'];
+  displayedColumns: string[] = ['mark', 'opponent', 'result', 'date'];
 
   dataSource = new MatTableDataSource([]);
 

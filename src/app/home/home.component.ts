@@ -177,7 +177,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       series: [{
         name: 'Elo rating (min. 10 odigranih)',
         data: this.firstEightByElo.map(player => player.elo),
-        color: '#4527a0'
+        color: '#BA68C8'
       }]
     };
   }
@@ -203,7 +203,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         name: 'Bodovi po meču (min. 10 odigranih)',
         // data: [25, 22, 16, 10, 10],
         data: this.firstEightByPpg.map(player => (player.points/(player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo))),
-        color: '#ef6c00'
+        color: '#E57373'
       }]
     };
   }
@@ -230,7 +230,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         data: [this.matchesPerDayMap.get('Monday'), this.matchesPerDayMap.get('Tuesday'), this.matchesPerDayMap.get('Wednesday'), 
           this.matchesPerDayMap.get('Thursday'), this.matchesPerDayMap.get('Friday'), this.matchesPerDayMap.get('Saturday'), 
           this.matchesPerDayMap.get('Sunday')],
-        color: '#AD1457'
+        color: '#FFB74D'
       }]
     };
   }

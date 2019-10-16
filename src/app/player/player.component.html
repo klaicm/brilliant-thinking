@@ -1,9 +1,12 @@
 <div style="padding-left: 18px; padding-right: 18px">
-  <div class="player-header">
-    <h2>
-      <img [src]="profilePic" style="width: 100px; height: 100px" /> {{player.firstName}} {{player.lastName}}</h2>
+  <div class="row tab-row">
+    <div class="page-header col-sm-4">
+      <h3>
+        <img [src]="profilePic" style="width: 100px; height: 100px" /> {{player.firstName}} {{player.lastName}}
+      </h3>
+    </div>
   </div>
-  <br>
+  
   <mat-tab-group>
     <mat-tab label="Trenutna sezona">
       <app-details [player]="player" [matches]="matches"></app-details>

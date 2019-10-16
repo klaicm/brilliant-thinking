@@ -1,72 +1,83 @@
 <div style="padding-left: 18px; padding-right: 18px">
-  <h4>Tablica sezone 2019 zima</h4>
+  
+  <div class="row tab-row">
+    <div class="page-header col-sm-3">
+      <h3>Sezona 2019 zima</h3>
+    </div>
+  </div>
   <br>
 
-  <table mat-table [dataSource]="dataSource" matSort matSortActive="points" matSortDirection="desc" matSortDisableClear class="mat-elevation-z8">
+  <table mat-table style="width: 700px" [dataSource]="dataSource" matSort matSortActive="points" matSortDirection="desc"
+    matSortDisableClear class="mat-elevation-z8">
 
     <!-- Position Column -->
-    <ng-container matColumnDef="firstName">
+    <ng-container matColumnDef="position">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-      <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
+      <td mat-cell style="width: 3%;" *matCellDef="let element; let i = index"> {{i + 1}} </td>
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="lastName">
+    <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Ime i prezime </th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell style="width: 20%;" *matCellDef="let element">
         <a (click)="navigateToPlayer(element.id)">{{element.firstName + ' ' + element.lastName}}</a>
       </td>
     </ng-container>
 
-    <!-- Weight Column -->
+    <!-- Points Column -->
     <ng-container matColumnDef="points">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Bodovi </th>
-      <td mat-cell *matCellDef="let element"> {{element.points}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Bod. </th>
+      <td mat-cell style="width: 6%;" *matCellDef="let element"> {{element.points}} </td>
     </ng-container>
 
-    <!-- Weight Column -->
+    <!-- Elo Column -->
     <ng-container matColumnDef="elo">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Elo rating </th>
-      <td mat-cell *matCellDef="let element"> {{element.elo}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ELO </th>
+      <td mat-cell style="width: 8%;" *matCellDef="let element"> {{element.elo}} </td>
     </ng-container>
 
-    <!-- Weight Column -->
+    <!-- Win Percentage Column -->
     <ng-container matColumnDef="percentage">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> % </th>
-      <td mat-cell *matCellDef="let element"> {{((element.winsInTwo+element.winsInTb)/(element.winsInTwo+element.winsInTb+element.losesInTwo+element.losesInTb))*100 | number:'1.0-0'}} %</td>
+      <td mat-cell style="width: 8%;" *matCellDef="let element">
+        {{((element.winsInTwo+element.winsInTb)/(element.winsInTwo+element.winsInTb+element.losesInTwo+element.losesInTb))*100 | number:'1.0-0'}}
+        %
+      </td>
     </ng-container>
 
-    <!-- Weight Column -->
+    <!-- Total Played Column -->
     <ng-container matColumnDef="played">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Odigrano </th>
-      <td mat-cell *matCellDef="let element"> {{element.winsInTwo + element.winsInTb + element.losesInTwo + element.losesInTb}}</td>
+      <td mat-cell style="width: 5%;" *matCellDef="let element">
+        {{element.winsInTwo + element.winsInTb + element.losesInTwo + element.losesInTb}}
+      </td>
     </ng-container>
 
-    <!-- Symbol Column -->
+    <!-- 2:0 Column -->
     <ng-container matColumnDef="winsInTwo">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Pobjede 2:0 </th>
-      <td mat-cell *matCellDef="let element"> {{element.winsInTwo}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> 2:0 </th>
+      <td mat-cell style="width: 5%;" *matCellDef="let element"> {{element.winsInTwo}} </td>
     </ng-container>
 
-    <!-- Symbol Column -->
+    <!-- 2:1 Column -->
     <ng-container matColumnDef="winsInTb">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Pobjede 2:1 </th>
-      <td mat-cell *matCellDef="let element"> {{element.winsInTb}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> 2:1 </th>
+      <td mat-cell style="width: 5%;" *matCellDef="let element"> {{element.winsInTb}} </td>
     </ng-container>
 
-    <!-- Symbol Column -->
+    <!-- 1:2 Column -->
     <ng-container matColumnDef="losesInTb">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Porazi 1:2 </th>
-      <td mat-cell *matCellDef="let element"> {{element.losesInTb}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> 1:2 </th>
+      <td mat-cell style="width: 5%;" *matCellDef="let element"> {{element.losesInTb}} </td>
     </ng-container>
 
-    <!-- Symbol Column -->
+    <!-- 0:2 Column -->
     <ng-container matColumnDef="losesInTwo">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Porazi 0:2 </th>
-      <td mat-cell *matCellDef="let element"> {{element.losesInTwo}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> 0:2 </th>
+      <td mat-cell style="width: 5%;" *matCellDef="let element"> {{element.losesInTwo}} </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>

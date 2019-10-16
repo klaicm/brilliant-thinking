@@ -3,7 +3,6 @@ import { PlayerService } from 'src/app/player/player.service';
 import { Player } from 'src/app/player/player.model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Match } from 'src/app/player/matches/match.model';
-import { ArchData } from 'src/app/player/details/archData.model';
 import { MatTableDataSource } from '@angular/material';
 
 @Component({
@@ -34,16 +33,16 @@ export class EloStatsComponent implements OnInit {
   playerBWins: number = 0;
   panelOpenState = false;
 
-  constructor(private playerService: PlayerService) { }
+  constructor(private playerService: PlayerService) {
+    this.playerSelectFormGroup = new FormGroup({
+      playerAFormControl: new FormControl(),
+      playerBFormControl: new FormControl()
+    });
+  }
 
   ngOnInit() {
     this.playerService.getAllPlayers().subscribe((response: Array<Player>) => {
       this.allPlayers = response;
-    })
-
-    this.playerSelectFormGroup = new FormGroup({
-      playerAFormControl: new FormControl(),
-      playerBFormControl: new FormControl()
     });
 
     this.playerSelectFormGroup.get('playerAFormControl').valueChanges.subscribe((value: Player) => {
@@ -85,12 +84,18 @@ export class EloStatsComponent implements OnInit {
   getPlayer(playerId: number, player: String): void {
     this.playerService.getPlayer(playerId).subscribe((response: Player) => {
       if (player === 'A') {
+        this.positionAList = [];
+        this.eloRatingAList = [];
+        this.winPercentageAList = [];
         response.archData.forEach(i => {
           this.positionAList.push(i.position);
           this.eloRatingAList.push(i.eloRating);
           this.winPercentageAList.push(i.winPercentage);
         });
       } else if (player === 'B') {
+        this.positionBList = [];
+        this.eloRatingBList = [];
+        this.winPercentageBList = [];
         response.archData.forEach(i => {
           this.positionBList.push(i.position);
           this.eloRatingBList.push(i.eloRating);
@@ -102,6 +107,8 @@ export class EloStatsComponent implements OnInit {
 
   getPlayerMatches(playerAId: number, playerBId: number): void {
     this.playerService.getPlayerMatches(playerAId).subscribe((response: Array<Match>) => {
+      this.playerAWins = 0;
+      this.playerBWins = 0;
       this.matches = response;
 
       let mutualMatches = this.matches.filter(match => (match.playerL.id === playerBId || match.playerW.id == playerBId));
@@ -214,7 +221,7 @@ export class EloStatsComponent implements OnInit {
 
   winProbabilityChart(probabilityA: number, probabilityB: number, playerAName: String, playerBName: String) {
     this.probabilites = {
-      title: { text: 'Vjerojatnost pobjede' },
+      title: { text: 'Vjerojatnost pobjede (na temelju ELO)' },
       credits: {
         enabled: false
       },
@@ -237,12 +244,12 @@ export class EloStatsComponent implements OnInit {
         type: 'pie',
         innerSize: '50%',
         data: [{
-          name: playerAName, 
+          name: playerAName,
           y: probabilityA,
           color: '#81D4FA'
         },
         {
-          name: playerBName, 
+          name: playerBName,
           y: probabilityB,
           color: '#FFCC80'
         }

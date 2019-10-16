@@ -59,3 +59,7 @@
     font-size: 14px;
     font-weight: 200;
 }
+
+.bgimg {
+  background: url('../assets/images/222632.png') no-repeat center center fixed;
+}

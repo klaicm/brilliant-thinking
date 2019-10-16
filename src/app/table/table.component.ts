@@ -12,8 +12,8 @@ import { ViewChild } from '@angular/core';
 })
 export class TableComponent implements OnInit {
 
-  displayedColumns: string[] = ['firstName', 'lastName', 'points', 'elo', 
-    'percentage', 'played', 'winsInTwo', 'winsInTb', 'losesInTb', 'losesInTwo'];
+  displayedColumns: string[] = ['position', 'name', 'points', 'elo', 
+    'percentage', 'winsInTwo', 'winsInTb', 'losesInTb', 'losesInTwo', 'played'];
   players: Array<Player>;
   dataSource = new MatTableDataSource([]);
 
