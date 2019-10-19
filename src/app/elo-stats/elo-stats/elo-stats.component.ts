@@ -29,8 +29,8 @@ export class EloStatsComponent implements OnInit {
   probabilites: Object;
   dataSource = new MatTableDataSource([]);
   displayedColumns: string[] = ['playerWon', 'playerLost', 'result', 'date'];
-  playerAWins: number = 0;
-  playerBWins: number = 0;
+  playerAWins = 0;
+  playerBWins = 0;
   panelOpenState = false;
 
   constructor(private playerService: PlayerService) {
@@ -55,16 +55,16 @@ export class EloStatsComponent implements OnInit {
   }
 
   getEloStats() {
-    let playerA: Player = this.playerSelectFormGroup.get("playerAFormControl").value;
-    let playerB: Player = this.playerSelectFormGroup.get("playerBFormControl").value;
+    const playerA: Player = this.playerSelectFormGroup.get('playerAFormControl').value;
+    const playerB: Player = this.playerSelectFormGroup.get('playerBFormControl').value;
 
     if (playerA && playerB) {
       this.playerService.getEloStats(playerA.elo, playerB.elo).subscribe(response => {
         this.probabilityA = Math.round(response.ea * 100);
         this.probabilityB = Math.round(response.eb * 100);
         this.winProbabilityChart(this.probabilityA, this.probabilityB,
-          playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName)
-      })
+          playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
+      });
 
       this.getPlayerMatches(playerA.id, playerB.id);
 
@@ -111,7 +111,7 @@ export class EloStatsComponent implements OnInit {
       this.playerBWins = 0;
       this.matches = response;
 
-      let mutualMatches = this.matches.filter(match => (match.playerL.id === playerBId || match.playerW.id == playerBId));
+      const mutualMatches = this.matches.filter(match => (match.playerL.id === playerBId || match.playerW.id === playerBId));
 
       if (mutualMatches) {
         mutualMatches.forEach(match => {
@@ -255,7 +255,7 @@ export class EloStatsComponent implements OnInit {
         }
         ]
       }]
-    }
+    };
   }
 
 

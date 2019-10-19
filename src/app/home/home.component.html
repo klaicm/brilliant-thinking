@@ -59,14 +59,15 @@
 
     </div>
     <div class="row tab-row">
+
       <div class="col-sm-4 card">
         <mat-card>
-          <chart [options]="eloRating"> </chart>
+          <chart [options]="playerMatches"> </chart>
         </mat-card>
       </div>
       <div class="col-sm-4 card">
         <mat-card>
-          <chart [options]="playerMatches"> </chart>
+          <chart [options]="eloRating"> </chart>
         </mat-card>
       </div>
     </div>
@@ -88,40 +89,19 @@
           <chart [options]="matchesPerDay"> </chart>
         </mat-card>
       </div>
-      <!--
-      <div class="col-sm-4 card">
-        <mat-card>
-          <chart [options]="winPercentage"> </chart>
-        </mat-card>
-      </div>
-      -->
     </div>
     <div class="row tab-row">
-      <div class="col-sm-2" style="padding: 8px">
-        <mat-card class="info-card">
+      <div class="col-sm-2 card" style="padding: 8px; text-align: center;">
+        <mat-card>
           <h5>Ukupno odigranih mečeva</h5>
           <h5>{{matches.length}}</h5>
         </mat-card>
       </div>
-      <div class="col-sm-2" style="padding: 8px">
-        <mat-card class="info-card">
+      <div class="col-sm-2 card" style="padding: 8px; text-align: center;">
+        <mat-card>
           <h5>Ukupan broj igrača</h5>
           <h5>{{allPlayers.length}}</h5>
         </mat-card>
       </div>
-      <!--
-      <div class="col-sm-2" style="padding: 8px">
-        <mat-card class="info-card">
-          <h5>Neki podatak</h5>
-          <h5>15</h5>
-        </mat-card>
-      </div>
-      <div class="col-sm-2" style="padding: 8px">
-        <mat-card class="info-card">
-          <h5>Neki podatak</h5>
-          <h5>15</h5>
-        </mat-card>
-      </div>
-      -->
     </div>
   </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { TableService } from 'src/app/table/table.service';
 import { Match } from 'src/app/player/matches/match.model';
 import { MatTableDataSource, MatSort } from '@angular/material';
@@ -16,69 +16,88 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   winPercentage: Object;
   playerMatches: Object;
-  winsInRow: Object;
   eloRating: Object;
   pointsPerMatch: Object;
   matchesPerDay: Object;
-  matches: Array<Match>;
+  matches: Array<Match> = [];
   dataSource = new MatTableDataSource([]);
   displayedColumns: string[] = ['playerWon', 'playerLost', 'result', 'date'];
   panelOpenState = false;
-  allPlayers: Array<Player>;
-  firstEightByPoints: Array<Player>;
-  firstEightByElo: Array<Player>;
-  firstEightByMatches: Array<Player>;
-  firstEightByWinPercentage: Array<Player>;
-  firstEightByPpg: Array<Player>;
+  allPlayers: Array<Player> = [];
+  firstEightByElo: Array<Player> = [];
+  firstEightByMatches: Array<Player> = [];
+  firstEightByWinPercentage: Array<Player> = [];
+  firstEightByPpg: Array<Player> = [];
   matchesPerDayMap: Map<String, number> = new Map<String, number>();
+  matchesLength: number;
+  allPlayersLength: number;
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private tableService: TableService, private playerService: PlayerService, private router: Router) { }
+  constructor(private tableService: TableService, private playerService: PlayerService, private router: Router,
+    private cdRef: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.getAllPlayers();
+    this.getAllMatches();
+  }
 
+  ngAfterViewInit(): void {
+
+    this.cdRef.detectChanges();
+  }
+
+  getAllPlayers(): void {
+    this.playerService.getAllPlayers().subscribe((response: Array<Player>) => {
+      this.allPlayers = response;
+
+      const playersWithMinTenMatches = this.allPlayers.filter(player =>
+        (player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo) >= 10);
+
+      this.setAllFirstEights(playersWithMinTenMatches);
+      this.playerMatchesChart();
+      this.eloRatingChart();
+      this.winPercentageChart();
+      this.pointsPerMatchChart();
+    });
+  }
+
+  getAllMatches(): void {
     this.tableService.getAllMatches().subscribe((response: Array<Match>) => {
       this.matches = response;
       this.dataSource = new MatTableDataSource(this.matches);
       this.dataSource.sort = this.sort;
 
-      this.matchesPerDayMap.set('Monday', this.matches.filter(match => new Date(match.date).getDay() == 1).length);
-      this.matchesPerDayMap.set('Tuesday', this.matches.filter(match => new Date(match.date).getDay() == 2).length);
-      this.matchesPerDayMap.set('Wednesday', this.matches.filter(match => new Date(match.date).getDay() == 3).length);
-      this.matchesPerDayMap.set('Thursday', this.matches.filter(match => new Date(match.date).getDay() == 4).length);
-      this.matchesPerDayMap.set('Friday', this.matches.filter(match => new Date(match.date).getDay() == 5).length);
-      this.matchesPerDayMap.set('Saturday', this.matches.filter(match => new Date(match.date).getDay() == 6).length);
-      this.matchesPerDayMap.set('Sunday', this.matches.filter(match => new Date(match.date).getDay() == 0).length);
-    });
-
-    this.playerService.getAllPlayers().subscribe((response: Array<Player>) => {
-      this.allPlayers = response;
-      let playersWithMinTenMatches: Array<Player> = new Array<Player>();
-
-      playersWithMinTenMatches = this.allPlayers.filter(player => (player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo) >= 10);
-      this.firstEightByElo = playersWithMinTenMatches.sort((a, b) => (a.elo > b.elo) ? -1 : 1).slice(0, 8);
-      this.firstEightByMatches = this.allPlayers.sort((a, b) =>
-        ((a.winsInTb + a.winsInTwo + a.losesInTb + a.losesInTwo) > (b.winsInTb + b.winsInTwo + b.losesInTwo + b.losesInTb)) ?
-          -1 : 1).slice(0, 8);
-      this.firstEightByWinPercentage = playersWithMinTenMatches.sort((a, b) =>
-        ((a.winsInTb + a.winsInTwo)/(a.winsInTb + a.winsInTwo + a.losesInTb + a.losesInTwo) > 
-        ((b.winsInTb + b.winsInTwo)/(b.winsInTb + b.winsInTwo + b.losesInTwo + b.losesInTb))) ?
-          -1 : 1).slice(0, 8);
-      this.firstEightByPpg = playersWithMinTenMatches.sort((a, b) => 
-        (a.points/(a.winsInTb + a.winsInTwo + a.losesInTb + a.losesInTwo) > 
-        b.points/(b.winsInTb + b.winsInTwo + b.losesInTwo + b.losesInTb)) ? -1 : 1).slice(0, 8);
+      this.setMatchesByDaysPerWeek(this.matches);
+      this.matchesPerDayChart();
     });
   }
 
-  ngAfterViewInit(): void {
-    this.matchesPerDayChart();
-    this.playerMatchesChart();
-    // this.winsInRowChart();
-    this.eloRatingChart();
-    this.winPercentageChart();
-    this.pointsPerMatchChart()
+  setAllFirstEights(playersWithMinTenMatches: Array<Player>): void {
+    this.firstEightByMatches = this.allPlayers.sort((a, b) =>
+      ((a.winsInTb + a.winsInTwo + a.losesInTb + a.losesInTwo) > (b.winsInTb + b.winsInTwo + b.losesInTwo + b.losesInTb)) ?
+        -1 : 1).slice(0, 8);
 
+    this.firstEightByElo = playersWithMinTenMatches.sort((a, b) => (a.elo > b.elo) ? -1 : 1).slice(0, 8);
+
+    this.firstEightByWinPercentage = playersWithMinTenMatches.sort((a, b) =>
+      ((a.winsInTb + a.winsInTwo) / (a.winsInTb + a.winsInTwo + a.losesInTb + a.losesInTwo) >
+        ((b.winsInTb + b.winsInTwo) / (b.winsInTb + b.winsInTwo + b.losesInTwo + b.losesInTb))) ?
+        -1 : 1).slice(0, 8);
+
+    this.firstEightByPpg = playersWithMinTenMatches.sort((a, b) =>
+      (a.points / (a.winsInTb + a.winsInTwo + a.losesInTb + a.losesInTwo) >
+        b.points / (b.winsInTb + b.winsInTwo + b.losesInTwo + b.losesInTb)) ? -1 : 1).slice(0, 8);
+  }
+
+  setMatchesByDaysPerWeek(allMatches: Array<Match>): void {
+    this.matchesPerDayMap.set('Monday', allMatches.filter(match => new Date(match.date).getDay() === 1).length);
+    this.matchesPerDayMap.set('Tuesday', allMatches.filter(match => new Date(match.date).getDay() === 2).length);
+    this.matchesPerDayMap.set('Wednesday', allMatches.filter(match => new Date(match.date).getDay() === 3).length);
+    this.matchesPerDayMap.set('Thursday', allMatches.filter(match => new Date(match.date).getDay() === 4).length);
+    this.matchesPerDayMap.set('Friday', allMatches.filter(match => new Date(match.date).getDay() === 5).length);
+    this.matchesPerDayMap.set('Saturday', allMatches.filter(match => new Date(match.date).getDay() === 6).length);
+    this.matchesPerDayMap.set('Sunday', allMatches.filter(match => new Date(match.date).getDay() === 0).length);
   }
 
   winPercentageChart(): void {
@@ -100,8 +119,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
       },
       series: [{
         name: 'Postotak pobjeda (min. 10 odigranih)',
-        data: this.firstEightByWinPercentage.map(player => 
-          Math.round(((player.winsInTb + player.winsInTwo)/(player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo))*100))
+        data: this.firstEightByWinPercentage.map(player =>
+          Math.round(((player.winsInTb + player.winsInTwo) /
+            (player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo)) * 100))
       }]
     };
   }
@@ -128,31 +148,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
         // data: [25, 22, 16, 10, 10],
         data: this.firstEightByMatches.map(player => (player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo)),
         color: '#CCFF90'
-      }]
-    };
-  }
-
-  winsInRowChart(): void {
-    this.winsInRow = {
-      chart: {
-        type: 'column'
-      },
-      title: {
-        text: 'Niz pobjeda'
-      },
-      yAxis: {
-        title: false
-      },
-      xAxis: {
-        categories: ['Ivan Ivić', 'Marko Marić', 'Tomo Tomić', 'Pero Perić', 'Luka Lukić']
-      },
-      credits: {
-        enabled: false
-      },
-      series: [{
-        name: 'Broj pobjeda',
-        data: [7, 4, 3, 3, 1],
-        color: '#ef6c00'
       }]
     };
   }
@@ -201,8 +196,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
       },
       series: [{
         name: 'Bodovi po meču (min. 10 odigranih)',
-        // data: [25, 22, 16, 10, 10],
-        data: this.firstEightByPpg.map(player => (player.points/(player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo))),
+        data: this.firstEightByPpg.map(player => (player.points /
+          (player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo))),
         color: '#E57373'
       }]
     };
@@ -226,10 +221,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
         enabled: false
       },
       series: [{
-        name: 'Odigrano mečeva',        
-        data: [this.matchesPerDayMap.get('Monday'), this.matchesPerDayMap.get('Tuesday'), this.matchesPerDayMap.get('Wednesday'), 
-          this.matchesPerDayMap.get('Thursday'), this.matchesPerDayMap.get('Friday'), this.matchesPerDayMap.get('Saturday'), 
-          this.matchesPerDayMap.get('Sunday')],
+        name: 'Odigrano mečeva',
+        data: [this.matchesPerDayMap.get('Monday'), this.matchesPerDayMap.get('Tuesday'), this.matchesPerDayMap.get('Wednesday'),
+        this.matchesPerDayMap.get('Thursday'), this.matchesPerDayMap.get('Friday'), this.matchesPerDayMap.get('Saturday'),
+        this.matchesPerDayMap.get('Sunday')],
         color: '#FFB74D'
       }]
     };

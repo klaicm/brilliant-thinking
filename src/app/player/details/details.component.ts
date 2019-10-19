@@ -49,7 +49,7 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
             // početak i kraj mjeseca uzeti broj pobjeda i poraza iz arch tablice
             // nakon toga oduzeti početak od kraja i dobiti koliko je pobjeda, a koliko poraza u tom mjesecu
             // problem ostaje - kako izvući mjesece "univerzalizirati", a da ne bude hardkodiranje?
-            // enumi, pa razdijeliti na zimsku i ljetnu ligu? 
+            // enumi, pa razdijeliti na zimsku i ljetnu ligu?
 
         });
 
@@ -230,15 +230,15 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
         this.playerService.getAllPlayers().subscribe((response: Array<Player>) => {
             this.allPlayers = response;
 
-            let pointsSortedList = this.allPlayers.sort((a, b) =>
+            const pointsSortedList = this.allPlayers.sort((a, b) =>
                 (a.points > b.points) ? -1 : 1);
 
-            this.currentPlayerPositionPts = pointsSortedList.findIndex(element => element.id === player.id) + 1;
-            let eloSortedList = this.allPlayers.sort((a, b) =>
+            this.currentPlayerPositionPts = pointsSortedList.findIndex(playerEl => playerEl.id === player.id) + 1;
+            const eloSortedList = this.allPlayers.sort((a, b) =>
                 (a.elo > b.elo) ? -1 : 1);
 
-            this.currentPlayerPositionElo = eloSortedList.findIndex(element => element.id === player.id) + 1;
-        })
+            this.currentPlayerPositionElo = eloSortedList.findIndex(playerEl => playerEl.id === player.id) + 1;
+        });
     }
 
     gaugeChart(): void { }
