@@ -7,7 +7,7 @@
     </div>
   </div>
   
-  <mat-tab-group>
+  <mat-tab-group *ngIf="player && matches">
     <mat-tab label="Trenutna sezona">
       <app-details [player]="player" [matches]="matches"></app-details>
     </mat-tab>

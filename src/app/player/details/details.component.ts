@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, AfterViewInit } from '@angular/core';
+import { Component, Input, OnChanges, AfterViewInit, OnInit } from '@angular/core';
 import { Player } from 'src/app/player/player.model';
 import { Match } from 'src/app/player/matches/match.model';
 import { ChangeDetectorRef } from '@angular/core';
@@ -11,7 +11,7 @@ import { PlayerService } from '../player.service';
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss']
 })
-export class DetailsComponent implements AfterViewInit, OnChanges {
+export class DetailsComponent implements OnInit, AfterViewInit, OnChanges {
 
     @Input() player: Player;
     @Input() matches: Array<Match>;
@@ -31,12 +31,9 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
     currentPlayerPositionElo: number;
     allPlayers: Array<Player>;
 
-    constructor(private cdref: ChangeDetectorRef, private router: Router, private playerService: PlayerService) {
+    constructor(private cdref: ChangeDetectorRef, private router: Router, private playerService: PlayerService) { }
 
-    }
-
-    ngAfterViewInit(): void {
-
+    ngOnInit(): void {
         this.getAllPlayers(this.player);
         this.player.archData.forEach(i => {
             this.positionList.push(i.position);
@@ -50,6 +47,9 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
             // enumi, pa razdijeliti na zimsku i ljetnu ligu?
 
         });
+    }
+
+    ngAfterViewInit(): void {
 
         this.positionList.push(this.currentPlayerPositionPts); // trenutna (live) pozicija
 
