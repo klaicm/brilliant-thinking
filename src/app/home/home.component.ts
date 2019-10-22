@@ -160,6 +160,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       title: {
         text: 'Elo rating'
       },
+      reflow: true,
       yAxis: {
         title: false
       },
@@ -185,6 +186,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       title: {
         text: 'Prosjek bodova po meču'
       },
+      reflow: true,
       yAxis: {
         title: false
       },
@@ -211,6 +213,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       title: {
         text: 'Odigrani mečevi po danu'
       },
+      reflow: true,
       yAxis: {
         title: false
       },

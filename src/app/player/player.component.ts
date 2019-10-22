@@ -20,7 +20,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   private sub: Subscription;
   profilePic: String = '../../../assets/images/profile1.png';
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private playerService: PlayerService) { }
+  constructor(private activatedRoute: ActivatedRoute, private playerService: PlayerService) { }
 
   ngOnInit(): void {
     this.getPlayerId();

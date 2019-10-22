@@ -10,26 +10,26 @@
                         </tr>
                         <tr>
                             <th>Pobjede</th>
-                            <td>{{player.winsInTwo+player.winsInTb}}</td>
+                            <td>{{player?.winsInTwo+player?.winsInTb}}</td>
                         </tr>
                         <tr>
                             <th>Porazi</th>
-                            <td>{{player.losesInTwo+player.losesInTb}}</td>
+                            <td>{{player?.losesInTwo+player?.losesInTb}}</td>
                         </tr>
 
                         <tr>
                             <th>Odigrano</th>
-                            <td>{{player.winsInTwo+player.winsInTb+player.losesInTwo+player.losesInTb}}</td>
+                            <td>{{player?.winsInTwo+player?.winsInTb+player?.losesInTwo+player?.losesInTb}}</td>
                         </tr>
 
                         <tr>
                             <th>Postotak</th>
-                            <td>{{((player.winsInTwo+player.winsInTb)/(player.winsInTwo+player.winsInTb+player.losesInTwo+player.losesInTb))*100 | number:'1.0-0'}} %</td>
+                            <td>{{((player?.winsInTwo+player?.winsInTb)/(player?.winsInTwo+player?.winsInTb+player?.losesInTwo+player?.losesInTb))*100 | number:'1.0-0'}} %</td>
                         </tr>
 
                         <tr>
                             <th>ELO rating</th>
-                            <td>{{player.elo}} (Trenutno: {{currentPlayerPositionElo}}.)</td>
+                            <td>{{player?.elo}} (Trenutno: {{currentPlayerPositionElo}}.)</td>
                         </tr>
                     </table>
                 </mat-card>
@@ -41,7 +41,7 @@
                         <ng-container matColumnDef="mark">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Ishod </th>
                             <td mat-cell *matCellDef="let element">
-                                <mat-icon [ngStyle]="{'color': player.id === element.playerW.id ? '#76FF03' : '#F44336'}">fiber_manual_record</mat-icon>
+                                <mat-icon [ngStyle]="{'color': player?.id === element.playerW.id ? '#76FF03' : '#F44336'}">fiber_manual_record</mat-icon>
                             </td>
                         </ng-container>
 
@@ -49,8 +49,8 @@
                         <ng-container matColumnDef="opponent">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Protivnik </th>
                             <td mat-cell *matCellDef="let element">
-                                <a *ngIf="player.id === element.playerW.id" (click)="navigateToPlayer(element.playerL.id)">{{element.playerL.firstName}} {{element.playerL.lastName}}</a>
-                                <a *ngIf="player.id === element.playerL.id" (click)="navigateToPlayer(element.playerW.id)">{{element.playerW.firstName}} {{element.playerW.lastName}}</a>
+                                <a *ngIf="player?.id === element.playerW.id" (click)="navigateToPlayer(element.playerL.id)">{{element.playerL.firstName}} {{element.playerL.lastName}}</a>
+                                <a *ngIf="player?.id === element.playerL.id" (click)="navigateToPlayer(element.playerW.id)">{{element.playerW.firstName}} {{element.playerW.lastName}}</a>
                             </td>
                         </ng-container>
 

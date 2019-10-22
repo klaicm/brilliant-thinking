@@ -1,12 +1,10 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, AfterViewInit } from '@angular/core';
 import { Player } from 'src/app/player/player.model';
 import { Match } from 'src/app/player/matches/match.model';
-import { AfterViewInit } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { PlayerService } from '../player.service';
-import { element } from '@angular/core/src/render3';
 
 @Component({
     selector: 'app-details',
@@ -84,6 +82,7 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
             credits: {
                 enabled: false
             },
+            reflow: true,
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
             },
@@ -129,6 +128,7 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
             credits: {
                 enabled: false
             },
+            reflow: true,
             yAxis: {
                 title: false,
                 allowDecimals: false,
@@ -154,6 +154,7 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
             credits: {
                 enabled: false
             },
+            reflow: true,
             yAxis: {
                 title: false,
                 allowDecimals: false,
@@ -178,6 +179,7 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
             credits: {
                 enabled: false
             },
+            reflow: true,
             yAxis: {
                 title: false,
                 allowDecimals: false,
@@ -214,6 +216,7 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
             credits: {
                 enabled: false
             },
+            reflow: true,
             series: [{
                 name: 'Pobjede',
                 data: [5, 3, 4, 7, 2],
@@ -240,8 +243,6 @@ export class DetailsComponent implements AfterViewInit, OnChanges {
             this.currentPlayerPositionElo = eloSortedList.findIndex(playerEl => playerEl.id === player.id) + 1;
         });
     }
-
-    gaugeChart(): void { }
 
     navigateToPlayer(playerId: number): void {
         this.router.navigate(['/player', playerId]);
