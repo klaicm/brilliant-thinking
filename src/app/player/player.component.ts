@@ -19,6 +19,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
   playerMatchesView = false;
   private sub: Subscription;
   profilePic: String = '../../../assets/images/profile1.png';
+  loadingPlayer = true;
+  loadingMatches = true;
 
   constructor(private activatedRoute: ActivatedRoute, private playerService: PlayerService) { }
 
@@ -34,15 +36,27 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   getPlayer(playerId: number): void {
-    this.playerService.getPlayer(playerId).subscribe((response: Player) => {
-      this.player = response;
-      this.getPlayerMatches(this.playerId);
-    });
+    setTimeout(() => {
+      this.playerService.getPlayer(playerId).subscribe((response: Player) => {
+        if (response) {
+          this.player = response;
+          this.loadingPlayer = false;
+          this.getPlayerMatches(this.playerId);
+        } else {
+          console.error('Greška kod poziva servisa za dohvat igrača. Player Component');
+        }
+      });
+    }, 1000);
   }
 
   getPlayerMatches(playerId: number): void {
     this.playerService.getPlayerMatches(playerId).subscribe((response: Array<Match>) => {
-      this.matches = response;
+      if (response) {
+        this.matches = response;
+        this.loadingMatches = false;
+      } else {
+        console.error('Greška kod poziva servisa za dohvat mečeva. Player component.');
+      }
     });
   }
 

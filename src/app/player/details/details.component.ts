@@ -30,7 +30,7 @@ export class DetailsComponent implements OnInit, AfterViewInit, OnChanges {
     currentPlayerPositionPts: number;
     currentPlayerPositionElo: number;
     allPlayers: Array<Player>;
-    loading: boolean;
+    loadingPlayers: boolean;
 
     constructor(private cdref: ChangeDetectorRef, private router: Router, private playerService: PlayerService) { }
 
@@ -233,20 +233,23 @@ export class DetailsComponent implements OnInit, AfterViewInit, OnChanges {
     getAllPlayers(player: Player): void {
         setTimeout(() => {
             this.playerService.getAllPlayers().subscribe((response: Array<Player>) => {
-                this.allPlayers = response;
-                this.loading = false;
+                if (response) {
+                    this.allPlayers = response;
+                    this.loadingPlayers = false;
 
-                const pointsSortedList = this.allPlayers.sort((a, b) =>
-                    (a.points > b.points) ? -1 : 1);
+                    const pointsSortedList = this.allPlayers.sort((a, b) =>
+                        (a.points > b.points) ? -1 : 1);
 
-                this.currentPlayerPositionPts = pointsSortedList.findIndex(playerEl => playerEl.id === player.id) + 1;
-                const eloSortedList = this.allPlayers.sort((a, b) =>
-                    (a.elo > b.elo) ? -1 : 1);
+                    this.currentPlayerPositionPts = pointsSortedList.findIndex(playerEl => playerEl.id === player.id) + 1;
+                    const eloSortedList = this.allPlayers.sort((a, b) =>
+                        (a.elo > b.elo) ? -1 : 1);
 
-                this.currentPlayerPositionElo = eloSortedList.findIndex(playerEl => playerEl.id === player.id) + 1;
+                    this.currentPlayerPositionElo = eloSortedList.findIndex(playerEl => playerEl.id === player.id) + 1;
+                } else {
+                    console.error('Greška kod poziva servisa za dohvat grača. Details Component');
+                }
             });
         }, 3000);
-
     }
 
     navigateToPlayer(playerId: number): void {

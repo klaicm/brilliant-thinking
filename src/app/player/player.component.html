@@ -1,22 +1,29 @@
-<div style="padding-left: 18px; padding-right: 18px">
-  <div class="row tab-row">
-    <div class="page-header col-sm-4">
-      <h3>
-        <img [src]="profilePic" style="width: 100px; height: 100px" /> {{player?.firstName}} {{player?.lastName}}
-      </h3>
+<app-spinner *ngIf="loadingPlayers || loadingMatches"></app-spinner>
+
+<div *ngIf="!loadingPlayers && !loadingMatches">
+  <div style="padding-left: 18px; padding-right: 18px">
+    <div class="row tab-row">
+      <div class="col-sm-4">
+        <h3>
+          <img [src]="profilePic" style="width: 100px; height: 100px" />
+          <span class="header-name">
+            {{player?.firstName}} {{player?.lastName}}
+          </span>
+        </h3>
+      </div>
     </div>
+
+    <mat-tab-group *ngIf="player && matches">
+      <mat-tab label="Trenutna sezona">
+        <app-details [player]="player" [matches]="matches"></app-details>
+      </mat-tab>
+      <mat-tab label="Odigrani mečevi">
+        <app-matches [player]="player" [matches]="matches"></app-matches>
+      </mat-tab>
+      <mat-tab label="Trofeji">
+        <app-trophies></app-trophies>
+      </mat-tab>
+      <mat-tab label="Prethodne sezone"> Content 3 </mat-tab>
+    </mat-tab-group>
   </div>
-  
-  <mat-tab-group *ngIf="player && matches">
-    <mat-tab label="Trenutna sezona">
-      <app-details [player]="player" [matches]="matches"></app-details>
-    </mat-tab>
-    <mat-tab label="Odigrani mečevi">
-      <app-matches [player]="player" [matches]="matches"></app-matches>
-    </mat-tab>
-    <mat-tab label="Trofeji">
-      <app-trophies></app-trophies>
-    </mat-tab>
-    <mat-tab label="Prethodne sezone"> Content 3 </mat-tab>
-  </mat-tab-group>
 </div>

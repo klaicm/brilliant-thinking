@@ -17,20 +17,18 @@ export class MatchesComponent implements OnChanges {
   @Input() player: Player;
 
   cPlayer: Player = new Player();
-
   match: Match = new Match;
-
   displayedColumns: string[] = ['mark', 'opponent', 'result', 'date'];
-
   dataSource = new MatTableDataSource([]);
+  responseListener = false;
 
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private router: Router, private cdref: ChangeDetectorRef, private playerService: PlayerService) { }
 
   testSaveMatch(): void {
-    let playerWon = new Player;
-    let playerLost = new Player;
+    const playerWon = new Player;
+    const playerLost = new Player;
 
     playerWon.id = 1;
 
@@ -41,8 +39,16 @@ export class MatchesComponent implements OnChanges {
     this.match.playerL = playerLost;
 
     this.playerService.saveMatch(this.match).subscribe(response => {
-      const listen = response;
-      console.log(this.match)
+      this.responseListener = true;
+      setTimeout(() => {
+        const listen = response;
+        if (response) {
+          this.responseListener = false;
+        } else {
+          console.error('Nije uspješno spremljeno.');
+          console.log(this.match);
+        }
+      }, 3000);
     });
   }
 

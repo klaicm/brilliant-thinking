@@ -16,18 +16,25 @@ export class TableComponent implements OnInit {
     'percentage', 'winsInTwo', 'winsInTb', 'losesInTb', 'losesInTwo', 'played'];
   players: Array<Player>;
   dataSource = new MatTableDataSource([]);
+  loadingTable = true;
 
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private tableService: TableService, private router: Router) { }
 
   ngOnInit() {
-
+    setTimeout(() => {
       this.tableService.getTable().subscribe((response: Array<Player>) => {
-        this.players = response;
-        this.dataSource = new MatTableDataSource(this.players);
-        this.dataSource.sort = this.sort;
+        if (response) {
+          this.loadingTable = false;
+          this.players = response;
+          this.dataSource = new MatTableDataSource(this.players);
+          this.dataSource.sort = this.sort;
+        } else {
+          console.error('Greška kod poziva servisa za dohvat tablice. Table Component.');
+        }
       });
+    }, 1000);
   }
 
   navigateToPlayer(playerId: number): void {

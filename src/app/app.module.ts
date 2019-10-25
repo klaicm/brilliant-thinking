@@ -15,13 +15,14 @@ import { DetailsComponent } from 'src/app/player/details/details.component';
 import { ChartModule } from 'angular2-highcharts';
 import { MatTabsModule, MatButtonModule, MatSidenavModule, MatToolbarModule,
   MatListModule, MatTableModule, MatSortModule, MatIconModule, MatCardModule,
-  MatExpansionModule, MatAutocompleteModule, MatInputModule, MatSelectModule, MatFormFieldModule, 
+  MatExpansionModule, MatAutocompleteModule, MatInputModule, MatSelectModule, MatFormFieldModule,
   MatProgressSpinnerModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 import { EloStatsComponent } from './elo-stats/elo-stats/elo-stats.component';
-import { SpinnerComponent } from './spinner/spinner.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { ReverseStringPipe } from './shared/pipes/reverse-string.pipe';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -49,7 +50,8 @@ export function highchartsFactory() {
     DetailsComponent,
     EloStatsComponent,
     EloStatsComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ReverseStringPipe
   ],
   imports: [
     BrowserModule,

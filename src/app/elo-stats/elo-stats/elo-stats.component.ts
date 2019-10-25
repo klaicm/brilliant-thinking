@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerService } from 'src/app/player/player.service';
 import { Player } from 'src/app/player/player.model';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Match } from 'src/app/player/matches/match.model';
 import { MatTableDataSource } from '@angular/material';
 
@@ -32,17 +32,26 @@ export class EloStatsComponent implements OnInit {
   playerAWins = 0;
   playerBWins = 0;
   panelOpenState = false;
+  loadingPlayers = true;
+  calculationLoader = false;
+  showAllCharts = false;
 
   constructor(private playerService: PlayerService) {
     this.playerSelectFormGroup = new FormGroup({
-      playerAFormControl: new FormControl(),
-      playerBFormControl: new FormControl()
+      playerAFormControl: new FormControl('', Validators.required),
+      playerBFormControl: new FormControl('', Validators.required)
     });
   }
 
   ngOnInit() {
     this.playerService.getAllPlayers().subscribe((response: Array<Player>) => {
-      this.allPlayers = response;
+      if (response) {
+        this.allPlayers = response;
+        this.loadingPlayers = false;
+      } else {
+        console.error('Greška kod dohvata igrača. EloStats Component.');
+      }
+
     });
 
     this.playerSelectFormGroup.get('playerAFormControl').valueChanges.subscribe((value: Player) => {
@@ -59,11 +68,20 @@ export class EloStatsComponent implements OnInit {
     const playerB: Player = this.playerSelectFormGroup.get('playerBFormControl').value;
 
     if (playerA && playerB) {
+      this.showAllCharts = true;
       this.playerService.getEloStats(playerA.elo, playerB.elo).subscribe(response => {
-        this.probabilityA = Math.round(response.ea * 100);
-        this.probabilityB = Math.round(response.eb * 100);
-        this.winProbabilityChart(this.probabilityA, this.probabilityB,
-          playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
+        setTimeout(() => {
+          if (response) {
+            this.showAllCharts = true;
+            this.calculationLoader = false;
+            this.probabilityA = Math.round(response.ea * 100);
+            this.probabilityB = Math.round(response.eb * 100);
+            this.winProbabilityChart(this.probabilityA, this.probabilityB,
+              playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
+          } else {
+            console.error('Greška kod izračuna vjerojatnosti pobjede.');
+          }
+        }, 1000);
       });
 
       this.getPlayerMatches(playerA.id, playerB.id);
@@ -76,31 +94,36 @@ export class EloStatsComponent implements OnInit {
         playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
 
     } else {
-
+      // dialog ili disablean button
+      console.log('Daj odaberi igrača.');
     }
 
   }
 
   getPlayer(playerId: number, player: String): void {
     this.playerService.getPlayer(playerId).subscribe((response: Player) => {
-      if (player === 'A') {
-        this.positionAList = [];
-        this.eloRatingAList = [];
-        this.winPercentageAList = [];
-        response.archData.forEach(i => {
-          this.positionAList.push(i.position);
-          this.eloRatingAList.push(i.eloRating);
-          this.winPercentageAList.push(i.winPercentage);
-        });
-      } else if (player === 'B') {
-        this.positionBList = [];
-        this.eloRatingBList = [];
-        this.winPercentageBList = [];
-        response.archData.forEach(i => {
-          this.positionBList.push(i.position);
-          this.eloRatingBList.push(i.eloRating);
-          this.winPercentageBList.push(i.winPercentage);
-        });
+      if (response) {
+        if (player === 'A') {
+          this.positionAList = [];
+          this.eloRatingAList = [];
+          this.winPercentageAList = [];
+          response.archData.forEach(i => {
+            this.positionAList.push(i.position);
+            this.eloRatingAList.push(i.eloRating);
+            this.winPercentageAList.push(i.winPercentage);
+          });
+        } else if (player === 'B') {
+          this.positionBList = [];
+          this.eloRatingBList = [];
+          this.winPercentageBList = [];
+          response.archData.forEach(i => {
+            this.positionBList.push(i.position);
+            this.eloRatingBList.push(i.eloRating);
+            this.winPercentageBList.push(i.winPercentage);
+          });
+        }
+      } else {
+        console.error('Greška kod dohvata igrača. EloStats Component');
       }
     });
   }
@@ -109,21 +132,27 @@ export class EloStatsComponent implements OnInit {
     this.playerService.getPlayerMatches(playerAId).subscribe((response: Array<Match>) => {
       this.playerAWins = 0;
       this.playerBWins = 0;
-      this.matches = response;
 
-      const mutualMatches = this.matches.filter(match => (match.playerL.id === playerBId || match.playerW.id === playerBId));
+      if (response) {
+        this.matches = response;
 
-      if (mutualMatches) {
-        mutualMatches.forEach(match => {
-          if (match.playerW.id === playerAId) {
-            this.playerAWins++;
-          } else if (match.playerW.id === playerBId) {
-            this.playerBWins++;
-          }
-        });
+        const mutualMatches = this.matches.filter(match => (match.playerL.id === playerBId || match.playerW.id === playerBId));
+
+        if (mutualMatches) {
+          mutualMatches.forEach(match => {
+            if (match.playerW.id === playerAId) {
+              this.playerAWins++;
+            } else if (match.playerW.id === playerBId) {
+              this.playerBWins++;
+            }
+          });
+        }
+
+        this.dataSource = new MatTableDataSource(mutualMatches);
+      } else {
+        console.error('dohvata mečeva. EloStatsComponent.');
       }
 
-      this.dataSource = new MatTableDataSource(mutualMatches);
     });
   }
 

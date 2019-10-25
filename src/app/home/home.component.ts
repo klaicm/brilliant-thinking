@@ -52,30 +52,43 @@ export class HomeComponent implements OnInit, AfterViewInit {
   getAllPlayers(): void {
     setTimeout(() => {
       this.playerService.getAllPlayers().subscribe((response: Array<Player>) => {
-        this.allPlayers = response;
-        this.loadingPlayers = false;
 
-        const playersWithMinTenMatches = this.allPlayers.filter(player =>
-          (player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo) >= 10);
+        if (response) {
+          this.loadingPlayers = false;
+          this.allPlayers = response;
 
-        this.setAllFirstEights(playersWithMinTenMatches);
-        this.playerMatchesChart();
-        this.eloRatingChart();
-        this.winPercentageChart();
-        this.pointsPerMatchChart();
+          const playersWithMinTenMatches = this.allPlayers.filter(player =>
+            (player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo) >= 10);
+
+          this.setAllFirstEights(playersWithMinTenMatches);
+          this.playerMatchesChart();
+          this.eloRatingChart();
+          this.winPercentageChart();
+          this.pointsPerMatchChart();
+        } else {
+          // TODO notificaton dialog
+          console.error('Greška kod poziva servisa za dohvat igrača. Home Component.');
+        }
+
       });
     }, 3000);
   }
 
   getAllMatches(): void {
     this.tableService.getAllMatches().subscribe((response: Array<Match>) => {
-      this.matches = response;
-      this.loadingMatches = false;
-      this.dataSource = new MatTableDataSource(this.matches);
-      this.dataSource.sort = this.sort;
+      if (response) {
+        this.loadingMatches = false;
+        this.matches = response;
 
-      this.setMatchesByDaysPerWeek(this.matches);
-      this.matchesPerDayChart();
+        this.dataSource = new MatTableDataSource(this.matches);
+        this.dataSource.sort = this.sort;
+
+        this.setMatchesByDaysPerWeek(this.matches);
+        this.matchesPerDayChart();
+      } else {
+        // TODO notification dialog
+        console.error('Greška kod poziva servisa za dohvat mečeva. HomeComponent.');
+      }
     });
   }
 
