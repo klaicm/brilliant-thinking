@@ -31,6 +31,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   matchesPerDayMap: Map<String, number> = new Map<String, number>();
   matchesLength: number;
   allPlayersLength: number;
+  loadingPlayers = true;
+  loadingMatches = true;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -48,23 +50,27 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   getAllPlayers(): void {
-    this.playerService.getAllPlayers().subscribe((response: Array<Player>) => {
-      this.allPlayers = response;
+    setTimeout(() => {
+      this.playerService.getAllPlayers().subscribe((response: Array<Player>) => {
+        this.allPlayers = response;
+        this.loadingPlayers = false;
 
-      const playersWithMinTenMatches = this.allPlayers.filter(player =>
-        (player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo) >= 10);
+        const playersWithMinTenMatches = this.allPlayers.filter(player =>
+          (player.winsInTb + player.winsInTwo + player.losesInTb + player.losesInTwo) >= 10);
 
-      this.setAllFirstEights(playersWithMinTenMatches);
-      this.playerMatchesChart();
-      this.eloRatingChart();
-      this.winPercentageChart();
-      this.pointsPerMatchChart();
-    });
+        this.setAllFirstEights(playersWithMinTenMatches);
+        this.playerMatchesChart();
+        this.eloRatingChart();
+        this.winPercentageChart();
+        this.pointsPerMatchChart();
+      });
+    }, 3000);
   }
 
   getAllMatches(): void {
     this.tableService.getAllMatches().subscribe((response: Array<Match>) => {
       this.matches = response;
+      this.loadingMatches = false;
       this.dataSource = new MatTableDataSource(this.matches);
       this.dataSource.sort = this.sort;
 

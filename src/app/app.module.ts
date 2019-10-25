@@ -15,11 +15,13 @@ import { DetailsComponent } from 'src/app/player/details/details.component';
 import { ChartModule } from 'angular2-highcharts';
 import { MatTabsModule, MatButtonModule, MatSidenavModule, MatToolbarModule,
   MatListModule, MatTableModule, MatSortModule, MatIconModule, MatCardModule,
-  MatExpansionModule, MatAutocompleteModule, MatInputModule, MatSelectModule, MatFormFieldModule } from '@angular/material';
+  MatExpansionModule, MatAutocompleteModule, MatInputModule, MatSelectModule, MatFormFieldModule, 
+  MatProgressSpinnerModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 import { EloStatsComponent } from './elo-stats/elo-stats/elo-stats.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -46,7 +48,8 @@ export function highchartsFactory() {
     MatchesComponent,
     DetailsComponent,
     EloStatsComponent,
-    EloStatsComponent
+    EloStatsComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -66,6 +69,7 @@ export function highchartsFactory() {
     MatInputModule,
     MatSelectModule,
     MatFormFieldModule,
+    MatProgressSpinnerModule,
     ReactiveFormsModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
@@ -85,6 +89,7 @@ export function highchartsFactory() {
     MatAutocompleteModule,
     MatInputModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     FormsModule

@@ -1,107 +1,112 @@
-<div style="padding-left: 18px; padding-right: 18px">
-  <div class="row tab-row">
-    <div class="page-header col-sm-4">
-      <h3>Zimska liga 2019./2020.</h3>
+<app-spinner *ngIf="loadingPlayers || loadingMatches"></app-spinner>
+
+<div *ngIf="!loadingPlayers && !loadingMatches">
+  <div style="padding-left: 18px; padding-right: 18px">
+    <div class="row tab-row">
+      <div class="page-header col-sm-4">
+        <h3>Zimska liga 2019./2020.</h3>
+      </div>
+    </div>
+    <div>
+      <div class="row tab-row">
+        <div class="col-sm-8 card">
+          <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Posljednjih 20 odigranih mečeva
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <table mat-table [dataSource]="dataSource" matSort style="width: 100%">
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="playerWon">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Pobjednik </th>
+                  <td mat-cell *matCellDef="let element">
+                    <a (click)="navigateToPlayer(element.playerW.id)">{{element.playerW.firstName | slice : 0 : 1}}. {{element.playerW.lastName}}
+                    </a>
+                  </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="playerLost">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Poraženi </th>
+                  <td mat-cell *matCellDef="let element">
+                    <a (click)="navigateToPlayer(element.playerL.id)">{{element.playerL.firstName | slice : 0 : 1}}. {{element.playerL.lastName}}
+                    </a>
+                  </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="result">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Rezultat </th>
+                  <td mat-cell *matCellDef="let element"> {{element.result}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="date">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Datum </th>
+                  <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+
+            </mat-expansion-panel>
+
+          </mat-accordion>
+
+        </div>
+
+      </div>
+      <div class="row tab-row">
+
+        <div class="col-sm-4 card">
+          <mat-card>
+            <chart [options]="playerMatches"> </chart>
+          </mat-card>
+        </div>
+        <div class="col-sm-4 card">
+          <mat-card>
+            <chart [options]="eloRating"> </chart>
+          </mat-card>
+        </div>
+      </div>
+      <div class="row tab-row">
+        <div class="col-sm-4 card">
+          <mat-card>
+            <chart [options]="pointsPerMatch"> </chart>
+          </mat-card>
+        </div>
+        <div class="col-sm-4 card">
+          <mat-card>
+            <chart [options]="winPercentage"> </chart>
+          </mat-card>
+        </div>
+      </div>
+      <div class="row tab-row">
+        <div class="col-sm-4 card">
+          <mat-card>
+            <chart [options]="matchesPerDay"> </chart>
+          </mat-card>
+        </div>
+      </div>
+      <div class="row tab-row">
+        <div class="col-sm-2 card" style="padding: 8px; text-align: center;">
+          <mat-card>
+            <h5>Ukupno odigranih mečeva</h5>
+            <h5>{{matches.length}}</h5>
+          </mat-card>
+        </div>
+        <div class="col-sm-2 card" style="padding: 8px; text-align: center;">
+          <mat-card>
+            <h5>Ukupan broj igrača</h5>
+            <h5>{{allPlayers.length}}</h5>
+          </mat-card>
+        </div>
+      </div>
     </div>
   </div>
-  <div *ngIf="allPlayers && matches">
-    <div class="row tab-row">
-      <div class="col-sm-8 card">
-        <mat-accordion>
-          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Posljednjih 20 odigranih mečeva
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-
-            <table mat-table [dataSource]="dataSource" matSort style="width: 100%">
-
-              <!-- Position Column -->
-              <ng-container matColumnDef="playerWon">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Pobjednik </th>
-                <td mat-cell *matCellDef="let element">
-                  <a (click)="navigateToPlayer(element.playerW.id)">{{element.playerW.firstName | slice : 0 : 1}}.
-                    {{element.playerW.lastName}}</a>
-                </td>
-              </ng-container>
-
-              <!-- Name Column -->
-              <ng-container matColumnDef="playerLost">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Poraženi </th>
-                <td mat-cell *matCellDef="let element">
-                  <a (click)="navigateToPlayer(element.playerL.id)">{{element.playerL.firstName | slice : 0 : 1}}.
-                    {{element.playerL.lastName}}</a>
-                </td>
-              </ng-container>
-
-              <!-- Weight Column -->
-              <ng-container matColumnDef="result">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Rezultat </th>
-                <td mat-cell *matCellDef="let element"> {{element.result}} </td>
-              </ng-container>
-
-              <!-- Weight Column -->
-              <ng-container matColumnDef="date">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Datum </th>
-                <td mat-cell *matCellDef="let element"> {{element.date}} </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-
-          </mat-expansion-panel>
-
-        </mat-accordion>
-
-      </div>
-
-    </div>
-    <div class="row tab-row">
-
-      <div class="col-sm-4 card">
-        <mat-card>
-          <chart [options]="playerMatches"> </chart>
-        </mat-card>
-      </div>
-      <div class="col-sm-4 card">
-        <mat-card>
-          <chart [options]="eloRating"> </chart>
-        </mat-card>
-      </div>
-    </div>
-    <div class="row tab-row">
-      <div class="col-sm-4 card">
-        <mat-card>
-          <chart [options]="pointsPerMatch"> </chart>
-        </mat-card>
-      </div>
-      <div class="col-sm-4 card">
-        <mat-card>
-          <chart [options]="winPercentage"> </chart>
-        </mat-card>
-      </div>
-    </div>
-    <div class="row tab-row">
-      <div class="col-sm-4 card">
-        <mat-card>
-          <chart [options]="matchesPerDay"> </chart>
-        </mat-card>
-      </div>
-    </div>
-    <div class="row tab-row">
-      <div class="col-sm-2 card" style="padding: 8px; text-align: center;">
-        <mat-card>
-          <h5>Ukupno odigranih mečeva</h5>
-          <h5>{{matches.length}}</h5>
-        </mat-card>
-      </div>
-      <div class="col-sm-2 card" style="padding: 8px; text-align: center;">
-        <mat-card>
-          <h5>Ukupan broj igrača</h5>
-          <h5>{{allPlayers.length}}</h5>
-        </mat-card>
-      </div>
-    </div>
-  </div>
+</div>

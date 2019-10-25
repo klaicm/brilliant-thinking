@@ -30,6 +30,7 @@ export class DetailsComponent implements OnInit, AfterViewInit, OnChanges {
     currentPlayerPositionPts: number;
     currentPlayerPositionElo: number;
     allPlayers: Array<Player>;
+    loading: boolean;
 
     constructor(private cdref: ChangeDetectorRef, private router: Router, private playerService: PlayerService) { }
 
@@ -230,18 +231,22 @@ export class DetailsComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     getAllPlayers(player: Player): void {
-        this.playerService.getAllPlayers().subscribe((response: Array<Player>) => {
-            this.allPlayers = response;
+        setTimeout(() => {
+            this.playerService.getAllPlayers().subscribe((response: Array<Player>) => {
+                this.allPlayers = response;
+                this.loading = false;
 
-            const pointsSortedList = this.allPlayers.sort((a, b) =>
-                (a.points > b.points) ? -1 : 1);
+                const pointsSortedList = this.allPlayers.sort((a, b) =>
+                    (a.points > b.points) ? -1 : 1);
 
-            this.currentPlayerPositionPts = pointsSortedList.findIndex(playerEl => playerEl.id === player.id) + 1;
-            const eloSortedList = this.allPlayers.sort((a, b) =>
-                (a.elo > b.elo) ? -1 : 1);
+                this.currentPlayerPositionPts = pointsSortedList.findIndex(playerEl => playerEl.id === player.id) + 1;
+                const eloSortedList = this.allPlayers.sort((a, b) =>
+                    (a.elo > b.elo) ? -1 : 1);
 
-            this.currentPlayerPositionElo = eloSortedList.findIndex(playerEl => playerEl.id === player.id) + 1;
-        });
+                this.currentPlayerPositionElo = eloSortedList.findIndex(playerEl => playerEl.id === player.id) + 1;
+            });
+        }, 3000);
+
     }
 
     navigateToPlayer(playerId: number): void {
