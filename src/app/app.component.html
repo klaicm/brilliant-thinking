@@ -28,7 +28,7 @@
     </mat-toolbar>
 
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-        <mat-sidenav #snav [mode]='over' [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" (click)="snav.toggle()">
+        <mat-sidenav #snav [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" (click)="snav.toggle()">
             <mat-nav-list>
                 <mat-list-item>
                     <button mat-icon-button routerLink="">
