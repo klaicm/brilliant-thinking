@@ -1,0 +1,60 @@
+<div class="page-header col-sm-4">
+  <h3>Unos meča</h3>
+</div>
+
+<form [formGroup]="matchFormGroup">
+  <mat-card>
+    <div class="row">
+      <mat-form-field style="padding-left: 16px;">
+        <mat-select placeholder="Pobjednik" formControlName="playerWinFormControl">
+          <mat-option *ngFor="let player of allPlayers" [value]="player">
+            {{player.firstName}} {{player.lastName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+       -
+      <mat-form-field style="padding-left: 16px;">
+        <mat-select placeholder="Poraženi" formControlName="playerLostFormControl">
+          <mat-option *ngFor="let player of allPlayers" [value]="player">
+            {{player.firstName}} {{player.lastName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field style="margin-left: 16px">
+        <input matInput [matDatepicker]="picker" placeholder="Datum" formControlName="dateFormControl">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="row" style="text-align: center;">
+      <mat-form-field style="padding-left: 16px;">
+        <mat-select placeholder="Prvi set" formControlName="firstSetFormControl">
+          <mat-option *ngFor="let result of resultList; let i = index" [value]="result">
+            {{result}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field style="padding-left: 16px;">
+        <mat-select placeholder="Drugi set" formControlName="secondSetFormControl">
+          <mat-option *ngFor="let result of resultList; let i = index" [value]="result">
+            {{result}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field style="margin-left: 16px">
+        <input matInput placeholder="Tie-break" formControlName="thirdSetFormControl">
+      </mat-form-field>
+    </div>
+
+    <div class="row" style="text-align: center;">
+      <button mat-raised-button [color]="'success'" aria-label="Calculate" (click)="saveMatch()"
+        [disabled]="matchFormGroup.invalid">
+        Spremi
+      </button>
+    </div>
+  </mat-card>
+</form>

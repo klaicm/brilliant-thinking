@@ -17,13 +17,17 @@ import { MatTabsModule, MatButtonModule, MatSidenavModule, MatToolbarModule,
   MatListModule, MatTableModule, MatSortModule, MatIconModule, MatCardModule,
   MatExpansionModule, MatAutocompleteModule, MatInputModule, MatSelectModule, MatFormFieldModule,
   MatProgressSpinnerModule,
-  MatPaginatorModule} from '@angular/material';
+  MatPaginatorModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MAT_DATE_LOCALE} from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 import { EloStatsComponent } from './elo-stats/elo-stats/elo-stats.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { ReverseStringPipe } from './shared/pipes/reverse-string.pipe';
+import { MatchInputComponent } from './match-input/match-input.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -32,7 +36,8 @@ const appRoutes: Routes = [
   { path: 'trophies', component: TrophiesComponent },
   { path: 'matches', component: MatchesComponent },
   { path: 'details', component: DetailsComponent },
-  { path: 'elo-stats', component: EloStatsComponent }
+  { path: 'elo-stats', component: EloStatsComponent },
+  { path: 'match-input', component: MatchInputComponent }
 ];
 
 export function highchartsFactory() {
@@ -52,7 +57,8 @@ export function highchartsFactory() {
     EloStatsComponent,
     EloStatsComponent,
     SpinnerComponent,
-    ReverseStringPipe
+    ReverseStringPipe,
+    MatchInputComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +80,8 @@ export function highchartsFactory() {
     MatFormFieldModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     ReactiveFormsModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
@@ -95,6 +103,8 @@ export function highchartsFactory() {
     MatSelectModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     FormsModule
@@ -105,6 +115,9 @@ export function highchartsFactory() {
     {
       provide: HighchartsStatic,
       useFactory: highchartsFactory
+    },
+    {
+      provide: MAT_DATE_LOCALE, useValue: 'hr'
     }
   ],
   schemas: [

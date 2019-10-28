@@ -29,7 +29,9 @@ export class TableComponent implements OnInit {
           this.loadingTable = false;
           this.players = response;
           this.dataSource = new MatTableDataSource(this.players);
-          this.dataSource.sort = this.sort;
+          setTimeout(() => {
+            this.dataSource.sort = this.sort;
+          });
         } else {
           console.error('Greška kod poziva servisa za dohvat tablice. Table Component.');
         }
