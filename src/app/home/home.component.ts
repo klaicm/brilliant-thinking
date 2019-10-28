@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
 
       });
-    }, 3000);
+    }, 8000);
   }
 
   getAllMatches(): void {
@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.dataSource = new MatTableDataSource(this.matches);
         setTimeout(() => {
           this.dataSource.paginator = this.paginator;
-        }, 4000);
+        }, 8000);
 
 
 
