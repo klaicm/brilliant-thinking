@@ -1,8 +1,8 @@
-import { Component, Input, OnChanges, AfterViewInit, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, AfterViewInit, OnInit, ViewChild } from '@angular/core';
 import { Player } from 'src/app/player/player.model';
 import { Match } from 'src/app/player/matches/match.model';
 import { ChangeDetectorRef } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { Router } from '@angular/router';
 import { PlayerService } from '../player.service';
 
@@ -15,6 +15,8 @@ export class DetailsComponent implements OnInit, AfterViewInit, OnChanges {
 
     @Input() player: Player;
     @Input() matches: Array<Match>;
+
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     position: Object;
     winPercentage: Object;
@@ -66,6 +68,9 @@ export class DetailsComponent implements OnInit, AfterViewInit, OnChanges {
     ngOnChanges() {
         if (this.matches) {
             this.dataSource = new MatTableDataSource(this.matches);
+            setTimeout(() => {
+                this.dataSource.paginator = this.paginator;
+            });
         }
     }
 

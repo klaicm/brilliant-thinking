@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { TableService } from 'src/app/table/table.service';
 import { Match } from 'src/app/player/matches/match.model';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlayerService } from '../player/player.service';
@@ -35,6 +35,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   loadingMatches = true;
 
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private tableService: TableService, private playerService: PlayerService, private router: Router,
     private cdRef: ChangeDetectorRef) { }
@@ -81,7 +82,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.matches = response;
 
         this.dataSource = new MatTableDataSource(this.matches);
-        this.dataSource.sort = this.sort;
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+        }, 4000);
+
+
 
         this.setMatchesByDaysPerWeek(this.matches);
         this.matchesPerDayChart();

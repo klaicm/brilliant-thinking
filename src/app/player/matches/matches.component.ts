@@ -1,7 +1,7 @@
 import { Component, OnChanges, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Input } from '@angular/core';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { Match } from './match.model';
 import { Player } from 'src/app/player/player.model';
 import { PlayerService } from 'src/app/player/player.service';
@@ -23,6 +23,7 @@ export class MatchesComponent implements OnChanges {
   responseListener = false;
 
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private router: Router, private cdref: ChangeDetectorRef, private playerService: PlayerService) { }
 
@@ -56,6 +57,7 @@ export class MatchesComponent implements OnChanges {
     if (this.matches) {
       this.dataSource = new MatTableDataSource(this.matches);
       this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     }
 
     if (this.player) {

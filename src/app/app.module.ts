@@ -16,7 +16,8 @@ import { ChartModule } from 'angular2-highcharts';
 import { MatTabsModule, MatButtonModule, MatSidenavModule, MatToolbarModule,
   MatListModule, MatTableModule, MatSortModule, MatIconModule, MatCardModule,
   MatExpansionModule, MatAutocompleteModule, MatInputModule, MatSelectModule, MatFormFieldModule,
-  MatProgressSpinnerModule } from '@angular/material';
+  MatProgressSpinnerModule,
+  MatPaginatorModule} from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
@@ -72,6 +73,7 @@ export function highchartsFactory() {
     MatSelectModule,
     MatFormFieldModule,
     MatProgressSpinnerModule,
+    MatPaginatorModule,
     ReactiveFormsModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
@@ -92,6 +94,7 @@ export function highchartsFactory() {
     MatInputModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatPaginatorModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     FormsModule
