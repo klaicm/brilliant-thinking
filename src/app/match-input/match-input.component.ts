@@ -67,7 +67,7 @@ export class MatchInputComponent implements OnInit {
     match.date = date;
 
     this.playerService.saveMatch(match).subscribe(response => {
-      console.log('Spremljena');
+      console.log('Saved');
     });
   }
 }

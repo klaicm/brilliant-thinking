@@ -94,8 +94,7 @@ export class EloStatsComponent implements OnInit {
         playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
 
     } else {
-      // dialog ili disablean button
-      console.log('Daj odaberi igrača.');
+
     }
 
   }

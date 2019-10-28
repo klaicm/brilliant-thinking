@@ -47,7 +47,6 @@ export class MatchesComponent implements OnChanges {
           this.responseListener = false;
         } else {
           console.error('Nije uspješno spremljeno.');
-          console.log(this.match);
         }
       }, 3000);
     });
