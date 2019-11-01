@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
 
       });
-    }, 8000);
+    }, 1000);
   }
 
   getAllMatches(): void {
@@ -84,10 +84,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.dataSource = new MatTableDataSource(this.matches);
         setTimeout(() => {
           this.dataSource.paginator = this.paginator;
-        }, 8000);
-
-
-
+        }, 1000);
         this.setMatchesByDaysPerWeek(this.matches);
         this.matchesPerDayChart();
       } else {

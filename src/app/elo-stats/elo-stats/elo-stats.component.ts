@@ -44,15 +44,16 @@ export class EloStatsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.playerService.getAllPlayers().subscribe((response: Array<Player>) => {
-      if (response) {
-        this.allPlayers = response;
-        this.loadingPlayers = false;
-      } else {
-        console.error('Greška kod dohvata igrača. EloStats Component.');
-      }
-
-    });
+    setTimeout(() => {
+      this.playerService.getAllPlayers().subscribe((response: Array<Player>) => {
+        if (response) {
+          this.allPlayers = response;
+          this.loadingPlayers = false;
+        } else {
+          console.error('Greška kod dohvata igrača. EloStats Component.');
+        }
+      });
+    }, 2000);
 
     this.playerSelectFormGroup.get('playerAFormControl').valueChanges.subscribe((value: Player) => {
       this.getPlayer(value.id, 'A');
@@ -69,6 +70,7 @@ export class EloStatsComponent implements OnInit {
 
     if (playerA && playerB) {
       this.showAllCharts = true;
+      this.calculationLoader = true;
       this.playerService.getEloStats(playerA.elo, playerB.elo).subscribe(response => {
         setTimeout(() => {
           if (response) {
@@ -81,7 +83,7 @@ export class EloStatsComponent implements OnInit {
           } else {
             console.error('Greška kod izračuna vjerojatnosti pobjede.');
           }
-        }, 1000);
+        }, 2000);
       });
 
       this.getPlayerMatches(playerA.id, playerB.id);
@@ -94,7 +96,7 @@ export class EloStatsComponent implements OnInit {
         playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
 
     } else {
-
+      console.error('Potreban unos oba igrača.');
     }
 
   }

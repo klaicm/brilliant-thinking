@@ -12,7 +12,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-       -
+      -
       <mat-form-field style="padding-left: 16px;">
         <mat-select placeholder="Poraženi" formControlName="playerLostFormControl">
           <mat-option *ngFor="let player of allPlayers" [value]="player">
@@ -50,9 +50,16 @@
       </mat-form-field>
     </div>
 
+    <mat-form-field style="margin-left: 16px">
+      <input matInput placeholder="Naziv file-a (bez ekstenzije)" [(ngModel)]="fileName" [ngModelOptions]="{standalone: true}">
+    </mat-form-field>
+
     <div class="row" style="text-align: center;">
-      <button mat-raised-button [color]="'success'" aria-label="Calculate" (click)="saveMatch()"
+      <!-- <button mat-raised-button [color]="'success'" aria-label="Calculate" (click)="saveMatch()"
         [disabled]="matchFormGroup.invalid">
+        Spremi
+      </button> -->
+      <button mat-raised-button [color]="'success'" aria-label="Calculate" (click)="setFileName(fileName)">
         Spremi
       </button>
     </div>

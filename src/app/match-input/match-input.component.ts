@@ -68,6 +68,15 @@ export class MatchInputComponent implements OnInit {
 
     this.playerService.saveMatch(match).subscribe(response => {
       console.log('Saved');
+      if (response) {
+        console.log('Notification success');
+      }
+    });
+  }
+
+  setFileName(fileName: string): void {
+    this.playerService.importExcelFile(fileName).subscribe(response => {
+      console.log('imported ' + fileName);
     });
   }
 }

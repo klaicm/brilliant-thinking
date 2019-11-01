@@ -53,7 +53,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private _filter(value: any): any[] {
     const filterValue = value;
-    return this.allPlayers.filter(option => option.firstName.toLowerCase().includes(filterValue));
+    return this.allPlayers.filter(option =>
+      (option.firstName.includes(filterValue) || option.lastName.includes(filterValue))
+    );
   }
 
   displayFn(val: Player) {
