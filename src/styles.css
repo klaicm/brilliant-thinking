@@ -1,1 +1,9 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.snackbar-background-red{
+    color: #F44336;
+ }
+
+.snackbar-background-green {
+    color: #B2FF59;
+}

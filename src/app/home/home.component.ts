@@ -6,6 +6,7 @@ import { ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlayerService } from '../player/player.service';
 import { Player } from '../player/player.model';
+import { SnackMessageService } from '../shared/services/snack-message.service';
 
 @Component({
   selector: 'app-home',
@@ -38,7 +39,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private tableService: TableService, private playerService: PlayerService, private router: Router,
-    private cdRef: ChangeDetectorRef) { }
+    private cdRef: ChangeDetectorRef, private snackMessageService: SnackMessageService) { }
 
   ngOnInit() {
     this.getAllPlayers();
@@ -67,8 +68,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.winPercentageChart();
           this.pointsPerMatchChart();
         } else {
-          // TODO notificaton dialog
-          console.error('Greška kod poziva servisa za dohvat igrača. Home Component.');
+          this.snackMessageService.showError('Greška kod poziva servisa za dohvat igrača.');
         }
 
       });
@@ -88,8 +88,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.setMatchesByDaysPerWeek(this.matches);
         this.matchesPerDayChart();
       } else {
-        // TODO notification dialog
-        console.error('Greška kod poziva servisa za dohvat mečeva. HomeComponent.');
+        this.snackMessageService.showError('Greška kod poziva servisa za dohvat mečeva');
       }
     });
   }

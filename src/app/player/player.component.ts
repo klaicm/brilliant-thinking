@@ -4,6 +4,7 @@ import { PlayerService } from 'src/app/player/player.service';
 import { Subscription } from 'rxjs';
 import { Player } from './player.model';
 import { Match } from './matches/match.model';
+import { SnackMessageService } from '../shared/services/snack-message.service';
 
 @Component({
   selector: 'app-player',
@@ -22,7 +23,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
   loadingPlayer = true;
   loadingMatches = true;
 
-  constructor(private activatedRoute: ActivatedRoute, private playerService: PlayerService) { }
+  constructor(private activatedRoute: ActivatedRoute, private playerService: PlayerService,
+    private snackMessageService: SnackMessageService) { }
 
   ngOnInit(): void {
     this.getPlayerId();
@@ -43,7 +45,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
           this.loadingPlayer = false;
           this.getPlayerMatches(this.playerId);
         } else {
-          console.error('Greška kod poziva servisa za dohvat igrača. Player Component');
+          this.snackMessageService.showError('Greška kod poziva servisa za dohvat igrača.');
         }
       });
     }, 1000);
@@ -55,7 +57,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
         this.matches = response;
         this.loadingMatches = false;
       } else {
-        console.error('Greška kod poziva servisa za dohvat mečeva. Player component.');
+        this.snackMessageService.showError('Greška kod poziva servisa za dohvat igrača.');
       }
     });
   }

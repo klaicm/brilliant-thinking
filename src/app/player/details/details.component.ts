@@ -5,6 +5,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { Router } from '@angular/router';
 import { PlayerService } from '../player.service';
+import { SnackMessageService } from 'src/app/shared/services/snack-message.service';
 
 @Component({
     selector: 'app-details',
@@ -34,7 +35,8 @@ export class DetailsComponent implements OnInit, AfterViewInit, OnChanges {
     allPlayers: Array<Player>;
     loadingPlayers: boolean;
 
-    constructor(private cdref: ChangeDetectorRef, private router: Router, private playerService: PlayerService) { }
+    constructor(private cdref: ChangeDetectorRef, private router: Router, private playerService: PlayerService,
+        private snackMessageService: SnackMessageService) { }
 
     ngOnInit(): void {
         this.getAllPlayers(this.player);
@@ -251,7 +253,7 @@ export class DetailsComponent implements OnInit, AfterViewInit, OnChanges {
 
                     this.currentPlayerPositionElo = eloSortedList.findIndex(playerEl => playerEl.id === player.id) + 1;
                 } else {
-                    console.error('Greška kod poziva servisa za dohvat grača. Details Component');
+                    this.snackMessageService.showError('Greška kod poziva servisa za dohvat igrača.');
                 }
             });
         }, 3000);

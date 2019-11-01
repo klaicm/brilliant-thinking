@@ -5,6 +5,7 @@ import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { Match } from './match.model';
 import { Player } from 'src/app/player/player.model';
 import { PlayerService } from 'src/app/player/player.service';
+import { SnackMessageService } from 'src/app/shared/services/snack-message.service';
 
 @Component({
   selector: 'app-matches',
@@ -25,7 +26,7 @@ export class MatchesComponent implements OnChanges {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private router: Router, private cdref: ChangeDetectorRef, private playerService: PlayerService) { }
+  constructor(private router: Router, private playerService: PlayerService, private snackMessageService: SnackMessageService) { }
 
   testSaveMatch(): void {
     const playerWon = new Player;
@@ -46,7 +47,7 @@ export class MatchesComponent implements OnChanges {
         if (response) {
           this.responseListener = false;
         } else {
-          console.error('Nije uspješno spremljeno.');
+          this.snackMessageService.showError('Nije uspješno spremljeno.');
         }
       }, 3000);
     });

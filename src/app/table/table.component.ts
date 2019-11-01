@@ -4,6 +4,7 @@ import { Player } from 'src/app/player/player.model';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { ViewChild } from '@angular/core';
+import { SnackMessageService } from '../shared/services/snack-message.service';
 
 @Component({
   selector: 'app-table',
@@ -12,7 +13,7 @@ import { ViewChild } from '@angular/core';
 })
 export class TableComponent implements OnInit {
 
-  displayedColumns: string[] = ['position', 'name', 'points', 'elo', 
+  displayedColumns: string[] = ['position', 'name', 'points', 'elo',
     'percentage', 'winsInTwo', 'winsInTb', 'losesInTb', 'losesInTwo', 'played'];
   players: Array<Player>;
   dataSource = new MatTableDataSource([]);
@@ -20,7 +21,7 @@ export class TableComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private tableService: TableService, private router: Router) { }
+  constructor(private tableService: TableService, private router: Router, private snackMessageService: SnackMessageService) { }
 
   ngOnInit() {
     setTimeout(() => {
@@ -33,14 +34,14 @@ export class TableComponent implements OnInit {
             this.dataSource.sort = this.sort;
           });
         } else {
-          console.error('Greška kod poziva servisa za dohvat tablice. Table Component.');
+          this.snackMessageService.showError('Greška kod poziva servisa za dohvat tablice.');
         }
       });
     }, 1000);
   }
 
   navigateToPlayer(playerId: number): void {
-      this.router.navigate(['/player', playerId]);
+    this.router.navigate(['/player', playerId]);
   }
 
 }

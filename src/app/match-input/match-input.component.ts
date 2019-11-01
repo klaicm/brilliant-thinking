@@ -3,6 +3,7 @@ import { PlayerService } from '../player/player.service';
 import { Player } from '../player/player.model';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Match } from '../player/matches/match.model';
+import { SnackMessageService } from '../shared/services/snack-message.service';
 
 @Component({
   selector: 'app-match-input',
@@ -16,7 +17,7 @@ export class MatchInputComponent implements OnInit {
 
   resultList: Array<String>;
 
-  constructor(private playerService: PlayerService) {
+  constructor(private playerService: PlayerService, private snackMessageService: SnackMessageService) {
 
     this.resultList = [
       '6:0', '6:1', '6:2', '6:3', '6:4', '7:5', '7:6', '6:7', '4:6', '3:6', '2:6', '1:6', '0:6'
@@ -38,7 +39,7 @@ export class MatchInputComponent implements OnInit {
         if (response) {
           this.allPlayers = response;
         } else {
-          console.error('Greška kod dohvata igrača. MatchInput Component.');
+          this.snackMessageService.showError('Neuspješan dohvat igrača.');
         }
       });
     });
@@ -67,16 +68,13 @@ export class MatchInputComponent implements OnInit {
     match.date = date;
 
     this.playerService.saveMatch(match).subscribe(response => {
-      console.log('Saved');
-      if (response) {
-        console.log('Notification success');
-      }
+      this.snackMessageService.showSuccess('Uspješno spremljeno');
     });
   }
 
   setFileName(fileName: string): void {
     this.playerService.importExcelFile(fileName).subscribe(response => {
-      console.log('imported ' + fileName);
+      this.snackMessageService.showSuccess('Učitan dokument: ' + response);
     });
   }
 }

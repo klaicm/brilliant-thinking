@@ -4,6 +4,7 @@ import { Player } from 'src/app/player/player.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Match } from 'src/app/player/matches/match.model';
 import { MatTableDataSource } from '@angular/material';
+import { SnackMessageService } from 'src/app/shared/services/snack-message.service';
 
 @Component({
   selector: 'app-elo-stats',
@@ -36,7 +37,7 @@ export class EloStatsComponent implements OnInit {
   calculationLoader = false;
   showAllCharts = false;
 
-  constructor(private playerService: PlayerService) {
+  constructor(private playerService: PlayerService, private snackMessageService: SnackMessageService) {
     this.playerSelectFormGroup = new FormGroup({
       playerAFormControl: new FormControl('', Validators.required),
       playerBFormControl: new FormControl('', Validators.required)
@@ -50,10 +51,10 @@ export class EloStatsComponent implements OnInit {
           this.allPlayers = response;
           this.loadingPlayers = false;
         } else {
-          console.error('Greška kod dohvata igrača. EloStats Component.');
+          this.snackMessageService.showError('Greška kod dohvata igrača');
         }
       });
-    }, 2000);
+    }, 1500);
 
     this.playerSelectFormGroup.get('playerAFormControl').valueChanges.subscribe((value: Player) => {
       this.getPlayer(value.id, 'A');
@@ -81,9 +82,9 @@ export class EloStatsComponent implements OnInit {
             this.winProbabilityChart(this.probabilityA, this.probabilityB,
               playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
           } else {
-            console.error('Greška kod izračuna vjerojatnosti pobjede.');
+            this.snackMessageService.showError('Greška kod izračuna vjerojatnosti pobjede.');
           }
-        }, 2000);
+        }, 1500);
       });
 
       this.getPlayerMatches(playerA.id, playerB.id);
@@ -96,9 +97,13 @@ export class EloStatsComponent implements OnInit {
         playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
 
     } else {
-      console.error('Potreban unos oba igrača.');
+      this.snackMessageService.showError('Potreban unos oba igrača');
     }
 
+  }
+
+  openSnackBar(): void {
+    this.snackMessageService.showError('Potreban unos oba igrača');
   }
 
   getPlayer(playerId: number, player: String): void {
@@ -124,7 +129,7 @@ export class EloStatsComponent implements OnInit {
           });
         }
       } else {
-        console.error('Greška kod dohvata igrača. EloStats Component');
+        this.snackMessageService.showError('Neuspješan dohvat igrača.');
       }
     });
   }
@@ -151,7 +156,7 @@ export class EloStatsComponent implements OnInit {
 
         this.dataSource = new MatTableDataSource(mutualMatches);
       } else {
-        console.error('dohvata mečeva. EloStatsComponent.');
+        this.snackMessageService.showError('Neuspješan dohvata mečeva.');
       }
 
     });

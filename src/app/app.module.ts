@@ -20,7 +20,8 @@ import { MatTabsModule, MatButtonModule, MatSidenavModule, MatToolbarModule,
   MatPaginatorModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MAT_DATE_LOCALE} from '@angular/material';
+  MAT_DATE_LOCALE,
+  MatSnackBarModule} from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
@@ -84,6 +85,7 @@ export function highchartsFactory() {
     MatNativeDateModule,
     ReactiveFormsModule,
     FormsModule,
+    MatSnackBarModule,
     RouterModule.forRoot(appRoutes),
     ChartModule
   ],
@@ -107,7 +109,8 @@ export function highchartsFactory() {
     MatNativeDateModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatSnackBarModule
   ],
   providers: [
     PlayerService,
