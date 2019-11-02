@@ -1,5 +1,6 @@
 <div>
   <div class="row tab-row">
+    <!--
     <div class="col-sm-2" style="padding: 8px">
       <mat-card class="trophy-card">
         <img [src]="grandTrophy3" class="grandTrophyImg" />
@@ -22,67 +23,70 @@
       </mat-card>
     </div>
   </div>
-  <div class="row tab-row">
-    <div class="col-sm-2" style="padding: 8px">
-      <mat-card class="trophy-card">
-        <img [src]="medal1" class="medalImg" />
-        <mat-divider></mat-divider>
-        <h5>20 pobjeda</h5>
-      </mat-card>
+  -->
+    <div class="row tab-row">
+      <div class="col-sm-2" style="padding: 8px" [ngStyle]="{'opacity': totalWins >= 20 ? 1 : 0.3}">
+        <mat-card class="trophy-card">
+          <img [src]="medal1" class="medalImg" />
+          <mat-divider></mat-divider>
+          <h5>20 pobjeda ({{totalWins}})</h5>
+        </mat-card>
+      </div>
+      <div class="col-sm-2" style="padding: 8px" [ngStyle]="{'opacity': totalWins >= 50 ? 1 : 0.3}">
+        <mat-card class="trophy-card">
+          <img [src]="medal2" class="medalImg" />
+          <mat-divider></mat-divider>
+          <h5>50 pobjeda ({{totalWins}})</h5>
+        </mat-card>
+      </div>
+      <div class="col-sm-2" style="padding: 8px" [ngStyle]="{'opacity': totalWins >= 100 ? 1 : 0.3}">
+        <mat-card class="trophy-card">
+          <img [src]="medal3" class="medalImg" />
+          <mat-divider></mat-divider>
+          <h5>100 pobjeda ({{totalWins}})</h5>
+        </mat-card>
+      </div>
     </div>
-    <div class="col-sm-2" style="padding: 8px">
-      <mat-card class="trophy-card">
-        <img [src]="medal2" class="medalImg" />
-        <mat-divider></mat-divider>
-        <h5>50 pobjeda</h5>
-      </mat-card>
+    <div class="row tab-row">
+      <div class="col-sm-2" style="padding: 8px" [ngStyle]="{'opacity': totalWins >= 100 ? 1 : 0.3}">
+        <mat-card class="trophy-card">
+          <img [src]="medal4" class="medalImg" />
+          <mat-divider></mat-divider>
+          <h5>150 pobjeda ({{totalWins}})</h5>
+        </mat-card>
+      </div>
+      <div class="col-sm-2" style="padding: 8px" [ngStyle]="{'opacity': totalWins >= 200 ? 1 : 0.3}">
+        <mat-card class="trophy-card">
+          <img [src]="medal5" class="medalImg" />
+          <mat-divider></mat-divider>
+          <h5>200 pobjeda ({{totalWins}})</h5>
+        </mat-card>
+      </div>
+      <div class="col-sm-2" style="padding: 8px" [ngStyle]="{'opacity': totalWins >= 200 ? 1 : 0.3}">
+        <mat-card class="trophy-card">
+          <img [src]="medal6" class="medalImg" />
+          <mat-divider></mat-divider>
+          <h5>10 pobjeda u nizu</h5>
+        </mat-card>
+      </div>
     </div>
-    <div class="col-sm-2" style="padding: 8px">
-      <mat-card class="trophy-card">
-        <img [src]="medal3" class="medalImg" />
-        <mat-divider></mat-divider>
-        <h5>100 pobjeda</h5>
-      </mat-card>
+    <div class="row tab-row">
+      <div class="col-sm-2" style="padding: 8px" [ngStyle]="{'opacity': totalWins >= 200 ? 1 : 0.3}">
+        <mat-card class="trophy-card">
+          <img [src]="medal7" class="medalImg" />
+          <mat-divider></mat-divider>
+          <h5>15 pobjeda u nizu</h5>
+        </mat-card>
+      </div>
+      <div class="col-sm-2" style="padding: 8px" [ngStyle]="{'opacity': totalWins >= 200 ? 1 : 0.3}">
+        <mat-card class="trophy-card">
+          <img [src]="medal8" class="medalImg" />
+          <mat-divider></mat-divider>
+          <h5>30 pobjeda u nizu</h5>
+        </mat-card>
+      </div>
     </div>
-  </div>
-  <div class="row tab-row">
-    <div class="col-sm-2" style="padding: 8px">
-      <mat-card class="trophy-card">
-        <img [src]="medal4" class="medalImg" />
-        <mat-divider></mat-divider>
-        <h5>150 pobjeda</h5>
-      </mat-card>
-    </div>
-    <div class="col-sm-2" style="padding: 8px">
-      <mat-card class="trophy-card">
-        <img [src]="medal5" class="medalImg" />
-        <mat-divider></mat-divider>
-        <h5>200 pobjeda</h5>
-      </mat-card>
-    </div>
-    <div class="col-sm-2" style="padding: 8px">
-      <mat-card class="trophy-card">
-        <img [src]="medal6" class="medalImg" />
-        <mat-divider></mat-divider>
-        <h5>10 pobjeda u nizu</h5>
-      </mat-card>
-    </div>
-  </div>
-  <div class="row tab-row">
-    <div class="col-sm-2" style="padding: 8px">
-      <mat-card class="trophy-card">
-        <img [src]="medal7" class="medalImg" />
-        <mat-divider></mat-divider>
-        <h5>15 pobjeda u nizu</h5>
-      </mat-card>
-    </div>
-    <div class="col-sm-2" style="padding: 8px">
-      <mat-card class="trophy-card">
-        <img [src]="medal8" class="medalImg" />
-        <mat-divider></mat-divider>
-        <h5>30 pobjeda u nizu</h5>
-      </mat-card>
-    </div>
+    <!--
     <div class="col-sm-2" style="padding: 8px">
       <mat-card class="trophy-card">
         <img [src]="playerTrophy1" class="playerImg" />
@@ -99,6 +103,7 @@
         <h5>Najveći napredak u sezoni</h5>
       </mat-card>
     </div>
+    -->
     <!--
     <div class="col-sm-2" style="padding: 8px">
       <mat-card class="trophy-card">
@@ -115,28 +120,22 @@
       </mat-card>
     </div>
   </div>
-  <div class="row tab-row">
-    <div class="col-sm-2" style="padding: 8px">
-      <mat-card class="trophy-card">
-        <img [src]="playerTrophy5" class="playerImg" />
-        <mat-divider></mat-divider>
-        <h5>Nešto</h5>
-      </mat-card>
-    </div>
+  
   -->
-    <div class="col-sm-2" style="padding: 8px">
-      <mat-card class="trophy-card">
-        <img [src]="honor1" class="honorImg" />
-        <mat-divider></mat-divider>
-        <h5>250 odigranih mečeva</h5>
-      </mat-card>
-    </div>
-    <div class="col-sm-2" style="padding: 8px">
-      <mat-card class="trophy-card">
-        <img [src]="honor2" class="honorImg" />
-        <mat-divider></mat-divider>
-        <h5>500 odigranih mečeva</h5>
-      </mat-card>
+    <div class="row tab-row">
+      <div class="col-sm-2" style="padding: 8px" [ngStyle]="{'opacity': totalPlayed >= 250 ? 1 : 0.3}">
+        <mat-card class="trophy-card">
+          <img [src]="honor1" class="honorImg" />
+          <mat-divider></mat-divider>
+          <h5>250 odigranih mečeva ({{totalPlayed}})</h5>
+        </mat-card>
+      </div>
+      <div class="col-sm-2" style="padding: 8px" [ngStyle]="{'opacity': totalPlayed >= 500 ? 1 : 0.3}">
+        <mat-card class="trophy-card">
+          <img [src]="honor2" class="honorImg" />
+          <mat-divider></mat-divider>
+          <h5>500 odigranih mečeva ({{totalPlayed}})</h5>
+        </mat-card>
+      </div>
     </div>
   </div>
-</div>

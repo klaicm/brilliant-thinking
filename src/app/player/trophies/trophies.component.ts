@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Player } from '../player.model';
 
 @Component({
   selector: 'app-trophies',
@@ -6,6 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./trophies.component.scss']
 })
 export class TrophiesComponent implements OnInit {
+
+  @Input() player: Player;
+
+  totalWins: number;
+  totalPlayed: number;
+  cPlayer: Player = new Player();
 
   tenWinsBadge: String = '../../../assets/images/10wins.PNG';
   trophyFiftyWins: String = '../../../assets/images/tr50wins.png';
@@ -30,12 +37,15 @@ export class TrophiesComponent implements OnInit {
   playerTrophy5: String = '../../../assets/images/playerTrophy5.png';
   honor1: String = '../../../assets/images/honor1.png';
   honor2: String = '../../../assets/images/honor2.png';
+
   constructor() { }
 
-  // ova komponenta je pod-komponenta player-a
-  // za nju ce se podaci vuci prema ID-u igraca, a kako brojiti stanja za svaki trofej?
-  // npr. kako brojati niz pobjeda? (if result === 'W' ++, else 0?) itd.
   ngOnInit() {
+    if (this.player) {
+      this.cPlayer = this.player;
+      this.totalWins = this.player.winsInTb + this.player.winsInTwo;
+      this.totalPlayed = this.player.winsInTb + this.player.winsInTwo + this.player.losesInTwo + this.player.losesInTb;
+    }
   }
 
 }
