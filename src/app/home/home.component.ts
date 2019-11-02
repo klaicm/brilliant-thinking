@@ -84,6 +84,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.dataSource = new MatTableDataSource(this.matches);
         setTimeout(() => {
           this.dataSource.paginator = this.paginator;
+          setTimeout(() => {
+            this.dataSource.sort = this.sort;
+          });
         }, 1000);
         this.setMatchesByDaysPerWeek(this.matches);
         this.matchesPerDayChart();

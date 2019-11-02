@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { ViewChild } from '@angular/core';
 import { SnackMessageService } from '../shared/services/snack-message.service';
+import { TableElement } from './table.model';
 
 @Component({
   selector: 'app-table',
@@ -14,10 +15,11 @@ import { SnackMessageService } from '../shared/services/snack-message.service';
 export class TableComponent implements OnInit {
 
   displayedColumns: string[] = ['position', 'name', 'points', 'elo',
-    'percentage', 'winsInTwo', 'winsInTb', 'losesInTb', 'losesInTwo', 'played'];
+    'percentage', 'totalPlayed', 'winsInTwo', 'winsInTb', 'losesInTb', 'losesInTwo'];
   players: Array<Player>;
   dataSource = new MatTableDataSource([]);
   loadingTable = true;
+  table: Array<TableElement>;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -29,7 +31,8 @@ export class TableComponent implements OnInit {
         if (response) {
           this.loadingTable = false;
           this.players = response;
-          this.dataSource = new MatTableDataSource(this.players);
+          const tableElements = this.createTableData(this.players);
+          this.dataSource = new MatTableDataSource(tableElements);
           setTimeout(() => {
             this.dataSource.sort = this.sort;
           });
@@ -42,6 +45,33 @@ export class TableComponent implements OnInit {
 
   navigateToPlayer(playerId: number): void {
     this.router.navigate(['/player', playerId]);
+  }
+
+  createTableData(players: Array<Player>): Array<TableElement> {
+    const table = new Array<TableElement>();
+    players.forEach(player => {
+      const tableElement = new TableElement;
+      tableElement.firstName = player.firstName;
+      tableElement.lastName = player.lastName;
+      tableElement.elo = player.elo;
+      tableElement.winsInTwo = player.winsInTwo;
+      tableElement.winsInTb = player.winsInTb;
+      tableElement.losesInTb = player.losesInTb;
+      tableElement.losesInTwo = player.losesInTwo;
+      tableElement.points = player.points;
+      tableElement.totalPlayed = player.winsInTwo + player.winsInTb + player.losesInTb + player.losesInTwo;
+      if (player.winsInTwo + player.winsInTb + player.losesInTb + player.losesInTwo === 0) {
+        tableElement.percentage = 0;
+      } else {
+        tableElement.percentage =
+          ((tableElement.winsInTb + tableElement.winsInTwo) /
+            (player.winsInTwo + player.winsInTb + player.losesInTb + player.losesInTwo)) * 100;
+      }
+
+      table.push(tableElement);
+    });
+
+    return table;
   }
 
 }

@@ -14,12 +14,12 @@
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  Posljednjih 20 odigranih mečeva
+                  Odigrani mečevi
                 </mat-panel-title>
               </mat-expansion-panel-header>
 
               <div>
-                <table mat-table [dataSource]="dataSource" style="width: 100%">
+                <table mat-table [dataSource]="dataSource" matSort matSortDirection="desc" matSortActive="date" style="width: 100%">
 
                   <!-- Position Column -->
                   <ng-container matColumnDef="playerWon">
@@ -49,8 +49,8 @@
 
                   <!-- Weight Column -->
                   <ng-container matColumnDef="date">
-                    <th mat-header-cell *matHeaderCellDef> Datum </th>
-                    <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Datum </th>
+                    <td mat-cell *matCellDef="let element"> {{element.date | date:'dd.MM.yyyy.'}} </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

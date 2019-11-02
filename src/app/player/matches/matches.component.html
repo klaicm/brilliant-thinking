@@ -3,7 +3,7 @@
 <div>
   <div class="tab-table">
     <div>
-      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 500px">
+      <table mat-table [dataSource]="dataSource" matSort matSortDirection="desc" matSortActive="date" class="mat-elevation-z8" style="width: 500px">
 
         <ng-container matColumnDef="mark">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Ishod </th>
@@ -39,7 +39,7 @@
         <!-- Date Column -->
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Datum </th>
-          <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.date | date:'dd.MM.yyyy.'}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

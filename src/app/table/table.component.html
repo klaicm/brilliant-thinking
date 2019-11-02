@@ -10,7 +10,8 @@
     </div>
     <br>
 
-    <table mat-table style="width: 700px; margin-left: 16px; margin-bottom: 32px" [dataSource]="dataSource" matSort matSortStart="desc" matSortActive="points" matSortDirection="desc" matSortDisableClear
+    <table mat-table style="width: 700px; margin-left: 16px; margin-bottom: 32px" [dataSource]="dataSource" 
+      matSort matSortStart="desc" matSortActive="points" matSortDirection="desc" matSortDisableClear
       class="mat-elevation-z8">
 
       <!-- Position Column -->
@@ -43,16 +44,15 @@
       <ng-container matColumnDef="percentage">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> % </th>
         <td mat-cell style="width: 8%;" *matCellDef="let element">
-          {{((element.winsInTwo+element.winsInTb)/(element.winsInTwo+element.winsInTb+element.losesInTwo+element.losesInTb))*100 |
-          number:'1.0-0'}} %
+          {{element.percentage | number: '1.0-0'}} %
         </td>
       </ng-container>
 
       <!-- Total Played Column -->
-      <ng-container matColumnDef="played">
+      <ng-container matColumnDef="totalPlayed">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Odigrano </th>
         <td mat-cell style="width: 5%;" *matCellDef="let element">
-          {{element.winsInTwo + element.winsInTb + element.losesInTwo + element.losesInTb}}
+          {{(element.winsInTwo + element.winsInTb + element.losesInTwo + element.losesInTb)}}
         </td>
       </ng-container>
 
