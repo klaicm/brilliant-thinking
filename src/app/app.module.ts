@@ -37,18 +37,15 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'matches',
-        component: MatchesComponent,
-        loadChildren: './pages/invites/invites.module#InvitesModule',
+        component: MatchesComponent
       },
       {
         path: 'details',
-        component: DetailsComponent,
-        loadChildren: './pages/invites/invites.module#InvitesModule',
+        component: DetailsComponent
       },
       {
         path: 'trophies',
-        component: TrophiesComponent,
-        loadChildren: './pages/invites/invites.module#InvitesModule',
+        component: TrophiesComponent
       },
     ],
     runGuardsAndResolvers: 'always'
