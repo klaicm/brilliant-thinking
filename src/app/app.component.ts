@@ -64,7 +64,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   toPlayer() {
     this.selectedPlayer = this.playerFormControl.value;
-    this.router.navigate(['/player', this.selectedPlayer.id]);
+    this.router.navigate(['/player', this.selectedPlayer.id]).then(() => {
+      window.location.reload();
+    });
     this.playerFormControl.reset();
   }
 

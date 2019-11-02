@@ -66,7 +66,9 @@ export class MatchesComponent implements OnChanges {
   }
 
   navigateToPlayer(playerId: number): void {
-    this.router.navigate(['/player', playerId]);
+    this.router.navigate(['/player', playerId]).then(() => {
+      window.location.reload();
+    });
   }
 
 }

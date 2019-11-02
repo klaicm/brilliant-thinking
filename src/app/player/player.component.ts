@@ -27,10 +27,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
     private snackMessageService: SnackMessageService) { }
 
   ngOnInit(): void {
-    this.getPlayerId();
-  }
-
-  getPlayerId(): void {
     this.sub = this.activatedRoute.params.subscribe(params => {
       this.playerId = +params['id'];
       this.getPlayer(this.playerId);

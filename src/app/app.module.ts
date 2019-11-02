@@ -33,10 +33,26 @@ import { MatchInputComponent } from './match-input/match-input.component';
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'table', component: TableComponent },
-  { path: 'player/:id', component: PlayerComponent },
-  { path: 'trophies', component: TrophiesComponent },
-  { path: 'matches', component: MatchesComponent },
-  { path: 'details', component: DetailsComponent },
+  { path: 'player/:id', component: PlayerComponent,
+    children: [
+      {
+        path: 'matches',
+        component: MatchesComponent,
+        loadChildren: './pages/invites/invites.module#InvitesModule',
+      },
+      {
+        path: 'details',
+        component: DetailsComponent,
+        loadChildren: './pages/invites/invites.module#InvitesModule',
+      },
+      {
+        path: 'trophies',
+        component: TrophiesComponent,
+        loadChildren: './pages/invites/invites.module#InvitesModule',
+      },
+    ],
+    runGuardsAndResolvers: 'always'
+  },
   { path: 'elo-stats', component: EloStatsComponent },
   { path: 'match-input', component: MatchInputComponent }
 ];
@@ -86,7 +102,7 @@ export function highchartsFactory() {
     ReactiveFormsModule,
     FormsModule,
     MatSnackBarModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, {onSameUrlNavigation: 'reload'}),
     ChartModule
   ],
   exports: [

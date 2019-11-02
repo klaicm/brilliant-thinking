@@ -256,11 +256,13 @@ export class DetailsComponent implements OnInit, AfterViewInit, OnChanges {
                     this.snackMessageService.showError('Greška kod poziva servisa za dohvat igrača.');
                 }
             });
-        }, 3000);
+        }, 500);
     }
 
     navigateToPlayer(playerId: number): void {
-        this.router.navigate(['/player', playerId]);
+        this.router.navigate(['/player', playerId]).then(() => {
+            window.location.reload();
+        });
     }
 
 }
