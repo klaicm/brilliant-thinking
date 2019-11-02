@@ -19,7 +19,8 @@
               </mat-expansion-panel-header>
 
               <div class="table-horizontal">
-                <table mat-table [dataSource]="dataSource" matSort matSortDirection="desc" matSortActive="date" style="width: 100%; min-width: 500px">
+                <table mat-table [dataSource]="dataSource" matSort matSortDirection="desc" matSortActive="date"
+                  style="width: 100%; min-width: 500px">
 
                   <!-- Position Column -->
                   <ng-container matColumnDef="playerWon">
@@ -80,18 +81,18 @@
         </div>
       </div>
       <div class="row tab-row">
+        <!--
         <div class="col-sm-4 card">
           <mat-card>
             <chart [options]="pointsPerMatch"> </chart>
           </mat-card>
         </div>
+        -->
         <div class="col-sm-4 card">
           <mat-card>
             <chart [options]="winPercentage"> </chart>
           </mat-card>
         </div>
-      </div>
-      <div class="row tab-row">
         <div class="col-sm-4 card">
           <mat-card>
             <chart [options]="matchesPerDay"> </chart>

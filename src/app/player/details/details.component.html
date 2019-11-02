@@ -41,7 +41,8 @@
             <div style="padding-top: 8px">
                 <mat-card>
                     <div>
-                        <table mat-table [dataSource]="dataSource" matSort style="width: 100%">
+                        <table mat-table [dataSource]="dataSource" matSort matSortDirection="desc" matSortActive="date"
+                            style="width: 100%">
 
                             <ng-container matColumnDef="mark">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Ishod </th>

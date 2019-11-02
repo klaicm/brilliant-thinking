@@ -130,7 +130,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
         text: 'Postotak pobjeda'
       },
       yAxis: {
-        title: false
+        title: false,
+        max: 100
       },
       xAxis: {
         categories: this.firstEightByWinPercentage.map(player => (player.firstName.substring(0, 1) + '. ' + player.lastName))

@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, AfterViewInit, OnInit, ViewChild } from '@
 import { Player } from 'src/app/player/player.model';
 import { Match } from 'src/app/player/matches/match.model';
 import { ChangeDetectorRef } from '@angular/core';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
 import { PlayerService } from '../player.service';
 import { SnackMessageService } from 'src/app/shared/services/snack-message.service';
@@ -18,6 +18,7 @@ export class DetailsComponent implements OnInit, AfterViewInit, OnChanges {
     @Input() matches: Array<Match>;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
 
     position: Object;
     winPercentage: Object;
@@ -56,8 +57,6 @@ export class DetailsComponent implements OnInit, AfterViewInit, OnChanges {
 
     ngAfterViewInit(): void {
 
-        this.positionList.push(this.currentPlayerPositionPts); // trenutna (live) pozicija
-
         this.resultsPieChart(this.player);
         this.positionChart(this.positionList);
         this.winPercentageChart(this.winPercentageList);
@@ -71,6 +70,7 @@ export class DetailsComponent implements OnInit, AfterViewInit, OnChanges {
         if (this.matches) {
             this.dataSource = new MatTableDataSource(this.matches);
             setTimeout(() => {
+                this.dataSource.sort = this.sort;
                 this.dataSource.paginator = this.paginator;
             });
         }
@@ -148,7 +148,7 @@ export class DetailsComponent implements OnInit, AfterViewInit, OnChanges {
                 allowDecimals: false,
             },
             series: [{
-                name: 'Plasman',
+                name: 'Plasman (nakon odigranog meča)',
                 type: 'spline',
                 color: '#B39DDB',
                 data: positionList,
@@ -248,6 +248,7 @@ export class DetailsComponent implements OnInit, AfterViewInit, OnChanges {
                         (a.points > b.points) ? -1 : 1);
 
                     this.currentPlayerPositionPts = pointsSortedList.findIndex(playerEl => playerEl.id === player.id) + 1;
+                    this.positionList.push(this.currentPlayerPositionPts); // trenutna (live) pozicija
                     const eloSortedList = this.allPlayers.sort((a, b) =>
                         (a.elo > b.elo) ? -1 : 1);
 

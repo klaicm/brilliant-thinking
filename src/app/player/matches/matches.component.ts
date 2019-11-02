@@ -28,31 +28,6 @@ export class MatchesComponent implements OnChanges {
 
   constructor(private router: Router, private playerService: PlayerService, private snackMessageService: SnackMessageService) { }
 
-  testSaveMatch(): void {
-    const playerWon = new Player;
-    const playerLost = new Player;
-
-    playerWon.id = 1;
-
-    playerLost.id = 2;
-    this.match.result = '6:4 6:2';
-
-    this.match.playerW = playerWon;
-    this.match.playerL = playerLost;
-
-    this.playerService.saveMatch(this.match).subscribe(response => {
-      this.responseListener = true;
-      setTimeout(() => {
-        const listen = response;
-        if (response) {
-          this.responseListener = false;
-        } else {
-          this.snackMessageService.showError('Nije uspješno spremljeno.');
-        }
-      }, 3000);
-    });
-  }
-
   ngOnChanges() {
     if (this.matches) {
       this.dataSource = new MatTableDataSource(this.matches);

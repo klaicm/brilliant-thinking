@@ -16,6 +16,7 @@ export class MatchInputComponent implements OnInit {
   matchFormGroup: FormGroup;
 
   resultList: Array<String>;
+  fileName: string;
 
   constructor(private playerService: PlayerService, private snackMessageService: SnackMessageService) {
 
@@ -74,7 +75,7 @@ export class MatchInputComponent implements OnInit {
 
   setFileName(fileName: string): void {
     this.playerService.importExcelFile(fileName).subscribe(response => {
-      this.snackMessageService.showSuccess('Učitan dokument: ' + response);
+      this.snackMessageService.showSuccess('Učitan dokument: ' + fileName);
     });
   }
 }
