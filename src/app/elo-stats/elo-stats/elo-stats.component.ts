@@ -5,6 +5,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Match } from 'src/app/player/matches/match.model';
 import { MatTableDataSource } from '@angular/material';
 import { SnackMessageService } from 'src/app/shared/services/snack-message.service';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-elo-stats',
@@ -36,6 +38,8 @@ export class EloStatsComponent implements OnInit {
   loadingPlayers = true;
   calculationLoader = false;
   showAllCharts = false;
+  filteredOptionsA: Observable<string[]>;
+  filteredOptionsB: Observable<string[]>;
 
   constructor(private playerService: PlayerService, private snackMessageService: SnackMessageService) {
     this.playerSelectFormGroup = new FormGroup({
@@ -56,13 +60,15 @@ export class EloStatsComponent implements OnInit {
       });
     }, 1500);
 
-    this.playerSelectFormGroup.get('playerAFormControl').valueChanges.subscribe((value: Player) => {
-      this.getPlayer(value.id, 'A');
-    });
+    this.filteredOptionsA = this.playerSelectFormGroup.get('playerAFormControl').valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value)));
 
-    this.playerSelectFormGroup.get('playerBFormControl').valueChanges.subscribe((value: Player) => {
-      this.getPlayer(value.id, 'B');
-    });
+    this.filteredOptionsB = this.playerSelectFormGroup.get('playerBFormControl').valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value)));
   }
 
   getEloStats() {
@@ -72,6 +78,8 @@ export class EloStatsComponent implements OnInit {
     if (playerA && playerB) {
       this.showAllCharts = true;
       this.calculationLoader = true;
+      this.getPlayer(playerA.id, 'A');
+      this.getPlayer(playerB.id, 'B');
       this.playerService.getEloStats(playerA.elo, playerB.elo).subscribe(response => {
         setTimeout(() => {
           if (response) {
@@ -81,6 +89,12 @@ export class EloStatsComponent implements OnInit {
             this.probabilityB = Math.round(response.eb * 100);
             this.winProbabilityChart(this.probabilityA, this.probabilityB,
               playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
+            this.positionChart(this.positionAList, this.positionBList,
+              playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
+            this.winPercentageChart(this.winPercentageAList, this.winPercentageBList,
+              playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
+            this.eloRatingChart(this.eloRatingAList, this.eloRatingBList,
+              playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
           } else {
             this.snackMessageService.showError('Greška kod izračuna vjerojatnosti pobjede.');
           }
@@ -88,13 +102,6 @@ export class EloStatsComponent implements OnInit {
       });
 
       this.getPlayerMatches(playerA.id, playerB.id);
-
-      this.positionChart(this.positionAList, this.positionBList,
-        playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
-      this.winPercentageChart(this.winPercentageAList, this.winPercentageBList,
-        playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
-      this.eloRatingChart(this.eloRatingAList, this.eloRatingBList,
-        playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
 
     } else {
       this.snackMessageService.showError('Potreban unos oba igrača');
@@ -160,6 +167,17 @@ export class EloStatsComponent implements OnInit {
       }
 
     });
+  }
+
+  private _filter(value: any): any[] {
+    const filterValue = value;
+    return this.allPlayers.filter(option =>
+      (option.firstName.includes(filterValue) || option.lastName.includes(filterValue))
+    );
+  }
+
+  displayFn(val: Player) {
+    return val ? val.firstName + ' ' + val.lastName : val;
   }
 
   positionChart(positionAList: Array<number>, positionBList: Array<number>, playerAName: String, playerBName: String): void {

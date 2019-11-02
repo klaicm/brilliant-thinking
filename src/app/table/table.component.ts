@@ -51,6 +51,7 @@ export class TableComponent implements OnInit {
     const table = new Array<TableElement>();
     players.forEach(player => {
       const tableElement = new TableElement;
+      tableElement.id = player.id;
       tableElement.firstName = player.firstName;
       tableElement.lastName = player.lastName;
       tableElement.elo = player.elo;

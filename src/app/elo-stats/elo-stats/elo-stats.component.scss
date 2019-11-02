@@ -23,3 +23,9 @@ a {
     background-color: rgb(0, 0, 0);
     color: #fff;
 }
+
+.table-horizontal {
+    overflow-x: auto;
+    white-space: nowrap;
+    max-width: 100%;
+}
