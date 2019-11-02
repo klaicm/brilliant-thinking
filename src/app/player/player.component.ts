@@ -19,7 +19,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   playerDetailsView = false;
   playerMatchesView = false;
   private sub: Subscription;
-  profilePic: String = '../../../assets/images/profile1.png';
+  profilePic: String = '../../../assets/images/profile_unknown.png';
   loadingPlayer = true;
   loadingMatches = true;
 
