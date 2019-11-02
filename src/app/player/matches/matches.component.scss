@@ -17,3 +17,9 @@ th.mat-header-cell {
     margin: 16px;
     opacity: 0.9;
 }
+
+.table-horizontal {
+    overflow-x: auto;
+    white-space: nowrap;
+    max-width: 100%;
+}

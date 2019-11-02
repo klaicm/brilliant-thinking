@@ -2,8 +2,9 @@
 
 <div>
   <div class="tab-table">
-    <div>
-      <table mat-table [dataSource]="dataSource" matSort matSortDirection="desc" matSortActive="date" class="mat-elevation-z8" style="width: 500px">
+    <div class="table-horizontal">
+      <table mat-table [dataSource]="dataSource" matSort matSortDirection="desc" 
+        matSortActive="date" class="mat-elevation-z8" style="width: 500px">
 
         <ng-container matColumnDef="mark">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Ishod </th>

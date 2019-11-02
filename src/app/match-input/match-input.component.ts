@@ -8,7 +8,7 @@ import { SnackMessageService } from '../shared/services/snack-message.service';
 @Component({
   selector: 'app-match-input',
   templateUrl: './match-input.component.html',
-  styleUrls: ['./match-input.component.css']
+  styleUrls: ['./match-input.component.scss']
 })
 export class MatchInputComponent implements OnInit {
 

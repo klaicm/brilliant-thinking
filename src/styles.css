@@ -7,3 +7,11 @@
 .snackbar-background-green {
     color: #B2FF59;
 }
+
+.page-header {
+    padding-bottom: 9px;
+    margin: 20px 10px 20px;
+    color: white;
+    border-radius: 5px;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
