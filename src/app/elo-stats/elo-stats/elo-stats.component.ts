@@ -88,7 +88,7 @@ export class EloStatsComponent implements OnInit {
             this.probabilityA = Math.round(response.ea * 100);
             this.probabilityB = Math.round(response.eb * 100);
             this.winProbabilityChart(this.probabilityA, this.probabilityB,
-              playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
+              playerA.lastName, playerB.lastName);
             this.positionChart(this.positionAList, this.positionBList,
               playerA.firstName + ' ' + playerA.lastName, playerB.firstName + ' ' + playerB.lastName);
             this.winPercentageChart(this.winPercentageAList, this.winPercentageBList,
@@ -195,6 +195,14 @@ export class EloStatsComponent implements OnInit {
       },
       xAxis: {
         allowDecimals: false,
+      },
+      plotOptions: {
+          series: {
+              borderWidth: 0,
+              dataLabels: {
+                  enabled: true
+              }
+          }
       },
       series: [{
         name: playerAName,

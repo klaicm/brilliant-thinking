@@ -139,6 +139,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
       credits: {
         enabled: false
       },
+      plotOptions: {
+          series: {
+              borderWidth: 0,
+              dataLabels: {
+                  enabled: true,
+                  format: '{point.y:.1f}%'
+              }
+          }
+      },
       series: [{
         name: 'Postotak pobjeda (min. 10 odigranih)',
         data: this.firstEightByWinPercentage.map(player =>
@@ -164,6 +173,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
       },
       credits: {
         enabled: false
+      },
+      plotOptions: {
+          series: {
+              borderWidth: 0,
+              dataLabels: {
+                  enabled: true
+              }
+          }
       },
       series: [{
         name: 'Broj mečeva',
@@ -192,6 +209,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
       credits: {
         enabled: false
       },
+      plotOptions: {
+          series: {
+              borderWidth: 0,
+              dataLabels: {
+                  enabled: true
+              }
+          }
+      },
       series: [{
         name: 'Elo rating (min. 10 odigranih)',
         data: this.firstEightByElo.map(player => player.elo),
@@ -217,6 +242,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
       },
       credits: {
         enabled: false
+      },
+      plotOptions: {
+          series: {
+              borderWidth: 0,
+              dataLabels: {
+                  enabled: true
+              }
+          }
       },
       series: [{
         name: 'Bodovi po meču (min. 10 odigranih)',
@@ -244,6 +277,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
       },
       credits: {
         enabled: false
+      },
+      plotOptions: {
+          series: {
+              borderWidth: 0,
+              dataLabels: {
+                  enabled: true
+              }
+          }
       },
       series: [{
         name: 'Odigrano mečeva',

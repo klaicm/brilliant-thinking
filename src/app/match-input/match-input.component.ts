@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { PlayerService } from '../player/player.service';
 import { Player } from '../player/player.model';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Match } from '../player/matches/match.model';
 import { SnackMessageService } from '../shared/services/snack-message.service';
+import { FileUploadService } from '../shared/services/file-upload.service';
 
 @Component({
   selector: 'app-match-input',
@@ -12,13 +13,18 @@ import { SnackMessageService } from '../shared/services/snack-message.service';
 })
 export class MatchInputComponent implements OnInit {
 
+  @Input() multiple = false;
+  @ViewChild('fileInput') inputEl: ElementRef;
+
   allPlayers: Array<Player> = new Array<Player>();
   matchFormGroup: FormGroup;
 
   resultList: Array<String>;
   fileName: string;
+  matchImporting = false;
 
-  constructor(private playerService: PlayerService, private snackMessageService: SnackMessageService) {
+  constructor(private playerService: PlayerService, private snackMessageService: SnackMessageService,
+    private fileUploadService: FileUploadService) {
 
     this.resultList = [
       '6:0', '6:1', '6:2', '6:3', '6:4', '7:5', '7:6', '6:7', '4:6', '3:6', '2:6', '1:6', '0:6'
@@ -46,7 +52,6 @@ export class MatchInputComponent implements OnInit {
     });
   }
 
-
   saveMatch(): void {
     const match = new Match;
 
@@ -73,9 +78,28 @@ export class MatchInputComponent implements OnInit {
     });
   }
 
-  setFileName(fileName: string): void {
-    this.playerService.importExcelFile(fileName).subscribe(response => {
-      this.snackMessageService.showSuccess('Učitan dokument: ' + fileName);
-    });
+  uploadFile() {
+    this.matchImporting = true;
+    const inputEl: HTMLInputElement = this.inputEl.nativeElement;
+    const fileCount: number = inputEl.files.length;
+    const formData = new FormData();
+    if (fileCount > 0) {
+      for (let i = 0; i < fileCount; i++) {
+        formData.append('file', inputEl.files.item(i));
+      }
+      this.fileUploadService.importExcelFile(formData).subscribe(
+        response => {
+          this.matchImporting = false;
+          this.snackMessageService.showSuccess(response);
+
+        }, error => {
+          this.matchImporting = false;
+          this.snackMessageService.showError('Nešta nevelja ' + error);
+        });
+    }
+  }
+
+  onFileInput(inputEl: any) {
+    this.fileName = inputEl.srcElement.files.item(0).name;
   }
 }

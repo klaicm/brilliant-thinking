@@ -11,7 +11,6 @@ export class PlayerService {
     private static ALL_PLAYERS_URL = environment.url + '/allPlayers';
     private static SAVE_MATCH_URL = environment.url + '/saveMatch';
     private static ELO_STATS_URL = environment.url + '/elo-stats';
-    private static IMPORT_MATCHES_URL = environment.url + '/importFile';
 
     constructor(private http: HttpClient) { }
 
@@ -36,9 +35,5 @@ export class PlayerService {
             .set('playerAElo', playerAElo.toString())
             .set('playerBElo', playerBElo.toString());
         return this.http.get(`${PlayerService.ELO_STATS_URL}`, {params});
-    }
-
-    importExcelFile(fileName: string): Observable<any> {
-        return this.http.get(`${PlayerService.IMPORT_MATCHES_URL}/${fileName}`);
     }
 }

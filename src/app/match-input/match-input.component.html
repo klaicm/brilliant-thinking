@@ -1,9 +1,11 @@
+<app-spinner *ngIf="matchImporting"></app-spinner>
+
 <div class="page-header col-sm-4">
   <h3>Unos meča</h3>
 </div>
 
 <form [formGroup]="matchFormGroup">
-  <mat-card>
+  <!--  
     <div class="row">
       <mat-form-field style="padding-left: 16px;">
         <mat-select placeholder="Pobjednik" formControlName="playerWinFormControl">
@@ -49,18 +51,25 @@
         <input matInput placeholder="Tie-break" formControlName="thirdSetFormControl">
       </mat-form-field>
     </div>
+    
+    -->
+  <mat-card>
+    <button mat-raised-button (click)="fileInput.click()" style="margin-right: 12px; background-color: whitesmoke">
+      <mat-icon style="margin-right: 6px">note_add</mat-icon>
+      <span>Odabir dokumenta</span>
+      <input type="file" [multiple]="multiple" #fileInput (change)="onFileInput($event)" style="display:none;" />
+    </button>
+    <span>{{fileName}}</span>
+    <!--<input type="file" [multiple]="multiple" #fileInput>-->
 
-    <mat-form-field style="margin-left: 16px">
-      <input matInput placeholder="Naziv file-a (bez ekstenzije)" [(ngModel)]="fileName" [ngModelOptions]="{standalone: true}">
-    </mat-form-field>
-
-    <div class="row" style="text-align: center;">
+    <div style="margin-top: 16px">
       <!-- <button mat-raised-button [color]="'success'" aria-label="Calculate" (click)="saveMatch()"
         [disabled]="matchFormGroup.invalid">
         Spremi
       </button> -->
-      <button mat-raised-button [color]="'success'" aria-label="Calculate" (click)="setFileName(fileName)">
-        Spremi
+      <button mat-raised-button aria-label="Calculate" (click)="uploadFile()"
+        style="background-color: red; color: white">
+        Učitaj
       </button>
     </div>
   </mat-card>

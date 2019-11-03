@@ -10,14 +10,14 @@ export class SnackMessageService {
 
   showError(message: string) {
     const config = new MatSnackBarConfig();
-    // config.panelClass = ['snackbar-background-red'];
+    config.panelClass = ['snackbar-background-red'];
     config.duration = 5000;
     this.snackBar.open(message, null, config);
   }
 
   showSuccess(message: string) {
     const config = new MatSnackBarConfig();
-    // config.panelClass = ['snackbar-background-green'];
+    config.panelClass = ['snackbar-background-green'];
     config.duration = 5000;
     this.snackBar.open(message, null, config);
   }

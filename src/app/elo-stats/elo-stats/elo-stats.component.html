@@ -16,7 +16,7 @@
             <mat-card>
 
               <ng-template #mobile>
-                mobile
+                <span style="font-size: 6px;">mobile</span>
                 <div class="row">
                   <mat-form-field class="input-headline">
                     <input type="text" placeholder="Pretraži igrača" aria-label="Number" matInput
@@ -33,8 +33,8 @@
                 <div class="row">
                   <mat-form-field class="input-headline">
                     <input type="text" placeholder="Pretraži igrača" aria-label="Number" matInput
-                      formControlName="playerBFormControl" [matAutocomplete]="auto">
-                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                      formControlName="playerBFormControl" [matAutocomplete]="autos">
+                    <mat-autocomplete #autos="matAutocomplete" [displayWith]="displayFn">
                       <mat-option *ngFor="let player of filteredOptionsB | async" [value]="player">
                         {{player.firstName}} {{ player.lastName}}
                       </mat-option>
@@ -51,7 +51,7 @@
               </ng-template>
 
               <ng-template #desktop>
-                desktop
+                <span style="font-size: 6px;">desktop</span>
                 <div class="row">
                   <mat-form-field class="input-headline">
                     <input type="text" placeholder="Pretraži igrača" aria-label="Number" matInput
@@ -62,8 +62,8 @@
                       </mat-option>
                     </mat-autocomplete>
                   </mat-form-field>
-                  <strong>{{playerAWins}}</strong> : 
-                  <strong>{{playerBWins}}</strong> 
+                  <strong>{{playerAWins}}</strong> :
+                  <strong>{{playerBWins}}</strong>
                   <mat-form-field class="input-headline" style="margin-left: 8px">
                     <input type="text" placeholder="Pretraži igrača" aria-label="Number" matInput
                       formControlName="playerBFormControl" [matAutocomplete]="autos">

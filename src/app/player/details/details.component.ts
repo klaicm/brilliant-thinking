@@ -147,6 +147,14 @@ export class DetailsComponent implements OnInit, AfterViewInit, OnChanges {
             xAxis: {
                 allowDecimals: false,
             },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
             series: [{
                 name: 'Plasman (nakon odigranog meča)',
                 type: 'spline',
@@ -171,6 +179,15 @@ export class DetailsComponent implements OnInit, AfterViewInit, OnChanges {
             },
             xAxis: {
                 allowDecimals: false,
+            },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.y:.1f}%'
+                    }
+                }
             },
             series: [{
                 name: 'Postotak pobjeda',
@@ -198,6 +215,14 @@ export class DetailsComponent implements OnInit, AfterViewInit, OnChanges {
                 allowDecimals: false
             },
             shadow: true,
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
             series: [{
                 name: 'ELO rating',
                 type: 'areaspline',
